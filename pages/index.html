@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMolberte - better than ICDMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="../styles/index.css" />
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-dna"></i> VMolberte</h1>
+            <p>Как ICDMS, только на JS.</p>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-page="main">
+                <i class="fas fa-home"></i>
+                <span>Рисовалка</span>
+            </div>
+            <div class="menu-item" data-page="instruction">
+                <i class="fas fa-book"></i>
+                <span>Инструкция</span>
+            </div>
+            <div class="menu-item" data-page="whatsnew">
+                <i class="fas fa-newspaper"></i>
+                <span>Новости</span>
+            </div>
+            <div class="menu-item" data-page="colors">
+                <i class="fa-solid fa-palette"></i>
+                <span>Цвета</span>
+            </div>
+            <div id="reportMenu" class="menu-item" data-page="report" style="visibility: hidden;">
+                <i class="fa-solid fa-file-code"></i>
+                <span>Отчёт по запуску</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Main Page -->
+        <div id="main" class="page active">
+            <div class="page-header">
+                <h2>Визуализация данных</h2>
+                <p>Выберите файл на компьютере и настройте необходимые параметры</p>
+            </div>
+
+            <div class="file-upload-container">
+                <div class="file-upload-area" id="fileUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Выбрать файл</h3>
+                    <p>Нажмите для поиска или перетащите файл сюда (drag'n'drop)</p>
+                    <input type="file" id="fileInput" class="file-input">
+                    <div class="file-name" id="fileName">Файлы не выбраны</div>
+                </div>
+            </div>
+
+            <div class="content-blocks">
+                <!-- Content Block 1 -->
+                <div class="content-block">
+                    <div class="block-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Тип графиков и детали</h3>
+                    </div>
+                    <div class="selectors">
+                        <div class="selector-group">
+                            <label for="selectGraphType">Тип графиков</label>
+                            <select id="selectGraphType">
+                                <option value="quickReport">Быстрый отчёт</option>
+                                <option value="quickReportEnrichment">Быстрый отчёт по обогащению</option>
+                                <option value="box">Диаграмма размаха</option>
+                                <option value="scatter">Точечная диаграмма</option>
+                                <option value="violin">Скрипичная диаграмма</option>
+                            </select>
+                        </div>
+                        <div class="selector-group">
+                            <label for="selectGroupType">Группировка подписей</label>
+                            <select id="selectGroupType">
+                                <option value="">Не выбран</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Content Block 2 -->
+                <div class="content-block">
+                    <div class="block-header">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        <h3>Метрики для визуализации</h3>
+                    </div>
+                    <div class="selectors">
+                        <div class="selector-group">
+                            <label for="metric_1">Метрика 1 (y)</label>
+                            <select id="metric_1">
+                                <option value="">Не выбрана</option>
+                            </select>
+                        </div>
+                        <div class="selector-group">
+                            <label for="metric_2">Метрика 2 (x)</label>
+                            <select id="metric_2">
+                                <option value="">Не выбрана</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Block 4 -->
+                <div class="content-block" style="grid-column: span 2" id="detailBlock">
+                    <div class="block-header">
+                        <i class="fa-solid fa-wrench"></i>
+                        <h3>Дополнительные элементы</h3>
+                    </div>
+                    <div class="selectors">
+                        <div class="selector-group">
+                            <label for="verticalLine">Добавить вертикальную линию</label>
+                            <div style="display: inline-block">
+                                <select id="verticalSelect">
+                                    <option value="">Тип линии</option>
+                                    <option value="threshold">Пороговая</option>
+                                    <option value="freeSize">Свободный размер</option>
+                                    <option value="pValue">P-value</option>
+                                </select>
+                                <input id="verticalLine" placeholder="y0 y1 x-pos ?color? ?line style?">
+                                <button id="addVert">Добавить</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="selector-group">
+                            <label for="horizontalLine">Добавить горизонтальную линию</label>
+                            <div style="display: inline-block">
+                                <select id="horizontalSelect">
+                                    <option value="">Тип линии</option>
+                                    <option value="threshold">Пороговая</option>
+                                    <option value="freeSize">Свободный размер</option>
+                                    <option value="pValue">P-value</option>
+                                </select>
+                                <input id="horizontalLine" placeholder="x0 x1 y-pos ?color? ?line style?">
+                                <button id="addHor">Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-container">
+                    <button class="draw-button" id="drawButton">
+                        <i class="fa-solid fa-brush"></i> Нарисовать
+                    </button>
+                    <div class="progress-container">
+                        <svg width="120" height="120" class="progress-circle">
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#667eea" />
+                                    <stop offset="100%" stop-color="#764ba2" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="60" cy="60" r="54" class="progress-background"></circle>
+                            <circle cx="60" cy="60" r="54" class="progress-bar" id="progressBar"></circle>
+                        </svg>
+                        <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="block-header">
+                    <i class="fa-solid fa-splotch"></i>
+                    <h3 id="graphTitle">Тут мог бы быть Ваш график</h3>
+                </div>
+                <div id="plotlyPlot">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Instruction Page -->
+        <div id="instruction" class="page">
+            <div class="page-header">
+                <h2>Инструкция</h2>
+                <p>Изучите приложение перед началом использования.</p>
+            </div>
+
+            <div class="instruction-container">
+                <div class="instruction-section">
+                    <div class="instruction-header">
+                        <i class="fas fa-file-upload"></i>
+                        <h3>1. Загрузка данных</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>VMolberte поддерживает два формата данных:</p>
+                        <ul>
+                            <li>CSV-файлы</li>
+                            <li>TSV-файлы</li>
+                        </ul>
+                        <p>Просто нажмите "Выбрать файл", укажите нужные, и приложение автоматически определит расширение и подготовит данные для работы.</p>
+                        <p><i>В отличие от ICDMS</i>, VMolberte поддерживает открытие нескольких файлов сразу, но пока не поддерживает 
+                        последовательное открытие нескольких файлов. Если Вы хотите работать с данными из нескольких файлов, укажите
+                        <b>все нужные файлы сразу</b>.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-section">
+                    <div class="instruction-header">
+                        <i class="fas fa-cogs"></i>
+                        <h3>2. Настройка параметров отображения</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>Each content block represents a different type of biological data visualization:</p>
+                        <ul>
+                            <li>Select the appropriate data type for your analysis</li>
+                            <li>Choose the visualization method that best represents your data</li>
+                            <li>Apply filters to focus on specific aspects of your data</li>
+                        </ul>
+                        <p>The system will automatically adjust the available options based on your file type and previous selections.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-section">
+                    <div class="instruction-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>3. Generating Visualizations</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>Once you've configured all parameters:</p>
+                        <ul>
+                            <li>Click the "Draw" button to generate your visualizations</li>
+                            <li>The progress bar will indicate the processing status</li>
+                            <li>Results will appear in a new tab or window</li>
+                        </ul>
+                        <p>Processing time varies depending on data size and complexity. Large datasets may take several minutes to process.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-section">
+                    <div class="instruction-header">
+                        <i class="fas fa-download"></i>
+                        <h3>4. Exporting Results</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>After generating your visualizations:</p>
+                        <ul>
+                            <li>Use the export button to save in various formats (PNG, SVG, PDF)</li>
+                            <li>Download raw data with applied filters</li>
+                            <li>Share visualizations using the generated link</li>
+                        </ul>
+                        <p>All exports maintain the resolution and quality of the original visualization.</p>
+                    </div>
+                </div>
+
+                <div class="instruction-section">
+                    <div class="instruction-header">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>5. Troubleshooting</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>Common issues and solutions:</p>
+                        <ul>
+                            <li><strong>File not supported:</strong> Ensure your file is in one of the supported formats</li>
+                            <li><strong>Visualization errors:</strong> Check that your data contains the required columns</li>
+                            <li><strong>Slow processing:</strong> Try reducing the dataset size or applying filters</li>
+                            <li><strong>Unexpected results:</strong> Verify that the selected parameters match your data type</li>
+                        </ul>
+                        <p>For additional support, contact our team at support@bioviz.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's New Page -->
+        <div id="whatsnew" class="page">
+            <div class="page-header">
+                <h2>What's New</h2>
+                <p>Stay updated with the latest features and improvements</p>
+            </div>
+
+            <div class="updates-container">
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">15</div>
+                        <div class="month">Nov 2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Enhanced Protein Interaction Visualization</h3>
+                        <p>We've improved the protein interaction visualization with new layout algorithms and better performance for large networks. The new circular layout option provides better visualization of hub proteins.</p>
+                        <div class="update-tags">
+                            <span class="tag feature">Feature</span>
+                            <span class="tag improvement">Improvement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">02</div>
+                        <div class="month">Nov 2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Support for Single-Cell RNA-Seq Data</h3>
+                        <p>BioViz now supports single-cell RNA-Seq data with specialized visualization options including UMAP plots, cell clustering, and differential expression analysis.</p>
+                        <div class="update-tags">
+                            <span class="tag feature">Feature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">20</div>
+                        <div class="month">Oct 2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Fixed Export Issues</h3>
+                        <p>Resolved issues with exporting high-resolution images on Safari and Firefox browsers. All export formats now work consistently across all supported browsers.</p>
+                        <div class="update-tags">
+                            <span class="tag bugfix">Bug Fix</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">08</div>
+                        <div class="month">Oct 2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Improved Data Processing Speed</h3>
+                        <p>Optimized our data processing algorithms to handle larger datasets more efficiently. Processing time for large genomic datasets has been reduced by up to 40%.</p>
+                        <div class="update-tags">
+                            <span class="tag improvement">Improvement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">25</div>
+                        <div class="month">Sep 2023</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>New Statistical Analysis Tools</h3>
+                        <p>Added advanced statistical analysis tools including survival analysis, ROC curves, and multivariate regression. These tools are integrated directly into the visualization workflow.</p>
+                        <div class="update-tags">
+                            <span class="tag feature">Feature</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Колористика -->
+        <div id="colors" class="page">
+            <div class="page-header">
+                <h2>72 уникальных цвета</h2>
+                <p>Приложение отображает все графики с использованием этих цветов</p>
+            </div>
+            <div id="color-grid"></div>
+
+        </div>
+
+        <!-- Отчёт -->
+        <div id="report" class="page">
+            <div class="page-header">
+                <h2>Здесть будет отчёт</h2>
+                <p>Сформированный отчёт по стандартным метрикам</p>
+                <span style="display: none" id="traceHolder"></span>
+                <button class="draw-button" id="downloadAsHtml" style="margin-top: 30px;">
+                    <i class="fa-solid fa-download"></i> Скачать как html</button>
+            </div>
+            <div id="report-content">
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="../fileLoadAndPrimProc.js"></script>
+    <script type="module" src="../functions/checkRequired.js"></script>
+    <script type="module" src="../functions/drawStandartGraph.js"></script>
+    <script type="module" src="../functions/addHorizontal.js"></script>
+    <script type="module" src="../functions/addHorizontal.js"></script>
+    <script type="module" src="../functions/portDataForSave.js"></script>
+    <script>
+        // Навигация
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function () {
+                // Remove active class from all menu items and pages
+                document.querySelectorAll('.menu-item').forEach(menuItem => {
+                    menuItem.classList.remove('active');
+                    menuItem.classList.remove('toggling');
+                });
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+
+                // Add active class to clicked menu item and corresponding page
+                this.classList.add('active');
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+
+        // File upload functionality
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+
+
+        // Draw button and progress bar functionality
+        const drawButton = document.getElementById('drawButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const circumference = 2 * Math.PI * 54; // 2πr where r=54
+
+        const colors = [
+            '#004074', '#a0a0a0', '#cd5c5c', '#ff1493', '#dfdf0f', '#ffa500',
+            '#ddaddd', '#ff00ff', '#9370DB', '#4b00b2', '#adff2f', '#90ee90',
+            '#3cb371', '#66cdaa', '#008b0b', '#4682b4', '#7b68ee', '#005959',
+            '#000080', '#ffdead', '#f4a460', '#d269e1', '#800000', '#2f4f4f',
+            "#C42727", "#00A651", "#0066CC", "#FFCC00", "#CC00CC", "#00CCCC",
+            "#A66633", "#663399", "#339966", "#993366", "#336699", "#999933",
+            "#804040", "#408040", "#404080", "#808040", "#804080", "#408080",
+            "#CC6666", "#66CC66", "#6666CC", "#CCCC66", "#CC66CC", "#66CCCC",
+            "#E67333", "#33E673", "#3333E6", "#E6E633", "#E633E6", "#33E6E6",
+            "#B38066", "#66B380", "#8066B3", "#B3B380", "#B380B3", "#66B3B3",
+            "#BF4040", "#4DBF4D", "#4D4DBF", "#BFBF40", "#BF40BF", "#40BFBF",
+            "#F28C8C", "#8CF28C", "#8C8CF2", "#F2F28C", "#F28CF2", "#8CF2F2"
+        ];
+
+        const grid = document.getElementById('color-grid');
+
+        // Function to calculate luminance to determine text color
+        function getLuminance(hexColor) {
+            const rgb = parseInt(hexColor.slice(1), 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >> 8) & 0xff;
+            const b = (rgb >> 0) & 0xff;
+            // Using sRGB luminance formula
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        colors.forEach(hex => {
+            const box = document.createElement('div');
+            box.className = 'color-box';
+            box.style.backgroundColor = hex;
+
+            const label = document.createElement('span');
+            label.className = 'color-label';
+            label.textContent = hex;
+
+            // Determine if black or white text is more readable
+            const luminance = getLuminance(hex);
+            label.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
+
+            box.appendChild(label);
+
+            grid.appendChild(box);
+        });
+        /*
+        drawButton.addEventListener('click', function () {
+
+            // Reset progress
+            progressBar.style.strokeDashoffset = circumference;
+            progressText.textContent = '0%';
+
+            // Simulate progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                if (progress > 100) {
+                    clearInterval(interval);
+                    progressText.textContent = 'Done!';
+                    setTimeout(() => {
+                        progressText.textContent = '0%';
+                        progressBar.style.strokeDashoffset = circumference;
+                    }, 2000);
+                    return;
+                }
+
+                const offset = circumference - (progress / 100) * circumference;
+                progressBar.style.strokeDashoffset = offset;
+                progressText.textContent = `${progress}%`;
+            }, 50);
+        });*/
+    </script>
+</body>
+</html>
