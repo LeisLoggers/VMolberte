@@ -1,7 +1,7 @@
 ﻿
-import { configureBoxplotTraces } from "./configureBoxplotTraces.js";
-import { configureScatterTraces } from "./configureScatterTraces.js";
-import { configureReportTraces } from "./configureReportTraces.js"
+import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
+import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
+import { configureReportTraces } from "./traceCreate/configureReportTraces.js"
 import { fileParse } from './fileParse.js'
 import { zipDict } from './zipDict.js'
 const d3 = require('d3');

@@ -1,41 +1,46 @@
-﻿import { sortNumericArray } from './sortNumericArray.js'
+﻿import {sortNumericArray} from '../sortNumericArray.js'
 
 
 
 
-export function configureScatterTraces(configGraph, verticals, horizontals) {
-    let uniqueCategories = configGraph.get('categories');
+export function configureBoxplotTraces(configGraph, verticals, horizontals) {
+    let uniqueCategories  = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
-    let graphTitle = `Зависимость ${yMetric} от ${xMetric}`;
+    let graphTitle = `Распределение ${yMetric} по ${groupBy}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
-    let xMax = parseFloat(sortNumericArray(fullData.map(d => d[xMetric])).pop());
-    let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
-    xMax += xMax * 0.1;
-    yMax += yMax * 0.1;
 
 
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
+    let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
 
 
     for (let category of xTicksOrder) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
+        let xPos = [];
+        xPos.length = filteredData.length;
+        xPos.fill(xTicksOrder.indexOf(category));
+
         let catTrace = {
             name: category,
             type: graphType,
             mode: 'markers',
             marker: { color: colorDiscreteMap[category], size: 8 },
-            x: filteredData.map(d => d[xMetric]),
+            boxpoints: 'all',
+            points: 'all',
+            pointpos: -1.8,
+            jitter: 0.5,
+
+            x: xPos,
             y: filteredData.map(d => d[yMetric]),
             customdata: filteredData.map(
                 d => `<b>Pool:</b> ${d[groupBy]}<br>
 <b>Code:</b> ${d['Code']}<br>
-<b>${yMetric}:</b> ${d[yMetric]}<br>
-<b>${xMetric}:</b> ${d[xMetric]}`
+<b>${yMetric}:</b> ${d[yMetric]}`
             ),
             hovertemplate: '%{customdata}<extra></extra>',
             hoverlabel: {
@@ -56,7 +61,6 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
 
-
     let layout = {
         title: {
             text: graphTitle, font: { weight: 'bold', size: 24, family: "Arial" }
@@ -64,13 +68,14 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
         xaxis: {
             title: { text: xMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
             tickfont: { size: 18, family: "Arial" },
-            range: [0, xMax]
-
+            range: [xIndex[0] - 1, xIndex.at(-1) + 1],
+            tickmode: 'array',
+            tickvals: xIndex,
+            ticktext: xTicksOrder
         },
         yaxis: {
             title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
             tickfont: { size: 18, family: "Arial" },
-            range: [0, yMax],
         },
         legend: {
             title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },

@@ -198,6 +198,7 @@
                         <p><i>В отличие от ICDMS</i>, VMolberte поддерживает открытие нескольких файлов сразу, но пока не поддерживает 
                         последовательное открытие нескольких файлов. Если Вы хотите работать с данными из нескольких файлов, укажите
                         <b>все нужные файлы сразу</b>.</p>
+                        <p>После успешной загрузки файла будет проиграна короткая анимация - подсветка полей выбора параметров синим цветом означает, что приложение распознало файлы и готово к работе.</p>
                     </div>
                 </div>
 
@@ -207,62 +208,61 @@
                         <h3>2. Настройка параметров отображения</h3>
                     </div>
                     <div class="instruction-content">
-                        <p>Each content block represents a different type of biological data visualization:</p>
+                        <p>Каждый блок параметров содержит знакомые по ICDMS настройки:</p>
                         <ul>
-                            <li>Select the appropriate data type for your analysis</li>
-                            <li>Choose the visualization method that best represents your data</li>
-                            <li>Apply filters to focus on specific aspects of your data</li>
+                            <li>Блок "Тип графиков и детали" содержит меню выбора графиков и варианты группировки</li>
+                            <li>Блок "Метрики для визуализации" предназначен для указания имён колонок с данными для отображения</li>
+                            <li>"Дополнительные элементы" (линии, пороговые линии и др.) могут быть применены к графикам при отображении единичных метрик, но не в режимах отчёта.</li>
                         </ul>
-                        <p>The system will automatically adjust the available options based on your file type and previous selections.</p>
+                        <p>Обратите внимание, что, в отличие от ICDMS, в Мольберте отсутствует выбор цветов и "стиля цвета". Теперь для отображения используются 72 уникальных цвета - посмотрите на них на вкладке "цвета".</p>
                     </div>
                 </div>
 
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-chart-line"></i>
-                        <h3>3. Generating Visualizations</h3>
+                        <h3>3. Генерация изображений</h3>
                     </div>
                     <div class="instruction-content">
-                        <p>Once you've configured all parameters:</p>
+                        <p>После настройки всех нужных параметров:</p>
                         <ul>
-                            <li>Click the "Draw" button to generate your visualizations</li>
-                            <li>The progress bar will indicate the processing status</li>
-                            <li>Results will appear in a new tab or window</li>
+                            <li>Нажмите кнопку "Нарисовать"</li>
+                            <li>При работе с единичными метриками график отобразится в нижней части текущей страницы</li>
+                            <li>При работе с отчётами результат будет вынесен в отдельную вкладку.</li>
                         </ul>
-                        <p>Processing time varies depending on data size and complexity. Large datasets may take several minutes to process.</p>
+                        <p>Время обработки зависит от объёма данных, но обычно всё происходит достаточно быстро.</p>
                     </div>
                 </div>
 
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-download"></i>
-                        <h3>4. Exporting Results</h3>
+                        <h3>4. Экспорт результатов</h3>
                     </div>
                     <div class="instruction-content">
-                        <p>After generating your visualizations:</p>
+                        <p>После создания графиков (или отчётов):</p>
                         <ul>
-                            <li>Use the export button to save in various formats (PNG, SVG, PDF)</li>
-                            <li>Download raw data with applied filters</li>
-                            <li>Share visualizations using the generated link</li>
+                            <li>Отдельные графики могут быть экспортированы с использованием функционала внутри графика - значок камеры в правом верхнем углу графика</li>
+                            <li>Для экспорта отчёта на вкладке отчёта присутствует отдельная кнопка, сохраняющая отчёт в интерактивном виде</li>
+                            <li>Делитесь визуализациями с друзьями и коллегами!</li>
                         </ul>
-                        <p>All exports maintain the resolution and quality of the original visualization.</p>
+                        
                     </div>
                 </div>
 
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-question-circle"></i>
-                        <h3>5. Troubleshooting</h3>
+                        <h3>5. Стрельба по проблемам</h3>
                     </div>
                     <div class="instruction-content">
-                        <p>Common issues and solutions:</p>
+                        <p>Частые ошибки и решения:</p>
                         <ul>
-                            <li><strong>File not supported:</strong> Ensure your file is in one of the supported formats</li>
-                            <li><strong>Visualization errors:</strong> Check that your data contains the required columns</li>
-                            <li><strong>Slow processing:</strong> Try reducing the dataset size or applying filters</li>
-                            <li><strong>Unexpected results:</strong> Verify that the selected parameters match your data type</li>
+                            <li><strong>Не определён разделитель:</strong> убедитесь, что Ваш файл имеет в качестве разделителя либо символ табуляции, либо запятую</li>
+                            <li><strong>Странный размер графика в отчёте:</strong> измените ширину окна приложения (откройте на весь экран или наоборот - уменьшите масштаб).</li>
                         </ul>
-                        <p>For additional support, contact our team at support@bioviz.com</p>
+                        <p>При возникновении ошибок - пишите в telegram (@sxotoffefs)</p>
+                        <p>Репозиторий Git - VMolberte</p>
                     </div>
                 </div>
             </div>
