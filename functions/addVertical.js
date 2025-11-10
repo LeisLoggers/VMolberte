@@ -1,20 +1,49 @@
-﻿const { ipcMain } = require('electron');
+const { ipcMain } = require('electron');
 const Plotly = require('plotly.js-dist');
 import { createVerticalTrace } from './traceCreate/createVerticalTrace.js';
 
 document.getElementById('addVert').addEventListener('click', function (event) {
-    ipcRenderer.send('addVert');
+    const lineDirection = document.getElementById('lineDirection').value;
+    if (lineDirection === 'vertical') {
+        ipcRenderer.send('addVert');
+    } else if (lineDirection === 'horizontal') {
+        ipcRenderer.send('addHor');
+    } else {
+        alert('Не указано направление линии')
+    }
 })
 
 ipcRenderer.on('draw-vertical', function (event) {
-    let canvas = document.getElementById('plotlyPlot');
-    let yValues = document.getElementById('horizontalLine').value.split(' ');
-    let y0 = yValues[0];
-    let y1 = yValues[1];
-    let x = yValues[2];
-    let color = (yValues[3] ? yValues[3] : 'red')
-    let ls = (yValues[4] ? yValues[4] : 'dash')
+    const canvas = document.getElementById('plotlyPlot');
+    const lineType = document.getElementById('verticalSelect').value;
+    const xValues = document.getElementById('verticalLine').value.split(' ');
+    const color = document.getElementById('verticalColorSelect').value;
+    /* FIXME: Требуется реализовать универсальный функционал откуда куда и как рисовать линии,
+    а так же изменить под это html.*/
 
-    const newTrace = createVerticalTrace(y0, y1, x, color, ls)
+    let x, y0, y1;
+    let newTrace;
+
+    if (lineType === 'threshold') {
+        y0 = canvas.layout.yaxis.range[0];
+        y1 = canvas.layout.yaxis.range[1];
+        x = +xValues[0];
+    } else {
+        y0 = +xValues[0];
+        y1 = +xValues[1];
+        x = +xValues[2];
+    }
+    let ls = (xValues[4] ? xValues[4] : 'dash')
+    let config = new Map([
+        ['x', x],
+        ['y0', y0],
+        ['y1', y1],
+        ['lc', color]
+    ])
+    if (lineType === 'pLine') {
+        newTrace = createPline(config);
+    } else {
+        newTrace = createVerticalTrace(config);
+    };
     Plotly.addTraces(canvas, newTrace)
 })

@@ -107,49 +107,6 @@
                     </div>
                 </div>
 
-                <!-- Content Block 4 -->
-                <div class="content-block" style="grid-column: span 2" id="detailBlock">
-                    <div class="block-header">
-                        <i class="fa-solid fa-wrench"></i>
-                        <h3>Дополнительные элементы</h3>
-                    </div>
-                    <div class="selectors">
-                        <div class="selector-group">
-                            <label for="verticalLine">Добавить вертикальную линию</label>
-                            <div style="display: inline-block">
-                                <select id="verticalSelect">
-                                    <option value="">Тип линии</option>
-                                    <option value="threshold">Пороговая</option>
-                                    <option value="freeSize">Свободный размер</option>
-                                    <option value="pValue">P-value</option>
-                                </select>
-                                <input id="verticalLine" placeholder="y0 y1 x-pos ?color? ?line style?">
-                                <select id="verticalColorSelect">
-                                    <option value="">Цвет линии</option>
-                                </select>
-                                <button id="addVert">Добавить</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="selector-group">
-                            <label for="horizontalLine">Добавить горизонтальную линию</label>
-                            <div style="display: inline-block">
-                                <select id="horizontalSelect">
-                                    <option value="">Тип линии</option>
-                                    <option value="threshold">Пороговая</option>
-                                    <option value="freeSize">Свободный размер</option>
-                                    <option value="pLine">P-value</option>
-                                </select>
-                                <input id="horizontalLine" placeholder="x0 x1 y-pos ?color? ?line style?">
-                                <select id="horizontalColorSelect">
-                                    <option value="">Цвет линии</option>
-                                </select>
-                                <button id="addHor">Добавить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="action-container">
                     <button class="draw-button" id="drawButton">
                         <i class="fa-solid fa-brush"></i> Нарисовать
@@ -166,6 +123,45 @@
                             <circle cx="60" cy="60" r="54" class="progress-bar" id="progressBar"></circle>
                         </svg>
                         <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Block 4 -->
+            <div class="content-block" style="grid-column: span 3; margin-bottom: 20px;" id="detailBlock">
+                <div class="block-header">
+                    <i class="fa-solid fa-wrench"></i>
+                    <h3>Дополнительные элементы (нажать для раскрытия)</h3>
+                </div>
+                <div class="selectors" style="display: none;">
+                    <div class="selector-group">
+                        <label for="verticalLine">Добавить линию</label>
+                        <div style="display: inline-block">
+                            <select id="lineDirection">
+                                <option value="">Направление линии</option>
+                                <option value="vertical">Вертикальная</option>
+                                <option value="horizontal">Горизонтальная</option>
+                            </select>
+                            <select id="verticalSelect">
+                                <option value="">Тип линии</option>
+                                <option value="threshold">Пороговая</option>
+                                <option value="freeSize">Свободный размер</option>
+                                <option value="pValue">P-value</option>
+                            </select>
+                            <input id="fromWhere" placeholder="Откуда">
+                            <input id="toWhere" placeholder="Докуда">
+                            <input id="whereLine" placeholder="Где">
+                            <select id="verticalColorSelect">
+                                <option value="">Цвет линии</option>
+                            </select>
+                            <select id="verticalStyleSelect">
+                                <option value="">Стиль линии</option>
+                                <option value="dash">Пунктир</option>
+                                <option value="solid">Сплошная</option>
+                                <option value="dot">Точки</option>
+                            </select>
+                            <button id="addVert">Добавить</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,8 +380,7 @@
     <script src="../fileLoadAndPrimProc.js"></script>
     <script type="module" src="../functions/checkRequired.js"></script>
     <script type="module" src="../functions/drawStandartGraph.js"></script>
-    <script type="module" src="../functions/addHorizontal.js"></script>
-    <script type="module" src="../functions/addHorizontal.js"></script>
+    <script type="module" src="../functions/addVertical.js"></script>
     <script type="module" src="../functions/portDataForSave.js"></script>
     <script>
         // Навигация
@@ -435,7 +430,6 @@
         ];
 
         const grid = document.getElementById('color-grid');
-        let horizontalColorSelect = document.getElementById('horizontalColorSelect');
         let verticalColorSelect = document.getElementById('verticalColorSelect');
 
         // Function to calculate luminance to determine text color
@@ -451,16 +445,12 @@
         colors.forEach(hex => {
             const box = document.createElement('div');
             const optVert = document.createElement('option');
-            const optHor = document.createElement('option');
             box.className = 'color-box';
             box.style.backgroundColor = hex;
             optVert.innerText = hex;
             optVert.value = hex;
             optVert.style.backgroundColor = hex;
-            optHor.innerText = hex;
-            optHor.value = hex;
-            optHor.style.backgroundColor = hex;
-
+            
             const label = document.createElement('span');
             label.className = 'color-label';
             label.textContent = hex;
@@ -469,14 +459,21 @@
             const luminance = getLuminance(hex);
             label.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
             optVert.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
-            optHor.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
             box.appendChild(label);
 
             grid.appendChild(box);
 
-            horizontalColorSelect.appendChild(optHor);
             verticalColorSelect.appendChild(optVert);
         });
+
+        document.getElementById('detailBlock').querySelector('.block-header').addEventListener('click', () => {
+            let content = document.getElementById('detailBlock').querySelector('.selectors');
+            if (content.style.display === 'flex') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'flex';
+            }
+        })
         /*
         drawButton.addEventListener('click', function () {
 

@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --primary-color: #2c7be5;
     --secondary-color: #11cdef;
     --success-color: #2dce89;
@@ -242,12 +242,20 @@ body {
         margin-bottom: 5px;
     }
 
-    .selector-group select, .selector-group input {
+    .selector-group select {
         padding: 8px 12px;
         border: 1px solid #d0d0d0;
         border-radius: 5px;
         background-color: white;
         transition: var(--transition);
+    }
+    .selector-group input {
+        padding: 8px 12px;
+        border: 1px solid #d0d0d0;
+        border-radius: 5px;
+        background-color: white;
+        transition: var(--transition);
+        width: 10%;
     }
     .selector-group button {
         text-align: center;
