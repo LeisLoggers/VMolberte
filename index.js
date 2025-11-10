@@ -1,4 +1,4 @@
-﻿const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron')
 const { os } = require('node:os');
 let filesMetaData;
 let currentTraces;
@@ -25,7 +25,7 @@ const createWindow = (loadingWindow) => {
     const win = new BrowserWindow({
         width: width,
         height: height,
-        icon: './assets/logo.ico',
+        icon: './assets/vmolberte.ico',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

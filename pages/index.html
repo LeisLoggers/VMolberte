@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VMolberte - better than ICDMS</title>
+    <title>VMolberte</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="../styles/index.css" />
 </head>
@@ -124,6 +124,9 @@
                                     <option value="pValue">P-value</option>
                                 </select>
                                 <input id="verticalLine" placeholder="y0 y1 x-pos ?color? ?line style?">
+                                <select id="verticalColorSelect">
+                                    <option value="">Цвет линии</option>
+                                </select>
                                 <button id="addVert">Добавить</button>
                             </div>
                         </div>
@@ -135,9 +138,12 @@
                                     <option value="">Тип линии</option>
                                     <option value="threshold">Пороговая</option>
                                     <option value="freeSize">Свободный размер</option>
-                                    <option value="pValue">P-value</option>
+                                    <option value="pLine">P-value</option>
                                 </select>
                                 <input id="horizontalLine" placeholder="x0 x1 y-pos ?color? ?line style?">
+                                <select id="horizontalColorSelect">
+                                    <option value="">Цвет линии</option>
+                                </select>
                                 <button id="addHor">Добавить</button>
                             </div>
                         </div>
@@ -429,6 +435,8 @@
         ];
 
         const grid = document.getElementById('color-grid');
+        let horizontalColorSelect = document.getElementById('horizontalColorSelect');
+        let verticalColorSelect = document.getElementById('verticalColorSelect');
 
         // Function to calculate luminance to determine text color
         function getLuminance(hexColor) {
@@ -442,8 +450,16 @@
 
         colors.forEach(hex => {
             const box = document.createElement('div');
+            const optVert = document.createElement('option');
+            const optHor = document.createElement('option');
             box.className = 'color-box';
             box.style.backgroundColor = hex;
+            optVert.innerText = hex;
+            optVert.value = hex;
+            optVert.style.backgroundColor = hex;
+            optHor.innerText = hex;
+            optHor.value = hex;
+            optHor.style.backgroundColor = hex;
 
             const label = document.createElement('span');
             label.className = 'color-label';
@@ -452,10 +468,14 @@
             // Determine if black or white text is more readable
             const luminance = getLuminance(hex);
             label.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
-
+            optVert.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
+            optHor.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
             box.appendChild(label);
 
             grid.appendChild(box);
+
+            horizontalColorSelect.appendChild(optHor);
+            verticalColorSelect.appendChild(optVert);
         });
         /*
         drawButton.addEventListener('click', function () {
