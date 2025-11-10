@@ -1,7 +1,7 @@
 export function createHorizontalTrace(config) { 
-    let x0 = config.get('x0');
-    let x1 = config.get('x1');
-    let y = config.get('y');
+    let x0 = config.get('from');
+    let x1 = config.get('to');
+    let y = config.get('where');
     let lineColor = (config.get('lc') !== '' ? config.get('lc') : 'red');
     let lineStyle = (config.get('ls') !== undefined ? config.get('ls') : 'dash');
     let lineName = (config.get('ln') !== undefined ? config.get('ln') : 'newTrace');

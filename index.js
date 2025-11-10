@@ -98,6 +98,7 @@ ipcMain.on('draw-signal', (event) => {
 
 // Добавление горизонтальной линии
 ipcMain.on('addHor', (event) => {
+    console.log('sending horizontal command')
     event.sender.send('draw-horizontal')
 })
 

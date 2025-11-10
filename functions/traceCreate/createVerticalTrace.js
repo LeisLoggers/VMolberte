@@ -1,7 +1,7 @@
 export function createVerticalTrace(config) {
-    let x = config.get('x');
-    let y0 = config.get('y0');
-    let y1 = config.get('y1');
+    let x = config.get('where');
+    let y0 = config.get('from');
+    let y1 = config.get('to');
     let lineColor = (config.get('lc') !== '' ? config.get('lc') : 'red');
     let lineStyle = (config.get('ls') !== undefined ? config.get('ls') : 'dash');
     let lineName = (config.get('ln') !== undefined ? config.get('ln') : 'newTrace');
