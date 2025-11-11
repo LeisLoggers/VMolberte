@@ -6,35 +6,44 @@ import { createPline } from './traceCreate/createPline.js';
 
 document.getElementById('addVert').addEventListener('click', function (event) {
     const lineDirection = document.getElementById('lineDirection').value;
-    console.log('clicked ' + lineDirection);
-    if (lineDirection === 'vertical') {
-        ipcRenderer.send('addVert');
-    } else if (lineDirection === 'horizontal') {
-        ipcRenderer.send('addHor');
+    const plotlyPlot = document.getElementById('plotlyPlot').textContent;
+    if (plotlyPlot.length === 17) {
+        alert('Сначала нарисуйте график');
     } else {
-        alert('Не указано направление линии')
+        if (lineDirection === 'vertical') {
+            ipcRenderer.send('addVert');
+        } else if (lineDirection === 'horizontal') {
+            ipcRenderer.send('addHor');
+        } else {
+            alert('Не указано направление линии')
+        }
     }
+    
 })
 
 ipcRenderer.on('draw-vertical', function (event) {
     let newTrace;
     const canvas = document.getElementById('plotlyPlot');
-    const lineType = document.getElementById('verticalSelect').value;
+    const lineType = document.getElementById('verticalSelect').value || 'threshold';
     const color = document.getElementById('verticalColorSelect').value;
     let fromWhere = document.getElementById('fromWhere').value || canvas.layout.yaxis.range[0];
     let toWhere = document.getElementById('toWhere').value || canvas.layout.yaxis.range[1];
     let whereLine = document.getElementById('whereLine').value;
     let ls = document.getElementById('verticalStyleSelect').value;
-
+    let ln = document.getElementById('lineName').value || 'линия' ;
+    let showLegend = (document.getElementById('showLegend').value === 'true' ? true : false);
+    
 
     let config = new Map([
         ['where', whereLine],
         ['from', fromWhere],
         ['to', toWhere],
         ['lc', color],
-        ['ls', ls] 
+        ['ls', ls],
+        ['ln', ln],
+        ['showLegend', showLegend]
     ])
-    if (lineType === 'pLine') {
+    if (lineType === 'pValue') {
         newTrace = createPline(config);
     } else {
         newTrace = createVerticalTrace(config);
@@ -52,15 +61,19 @@ ipcRenderer.on('draw-horizontal', function (event) {
     let toWhere = document.getElementById('toWhere').value || canvas.layout.xaxis.range[1];
     let whereLine = document.getElementById('whereLine').value;
     let ls = document.getElementById('verticalStyleSelect').value;
+    let ln = document.getElementById('lineName').value || 'линия';
+    let showLegend = (document.getElementById('showLegend').value === 'true' ? true : false);
 
     let config = new Map([
         ['where', whereLine],
         ['from', fromWhere],
         ['to', toWhere],
         ['lc', color],
-        ['ls', ls]
+        ['ls', ls],
+        ['ln', ln],
+        ['showLegend', showLegend]
     ])
-    if (lineType === 'pLine') {
+    if (lineType === 'pValue') {
         newTrace = createPline(config);
     } else {
         newTrace = createHorizontalTrace(config);

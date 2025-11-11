@@ -25,7 +25,7 @@ const createWindow = (loadingWindow) => {
     const win = new BrowserWindow({
         width: width,
         height: height,
-        icon: './assets/vmolberte.ico',
+        icon: './assets/logo256.ico',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

@@ -1,4 +1,4 @@
-﻿import { configureBoxplotTraces } from "./configureBoxplotTraces.js";
+import { configureBoxplotTraces } from "./configureBoxplotTraces.js";
 import { configureScatterTraces } from "./configureScatterTraces.js";
 import { createHorizontalTrace } from './createHorizontalTrace.js';
 import { createVerticalTrace } from './createVerticalTrace.js';
@@ -24,9 +24,9 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['data', fullData]
     ]
     ), [(enrichmentFlag ?
-        createVerticalTrace(new Map([['x', 70], ['y0', 0], ['y1', 1.2], ['showLegend', false]])) :
-        createVerticalTrace(new Map([['x', 300], ['y0', 0], ['y1', 1.2], ['showLegend', false]])))],
-        [createHorizontalTrace(new Map([['x0', -1], ['x1', mtcMax], ['y', 0.95], ['showLegend', false]]))]);
+        createVerticalTrace(new Map([['where', 70], ['from', 0], ['to', 1.2], ['showLegend', false]])) :
+        createVerticalTrace(new Map([['where', 300], ['from', 0], ['to', 1.2], ['showLegend', false]])))],
+        [createHorizontalTrace(new Map([['from', -1], ['to', mtcMax], ['where', 0.95], ['showLegend', false]]))]);
 
     let breadth_20X_trace = configureScatterTraces(new Map([
         ['categories', uniqueCategories],
@@ -38,9 +38,9 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['data', fullData]
     ]
     ), [(enrichmentFlag ?
-        createVerticalTrace(new Map([['x', 70], ['y0', 0], ['y1', 1.2], ['showLegend', false]])) :
-        createVerticalTrace(new Map([['x', 300], ['y0', 0], ['y1', 1.2], ['showLegend', false]])))],
-        [createHorizontalTrace(new Map([['x0', -1], ['x1', mtcMax], ['y', 0.9], ['showLegend', false]]))]);
+        createVerticalTrace(new Map([['where', 70], ['from', 0], ['to', 1.2], ['showLegend', false]])) :
+        createVerticalTrace(new Map([['where', 300], ['from', 0], ['to', 1.2], ['showLegend', false]])))],
+        [createHorizontalTrace(new Map([['from', -1], ['to', mtcMax], ['where', 0.9], ['showLegend', false]]))]);
 
     let pct_target_bases_10X_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -52,7 +52,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['data', fullData]
     ]
     ), '',
-        [createHorizontalTrace(new Map([['x0', -1], ['x1', uniqueCategories.length], ['y', 0.95], ['showLegend', false]]))]);
+        [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.95], ['showLegend', false]]))]);
 
     let pct_target_bases_20X_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -63,7 +63,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['graphType', 'box'],
         ['data', fullData]
     ]
-    ), '', [createHorizontalTrace(new Map([['x0', -1], ['x1', uniqueCategories.length], ['y', 0.9], ['showLegend', false]]))]);
+    ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.9], ['showLegend', false]]))]);
 
     let pct_selected_bases_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -74,7 +74,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['graphType', 'box'],
         ['data', fullData]
     ]
-    ), '', [createHorizontalTrace(new Map([['x0', -1], ['x1', uniqueCategories.length], ['y', 0.9], ['showLegend', false]]))]);
+    ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.9], ['showLegend', false]]))]);
 
     let pct_exc_dupe_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -85,8 +85,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['graphType', 'box'],
         ['data', fullData]
     ]
-    ), '', [createHorizontalTrace(new Map([['x0', -1], ['x1', uniqueCategories.length], ['y', 0.1], ['showLegend', false]])),
-        createHorizontalTrace(new Map([['x0', -1], ['x1', uniqueCategories.length], ['y', 0.2], ['showLegend', false]]))]);
+    ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.1], ['showLegend', false]])),
+        createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.2], ['showLegend', false]]))]);
 
     let total_reads_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -109,8 +109,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['data', fullData]
     ]
     ), '', [(enrichmentFlag ?
-        createHorizontalTrace(new Map([['y', 70], ['x0', -1], ['y1', uniqueCategories.length], ['showLegend', false]])) :
-        createHorizontalTrace(new Map([['y', 300], ['x0', -1], ['y1', uniqueCategories.length], ['showLegend', false]])))]);
+        createHorizontalTrace(new Map([['where', 70], ['from', -1], ['to', uniqueCategories.length], ['showLegend', false]])) :
+        createHorizontalTrace(new Map([['where', 300], ['from', -1], ['to', uniqueCategories.length], ['showLegend', false]])))]);
 
     let at_dropout_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],

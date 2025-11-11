@@ -75,9 +75,33 @@
                                 <option value="violin">Скрипичная диаграмма</option>
                             </select>
                         </div>
+                        <div class="selector-group" style="display: inline;">
+                            <input type="checkbox" id="boxpoints" value="all" checked />
+                            <label for="boxpoints">Показывать все точки (боксплот)</label>
+                        </div>
+                        <div class="selector-group" style="display: inline;">
+                            <input type="checkbox" id="outliers" value="all" checked />
+                            <label for="boxpoints">Показывать выбросы (боксплот)</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <div class="block-header">
+                        <i class="fa-regular fa-object-group"></i>
+                        <h3>Раскрашиваем и группируем</h3>
+                    </div>
+                    <div class="selectors">
                         <div class="selector-group">
-                            <label for="selectGroupType">Группировка подписей</label>
+                            <label for="selectGroupType">Сгруппировать по</label>
                             <select id="selectGroupType">
+                                <option value="">Не выбран</option>
+                            </select>
+                        </div>
+                        <div class="selector-group">
+                            <label for="selectGroupColor">Раскрасить по</label>
+                            <select id="selectGroupColor">
                                 <option value="">Не выбран</option>
                             </select>
                         </div>
@@ -133,34 +157,41 @@
                     <i class="fa-solid fa-wrench"></i>
                     <h3>Дополнительные элементы (нажать для раскрытия)</h3>
                 </div>
-                <div class="selectors" style="display: none;">
+                <div class="selectors">
                     <div class="selector-group">
-                        <label for="verticalLine">Добавить линию</label>
-                        <div style="display: inline-block">
-                            <select id="lineDirection">
+                        <div class="styler" style="display: none;">
+                            <label for="verticalLine">Добавить линию</label>
+                            <input id="lineName" placeholder="Укажите имя линии (опционально)" style="grid-column-start:2; grid-row-start:1;">
+                            <select id="showLegend" style="grid-column-start:3; grid-row-start:1;">
+                                <option value="false">Не отображать в легенде</option>
+                                <option value="true">Отображать в легенде</option>
+                            </select>
+                            <select id="lineDirection" style="grid-column-start:1; grid-row-start:2;">
                                 <option value="">Направление линии</option>
                                 <option value="vertical">Вертикальная</option>
                                 <option value="horizontal">Горизонтальная</option>
                             </select>
-                            <select id="verticalSelect">
+                            <select id="verticalSelect" style="grid-column-start:1; grid-row-start:3;">
                                 <option value="">Тип линии</option>
                                 <option value="threshold">Пороговая</option>
                                 <option value="freeSize">Свободный размер</option>
                                 <option value="pValue">P-value</option>
                             </select>
-                            <input id="fromWhere" placeholder="Откуда">
-                            <input id="toWhere" placeholder="Докуда">
-                            <input id="whereLine" placeholder="Где">
-                            <select id="verticalColorSelect">
+                            <!-- Инпуты -->
+                            <input id="fromWhere" placeholder="Откуда" style="grid-column-start:2; grid-row-start:2;">
+                            <input id="toWhere" placeholder="Докуда" style="grid-column-start:3; grid-row-start:2;">
+                            <input id="whereLine" placeholder="Где" style="grid-column-start:4; grid-row-start:2;">
+                            
+                            <select id="verticalColorSelect" style="grid-column-start:2; grid-row-start:3;">
                                 <option value="">Цвет линии</option>
                             </select>
-                            <select id="verticalStyleSelect">
+                            <select id="verticalStyleSelect" style="grid-column-start:3; grid-row-start:3;">
                                 <option value="">Стиль линии</option>
                                 <option value="dash">Пунктир</option>
                                 <option value="solid">Сплошная</option>
                                 <option value="dot">Точки</option>
                             </select>
-                            <button id="addVert">Добавить</button>
+                            <button id="addVert" style="grid-column-start:4; grid-row-start:3;">Добавить</button>
                         </div>
                     </div>
                 </div>
@@ -172,7 +203,6 @@
                     <h3 id="graphTitle">Тут мог бы быть Ваш график</h3>
                 </div>
                 <div id="plotlyPlot">
-
                 </div>
             </div>
         </div>
@@ -431,7 +461,8 @@
 
         const grid = document.getElementById('color-grid');
         let verticalColorSelect = document.getElementById('verticalColorSelect');
-
+        const verticalSelect = document.getElementById('verticalSelect');
+        const groupType = document.getElementById('selectGroupType');
         // Function to calculate luminance to determine text color
         function getLuminance(hexColor) {
             const rgb = parseInt(hexColor.slice(1), 16);
@@ -467,12 +498,69 @@
         });
 
         document.getElementById('detailBlock').querySelector('.block-header').addEventListener('click', () => {
-            let content = document.getElementById('detailBlock').querySelector('.selectors');
-            if (content.style.display === 'flex') {
+            let content = document.getElementById('detailBlock').querySelector('.styler');
+            if (content.style.display === 'grid') {
                 content.style.display = 'none';
             } else {
-                content.style.display = 'flex';
+                content.style.display = 'grid';
             }
+        })
+
+        verticalSelect.addEventListener('change', () => {
+            const fromElement = document.getElementById('fromWhere');
+            const toElement = document.getElementById('toWhere');
+            if (verticalSelect.value === 'pValue') {
+                let newFrom = document.createElement('select');
+                newFrom.id = fromElement.id;
+                let newTo = document.createElement('select');
+                newTo.id = toElement.id;
+                const fromStyles = getComputedStyle(fromElement);
+                const toStyles = getComputedStyle(toElement);
+                const plotlyPlot = document.getElementById('plotlyPlot');
+                const xTicks = plotlyPlot.layout.xaxis.tickvals;
+                const xText = plotlyPlot.layout.xaxis.ticktext;
+                for (let i = 0; i < fromStyles.length; i++) {
+                    const prop = fromStyles[i];
+                    newFrom.style[prop] = fromStyles.getPropertyValue(prop);
+                };
+                for (let i = 0; i < toStyles.length; i++) {
+                    const prop = toStyles[i];
+                    newTo.style[prop] = toStyles.getPropertyValue(prop);
+                };
+                xTicks.forEach(tick => {
+                    let fromOpt = document.createElement('option');
+                    let toOpt = document.createElement('option');
+                    fromOpt.value = tick; fromOpt.text = xText[tick];
+                    toOpt.value = tick; toOpt.text = xText[tick];
+                    newFrom.appendChild(fromOpt); newTo.appendChild(toOpt);
+                });
+                fromElement.replaceWith(newFrom);
+                toElement.replaceWith(newTo);
+            } else {
+                if (fromElement.tagName === 'SELECT') {
+                    let newFrom = document.createElement('input');
+                    newFrom.id = fromElement.id;
+                    let newTo = document.createElement('input');
+                    newTo.id = toElement.id;
+                    const fromStyles = getComputedStyle(fromElement);
+                    const toStyles = getComputedStyle(toElement);
+                    for (let i = 0; i < fromStyles.length; i++) {
+                        const prop = fromStyles[i];
+                        newFrom.style[prop] = fromStyles.getPropertyValue(prop);
+                    };
+                    for (let i = 0; i < toStyles.length; i++) {
+                        const prop = toStyles[i];
+                        newTo.style[prop] = toStyles.getPropertyValue(prop);
+                    };
+                    newFrom.placeholder = 'Откуда';
+                    newTo.placeholder = 'Куда';
+                    fromElement.replaceWith(newFrom);
+                    toElement.replaceWith(newTo)
+                }
+            }
+        })
+        groupType.addEventListener('change', () => {
+            document.getElementById('selectGroupColor').value = groupType.value;
         })
         /*
         drawButton.addEventListener('click', function () {

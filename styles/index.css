@@ -231,6 +231,13 @@ body {
     gap: 12px;
 }
 
+.styler {
+    display: grid;
+    grid-template-rows: minmax(auto-fit(200px, 1fr));
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    gap: 5px;
+}
+
 .selector-group {
     display: flex;
     flex-direction: column;
@@ -255,7 +262,7 @@ body {
         border-radius: 5px;
         background-color: white;
         transition: var(--transition);
-        width: 10%;
+        text-align: center;
     }
     .selector-group button {
         text-align: center;
@@ -267,6 +274,9 @@ body {
         font-weight: 600;
         cursor: pointer;
         color: white;
+    }
+    .checkbox {
+        width: 20%;
     }
         
 

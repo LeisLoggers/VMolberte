@@ -1,7 +1,7 @@
-﻿export function createPline(config) {
-    const x0 = config.get('x0');
-    const x1 = config.get('x1');
-    const y = parseFloat(config.get('y'));
+export function createPline(config) {
+    const x0 = config.get('from');
+    const x1 = config.get('to');
+    const y = parseFloat(config.get('where'));
     //const name = config.get('name');
     //const pVal = config.get('pVal');
 
