@@ -358,6 +358,7 @@ body {
 .hovered {
     box-shadow: 2px 2px 5px 5px rgba(0, 64, 116, 0.5)
 }
+
 /* Instruction Page Styles */
 .instruction-container {
     display: grid;
