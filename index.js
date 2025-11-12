@@ -50,7 +50,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
     let loadingWindow = createLoadingWindow();
-    setTimeout(() => createWindow(loadingWindow), 1000)
+    setTimeout(() => createWindow(loadingWindow), 3000)
     
 })
 // Получение файла/файлов и путей к ним
