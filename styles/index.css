@@ -409,6 +409,20 @@ body {
     .instruction-content li {
         margin-bottom: 8px;
     }
+    .instruction-content pre {
+        color: #707070;
+        border: solid 2px #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+    .pythonWord {
+        color: #004074;
+        font-weight: bold;
+    }
+    .pythonFunc {
+        color: #1a55b1;
+        font-weight: bold;
+    }
 
 /* What's New Page Styles */
 .updates-container {

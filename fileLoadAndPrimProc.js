@@ -1,6 +1,5 @@
 const { ipcRenderer } = require('electron');
 const fs  = require('fs');
-const { os } = require('node:os');
 const nodePath = require('path')
 
 function toggleHovered(element, duration = 200) {
@@ -26,20 +25,6 @@ const buttonCreated = document.getElementById('fileUploadArea');
 buttonCreated.addEventListener('click', function (event) {
     ipcRenderer.send('open-file-dialog-for-file')
 });
-
-buttonCreated.addEventListener('dragover', (event) => {
-    event.preventDefault();
-});
-
-buttonCreated.addEventListener('drop', function (event) {
-    event.preventDefault();
-    const files = event.dataTransfer.files;
-    for (let file of files) {
-        console.log(file)
-        console.log(require('path').resolve(file.path));
-    }
-    ipcRenderer.send('dropped-file', files)
-})
 
 ipcRenderer.on('selected-file', function (event, filePaths) {
 
@@ -95,10 +80,12 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             metric2.appendChild(m2Option);
         })
         blink(decoration);
-        document.getElementById('fileName').innerText = `Выбрано файлов: ${fileMetaData.size}`;
         event.sender.send('send-meta-data', fileMetaData)
     }
     
     
 });
 
+ipcRenderer.on('update-meta-length', function (event, metaLen) {
+    document.getElementById('fileName').innerText = `Выбрано файлов: ${metaLen}`;
+})

@@ -1,5 +1,5 @@
 const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron')
-const { os } = require('node:os');
+const path = require('path')
 let filesMetaData;
 let currentTraces;
 
@@ -29,7 +29,6 @@ const createWindow = (loadingWindow) => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            preload: 'preload.js',
         }
     });
     win.webContents.openDevTools();
@@ -69,10 +68,6 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
     }
 })
 
-ipcMain.on('dropped-file', (event, files) => {
-    event.sender.send('selected-file', files);
-})
-
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {
     filesMetaData.length = 0;
@@ -86,13 +81,22 @@ ipcMain.on('check-required', (event) => {
 
 // Получение метаданных по файлам и сохранение их в переменную приложения
 ipcMain.on('send-meta-data', (event, metaData) => {
-    filesMetaData = metaData;
+    if (filesMetaData !== undefined) {
+        let startPos = filesMetaData.size + 1;
+        for (let [key, value] of metaData) {
+            filesMetaData.set(key + startPos, value);
+        };
+    } else {
+        filesMetaData = metaData;
+    }
+    event.sender.send('update-meta-length', filesMetaData.size);
 })
 
 // Отправка метаданных на отрисовку
 ipcMain.on('draw-signal', (event) => {
     event.sender.send('drawIt', filesMetaData)
 })
+
 
 // Добавление горизонтальной линии
 ipcMain.on('addHor', (event) => {
