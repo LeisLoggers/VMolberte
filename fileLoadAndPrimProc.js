@@ -24,7 +24,6 @@ async function blink(elems) {
 const buttonCreated = document.getElementById('fileUploadArea');
 
 buttonCreated.addEventListener('click', function (event) {
-    console.log('[SEND] Signal from renderer');
     ipcRenderer.send('open-file-dialog-for-file')
 });
 

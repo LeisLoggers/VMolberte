@@ -1,4 +1,4 @@
-﻿
+
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js"

@@ -44,11 +44,9 @@ ipcRenderer.on('draw-vertical', function (event) {
         ['showLegend', showLegend]
     ])
     if (lineType === 'pValue') {
-        async function suka(config) {
-            newTrace = await createPline(config);
-            Plotly.addTraces(canvas, newTrace)
-        }
-        suka(config)
+        newTrace = createPline(config).then((newTrace) => {
+            Plotly.addTraces(canvas, newTrace);
+        });
     } else {
         newTrace = createHorizontalTrace(config);
         Plotly.addTraces(canvas, newTrace)
@@ -78,11 +76,9 @@ ipcRenderer.on('draw-horizontal', function (event) {
         ['showLegend', showLegend]
     ])
     if (lineType === 'pValue') {
-        async function suka(config) {
-            newTrace = await createPline(config);
-            Plotly.addTraces(canvas, newTrace)
-        }
-        suka(config)
+        newTrace = createPline(config).then((newTrace) => {
+            Plotly.addTraces(canvas, newTrace);
+        });
     } else {
         newTrace = createHorizontalTrace(config);
         Plotly.addTraces(canvas, newTrace)

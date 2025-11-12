@@ -76,7 +76,7 @@ ipcMain.on('dropped-file', (event, files) => {
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {
     filesMetaData.length = 0;
-    console.log('filepath error');
+    console.log('Filepaths cleared');
 })
 
 // Проверка заполнения нужных полей
@@ -86,19 +86,16 @@ ipcMain.on('check-required', (event) => {
 
 // Получение метаданных по файлам и сохранение их в переменную приложения
 ipcMain.on('send-meta-data', (event, metaData) => {
-    console.log('[RECIEVE] recieved meta')
     filesMetaData = metaData;
 })
 
 // Отправка метаданных на отрисовку
 ipcMain.on('draw-signal', (event) => {
-    console.log(' [SEND] File from MAIN')
     event.sender.send('drawIt', filesMetaData)
 })
 
 // Добавление горизонтальной линии
 ipcMain.on('addHor', (event) => {
-    console.log('sending horizontal command')
     event.sender.send('draw-horizontal')
 })
 
