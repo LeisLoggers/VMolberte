@@ -82,6 +82,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             font: { size: 18, family: "Arial" }
         },
         height: 700,
+        flexgrow: 1,
         autosize: true
     }
 

@@ -364,7 +364,11 @@
                 <p>Сформированный отчёт по стандартным метрикам</p>
                 <span style="display: none" id="traceHolder"></span>
                 <button class="draw-button" id="downloadAsHtml" style="margin-top: 30px;">
-                    <i class="fa-solid fa-download"></i> Скачать как html</button>
+                    <i class="fa-solid fa-download"></i> Скачать как html
+                </button>
+                <button class="draw-button" id="resetPlotSizes" style="margin-top: 30px;">
+                    <i class="fa-solid fa-rotate-left"></i> Обновить графики
+                </button>
             </div>
             <div id="report-content">
 
@@ -395,6 +399,9 @@
                 // Add active class to clicked menu item and corresponding page
                 this.classList.add('active');
                 const pageId = this.getAttribute('data-page');
+                if (pageId === 'report') {
+                    document.getElementById('resetPlotSizes').dispatchEvent(new Event('click'));
+                }
                 document.getElementById(pageId).classList.add('active');
             });
         });

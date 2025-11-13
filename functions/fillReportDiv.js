@@ -1,4 +1,4 @@
-﻿const Plotly = require('plotly.js-dist')
+const Plotly = require('plotly.js-dist')
 export function fillReportDiv(traces, filenames) {
     let reportDiv = 
     `
