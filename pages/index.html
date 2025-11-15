@@ -48,15 +48,25 @@
             </div>
 
             <div class="file-upload-container">
-                <div class="file-upload-area" id="fileUploadArea">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Выбрать файл</h3>
-                    <p>Нажмите для поиска</p>
-                    <input type="file" id="fileInput" class="file-input">
-                    <div class="file-name" id="fileName">Файлы не выбраны</div>
+                <div>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Выбрать файл</h3>
+                        <p>Нажмите для поиска</p>
+                        <input type="file" id="fileInput" class="file-input">
+                        <div class="file-name" id="fileName">Файлы не выбраны</div>
+                    </div>
+                </div>
+                <div class="buttons-area" id="buttonsArea">
+                    <button class="draw-button" id="clearFP">Очистить</button>
+                    <div class="selector-group">
+                        <select id="mergeKey">
+                            <option value="">Ключ для объединения файлов не выбран</option>
+                        </select>
+                        
+                    </div>
                 </div>
             </div>
-
             <div class="content-blocks">
                 <!-- Content Block 1 -->
                 <div class="content-block">
@@ -377,8 +387,8 @@
     </div>
 
     
-
-    <script src="../fileLoadAndPrimProc.js"></script>
+    <script src="../functions/justLoadRenderer.js"></script>
+    <script type="module" src="../fileLoadAndPrimProc.js"></script>
     <script type="module" src="../functions/checkRequired.js"></script>
     <script type="module" src="../functions/drawStandartGraph.js"></script>
     <script type="module" src="../functions/detailLines.js"></script>

@@ -1,17 +1,15 @@
 
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
-import { configureReportTraces } from "./traceCreate/configureReportTraces.js"
-import { fileParse } from './fileParse.js'
-import { zipDict } from './zipDict.js'
-const d3 = require('d3');
-const Plotly = require('plotly.js-dist')
+import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
+import { fileParse } from './fileParse.js';
+import { zipDict } from './zipDict.js';
+const Plotly = require('plotly.js-dist');
 
 
 
 
 ipcRenderer.on('drawIt', function (event, filesMetaData) {
-    let detailBlock = document.getElementById('detailBlock');
     const available_colors = [
         '#004074', '#a0a0a0', '#cd5c5c', '#ff1493', '#dfdf0f', '#ffa500',
         '#ddaddd', '#ff00ff', '#9370DB', '#4b00b2', '#adff2f', '#90ee90',

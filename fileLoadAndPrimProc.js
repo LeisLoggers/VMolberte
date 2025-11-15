@@ -1,6 +1,6 @@
-const { ipcRenderer } = require('electron');
 const fs  = require('fs');
-const nodePath = require('path')
+const nodePath = require('path');
+import {configureSelectBoxes} from './functions/configureSelectBoxes.js';
 
 function toggleHovered(element, duration = 200) {
     return new Promise((resolve) => {
@@ -20,11 +20,17 @@ async function blink(elems) {
 
 
 
-const buttonCreated = document.getElementById('fileUploadArea');
-
-buttonCreated.addEventListener('click', function (event) {
+const fileUpload = document.getElementById('fileUploadArea');
+const clearFP = document.getElementById('clearFP');
+fileUpload.addEventListener('click', function (event) {
     ipcRenderer.send('open-file-dialog-for-file')
 });
+clearFP.addEventListener('click', function () {
+    ipcRenderer.send('clear-fp-wrong-paths');
+    document.getElementById('fileName').innerText = `Файлы не выбраны`;
+})
+
+
 
 ipcRenderer.on('selected-file', function (event, filePaths) {
 
@@ -52,33 +58,11 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     if (unseparated.length !== 0) {
         alert(`Не удалось определить разделитель для файлов ${unseparated.join(', ')}\nВыполнение программы остановлено.`);
         event.sender.send('clear-fp-wrong-paths');
+        document.getElementById('fileName').innerText = `Файлы не выбраны`;
         return
     }
     if (separator) {
-        let gt = document.getElementById('selectGraphType');
-        let menu = document.getElementById('selectGroupType');
-        let colormenu = document.getElementById('selectGroupColor');
-        let metric1 = document.getElementById('metric_1');
-        let metric2 = document.getElementById('metric_2');
-        let decoration = [gt, menu, colormenu, metric1, metric2]
-        lfh.forEach(column => {
-            let groupOption = document.createElement('option');
-            let colorOption = document.createElement('option');
-            let m1Option = document.createElement('option');
-            let m2Option = document.createElement('option');
-            groupOption.innerText = column;
-            colorOption.innerText = column;
-            m1Option.innerText = column;
-            m2Option.innerText = column;
-            groupOption.value = column;
-            colorOption.value = column;
-            m1Option.value = column;
-            m2Option.value = column;
-            menu.appendChild(groupOption);
-            colormenu.appendChild(colorOption)
-            metric1.appendChild(m1Option);
-            metric2.appendChild(m2Option);
-        })
+        let decoration = configureSelectBoxes(lfh);
         blink(decoration);
         event.sender.send('send-meta-data', fileMetaData)
     }
