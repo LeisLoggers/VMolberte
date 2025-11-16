@@ -26,6 +26,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
     ];
 
     let groupBy = document.getElementById('selectGroupType').value;
+    let colorBy = document.getElementById('selectGroupColor').value;
     let yMetric = document.getElementById('metric_1').value;
     let xMetric = document.getElementById('metric_2').value || groupBy;
     let graphType = document.getElementById('selectGraphType').value;
@@ -40,10 +41,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         const fullData = await fileParse(filesMetaData);
         // Собираем конфиги
         let uniqueCategories = [... new Set(fullData.map(d => d[groupBy]))];
-        let colorDiscreteMap = zipDict(uniqueCategories, available_colors);
+        let uniqueColorGroups = [... new Set(fullData.map(d => d[colorBy]))];
+        let colorDiscreteMap = zipDict(uniqueColorGroups, available_colors);
         let configGraph = new Map()
         configGraph.set('categories', uniqueCategories);
         configGraph.set('groupBy', groupBy);
+        configGraph.set('colorBy', colorBy);
         configGraph.set('colorDiscreteMap', colorDiscreteMap);
         configGraph.set('xMetric', xMetric);
         configGraph.set('yMetric', yMetric);

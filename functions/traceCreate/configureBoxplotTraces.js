@@ -6,6 +6,7 @@ import {sortNumericArray} from '../sortNumericArray.js'
 export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let uniqueCategories  = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
+    let colorBy = configGraph.get('colorBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
@@ -24,12 +25,11 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
         let xPos = [];
         xPos.length = filteredData.length;
         xPos.fill(xTicksOrder.indexOf(category));
-
         let catTrace = {
             name: category,
             type: graphType,
             mode: 'markers',
-            marker: { color: colorDiscreteMap[category], size: 8 },
+            marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
             boxpoints: 'all',
             points: 'all',
             pointpos: -1.8,

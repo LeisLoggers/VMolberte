@@ -8,6 +8,7 @@ import { sortNumericArray } from "../sortNumericArray.js"
 export function configureReportTraces(configGraph, enrichmentFlag) {
     let uniqueCategories = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
+    let colorBy = configGraph.get('colorBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let fullData = configGraph.get('data');
     let mtcMax = parseFloat(sortNumericArray(fullData.map(d => d['MEAN_TARGET_COVERAGE'])).pop());
@@ -17,6 +18,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let breadth_10X_trace = configureScatterTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', 'MEAN_TARGET_COVERAGE'],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_10X' : 'PCT_TARGET_BASES_50X')],
@@ -31,6 +33,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let breadth_20X_trace = configureScatterTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', 'MEAN_TARGET_COVERAGE'],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_20X' : 'PCT_TARGET_BASES_100X')],
@@ -45,6 +48,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let pct_target_bases_10X_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_10X' : 'PCT_TARGET_BASES_50X')],
@@ -57,6 +61,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let pct_target_bases_20X_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_20X' : 'PCT_TARGET_BASES_100X')],
@@ -68,6 +73,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let pct_selected_bases_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'PCT_SELECTED_BASES'],
@@ -79,6 +85,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let pct_exc_dupe_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'PCT_EXC_DUPE'],
@@ -91,6 +98,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let total_reads_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'TOTAL_READS'],
@@ -102,6 +110,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let mean_target_coverage_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'MEAN_TARGET_COVERAGE'],
@@ -115,6 +124,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let at_dropout_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'AT_DROPOUT'],
@@ -126,6 +136,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let gc_dropout_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
         ['groupBy', groupBy],
+        ['colorBy', colorBy],
         ['colorDiscreteMap', colorDiscreteMap],
         ['xMetric', ''],
         ['yMetric', 'GC_DROPOUT'],
