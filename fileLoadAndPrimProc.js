@@ -38,8 +38,11 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     let lfh = new Set();
     let fileMetaData = new Map();
     let unseparated = [];
+    let decoration;
+    let headersInSelect = document.getElementById('selectGroupType');
+    let currentHeaders = Array.from(headersInSelect.options).map(option => option.value);
 
-    filePaths.forEach((path, index )=> {
+    filePaths.forEach((path, index) => {
         fileMetaData.set(index, { 'filepath': path });
         fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
         let fileHeader = fs.readFileSync(path, 'utf8').split('\n')[0];
@@ -64,12 +67,19 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     }
     // Настраиваем все меню select
     if (separator) {
-        let decoration = configureSelectBoxes(lfh);
-        blink(decoration);
-        event.sender.send('send-meta-data', fileMetaData)
-    }
-    
-    
+        if (currentHeaders.length > 2) {
+            lfh = lfh.union(new Set(currentHeaders));
+            decoration = configureSelectBoxes(lfh, currentHeaders);
+            blink(decoration);
+            event.sender.send('send-meta-data', fileMetaData)
+        } else {
+            decoration = configureSelectBoxes(lfh, currentHeaders);
+            blink(decoration);
+            event.sender.send('send-meta-data', fileMetaData)
+        };
+
+
+    };
 });
 
 ipcRenderer.on('update-meta-length', function (event, metaLen) {
