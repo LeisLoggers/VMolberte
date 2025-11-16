@@ -10,6 +10,7 @@ export async function fileParse(filesMetaData) {
         const filepath = fileMeta['filepath'];
         const resolution = fileMeta['resolution'];
         const filename = fileMeta['filename'];
+        let mergeKey = document.getElementById('mergeKey').value;
 
         const promise = new Promise((resolve, reject) => {
             if (resolution === 'tsv') {

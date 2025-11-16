@@ -55,12 +55,14 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             unseparated.push(nodePath.basename(path));
         }
     })
+    // В случае ошибки с разделителем - чистим все процессы.
     if (unseparated.length !== 0) {
         alert(`Не удалось определить разделитель для файлов ${unseparated.join(', ')}\nВыполнение программы остановлено.`);
         event.sender.send('clear-fp-wrong-paths');
         document.getElementById('fileName').innerText = `Файлы не выбраны`;
         return
     }
+    // Настраиваем все меню select
     if (separator) {
         let decoration = configureSelectBoxes(lfh);
         blink(decoration);

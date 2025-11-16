@@ -13,12 +13,11 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let graphTitle = `Распределение ${yMetric} по ${groupBy}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
-
+    
 
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
     let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
-
 
     for (let category of xTicksOrder) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
@@ -29,6 +28,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             name: category,
             type: graphType,
             mode: 'markers',
+            outliercolor: 'red',
             marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
             boxpoints: 'all',
             points: 'all',
@@ -38,7 +38,8 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             x: xPos,
             y: filteredData.map(d => d[yMetric]),
             customdata: filteredData.map(
-                d => `<b>Pool:</b> ${d[groupBy]}<br>
+                d => `<b>Файл:</b> ${d['filename']}<br>
+<b>Группа:</b> ${d[groupBy]}<br>
 <b>Code:</b> ${d['Code']}<br>
 <b>${yMetric}:</b> ${d[yMetric]}`
             ),
@@ -78,7 +79,10 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             tickfont: { size: 18, family: "Arial" },
         },
         legend: {
-            title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
+            title: {
+                text: groupBy,
+                font: { weight: 'bold', size: 18, family: "Arial" }
+            },
             font: { size: 18, family: "Arial" }
         },
         height: 700,
