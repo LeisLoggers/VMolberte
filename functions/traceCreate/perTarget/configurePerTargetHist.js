@@ -7,7 +7,6 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
     let yMetric = configGraph.get('yMetric');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
-    console.log(axes);
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
 
@@ -19,10 +18,8 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
             type: 'histogram',
             mode: 'markers',
             marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
-            legendgroup: category,
-            showlegend: false,
             // Оси
-            y: filteredData.map(d => d[yMetric]),
+            x: filteredData.map(d => d[yMetric]),
             xaxes: axes[0],
             yaxis: axes[1],
             
@@ -43,5 +40,31 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-    return tracesDrawable;
+    let layout = {
+        title: {
+            text: graphTitle,
+            font: { weight: 'bold', size: 24, family: "Arial" }
+        },
+        xaxis: {
+            title: { text: 'Распределение', font: { weight: 'bold', size: 22, family: "Arial" } },
+            tickfont: { size: 14, family: "Arial" },
+        },
+        yaxis: {
+            title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
+            tickfont: { size: 18, family: "Arial" },
+        },
+        legend: {
+            title: {
+                text: groupBy,
+                font: { weight: 'bold', size: 18, family: "Arial" }
+            },
+            font: { size: 18, family: "Arial" }
+        },
+        height: 700,
+        flexgrow: 1,
+        autosize: true
+    }
+    let config = { responsive: true };
+
+    return [tracesDrawable, layout, config];
 }

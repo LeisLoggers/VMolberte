@@ -7,14 +7,12 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
-    let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
-    let xMax = parseFloat(sortNumericArray(fullData.map(d => d[xMetric])).pop());
-    let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
-    xMax += xMax * 0.1;
-    yMax += yMax * 0.1;
-    console.log(axes);
+    let xValues = sortNumericArray(fullData.map(d => d[xMetric]));
+    let yValues = sortNumericArray(fullData.map(d => d[yMetric]));
+    let xMinMax = [xValues[0] - 0.1, xValues.pop() + 0.1]
+    let yMinMax = [+yValues[0] - 0.5, +yValues.pop() + 0.5]
 
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
@@ -61,5 +59,30 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-    return tracesDrawable;
+    let layout = {
+        title: {
+            text: graphTitle, font: { weight: 'bold', size: 24, family: "Arial" }
+        },
+        xaxis: {
+            title: { text: xMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
+            tickfont: { size: 18, family: "Arial" },
+            range: xMinMax
+
+        },
+        yaxis: {
+            title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
+            tickfont: { size: 18, family: "Arial" },
+            range: yMinMax,
+        },
+        legend: {
+            title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
+            font: { size: 18, family: "Arial" }
+        },
+        height: 700,
+        autosize: true
+    }
+
+    let config = { responsive: true };
+
+    return [tracesDrawable, layout, config]
 }
