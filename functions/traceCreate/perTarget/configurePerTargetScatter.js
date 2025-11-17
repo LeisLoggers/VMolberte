@@ -14,7 +14,7 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
     xMax += xMax * 0.1;
     yMax += yMax * 0.1;
-
+    console.log(axes);
 
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
@@ -24,7 +24,7 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
         let catTrace = {
             name: category,
-            type: graphType,
+            type: 'scatter',
             mode: 'markers',
             marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
             legendgroup: category,

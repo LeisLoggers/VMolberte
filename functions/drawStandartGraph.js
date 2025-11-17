@@ -64,7 +64,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             configureReportTraces(configGraph, true)
         } else if (graphType === 'quickReportEnrichment') {
             configureReportTraces(configGraph, false)
-        } else if (graphType === 'perTarget') {
+        } else if (graphType === 'quickReportPerTarget') {
             let genes = [... new Set(fullData.map(d => d['name']))];
             configGraph.set('genes', genes);
             let ptGraph = configurePerTar(configGraph);

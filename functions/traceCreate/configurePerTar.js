@@ -6,17 +6,15 @@ export function configurePerTar(configGraph) {
     let groupBy = configGraph.get('groupBy');
     configGraph.set('yMetric', 'normalized_coverage');
     configGraph.set('xMetric', 'name');
-    configGraph.set('axes', ['x1', 'y1']);
-    let perGene = configurePerTargetBox(configGraph);
+    configGraph.set('axes', ['x2', 'y2']);
+    let box = configurePerTargetBox(configGraph);
+    let perGene = box[0];
+    let range = box[1];
 
     configGraph.set('yMetric', 'normalized_coverage');
     configGraph.set('xMetric', '%gc');
-    configGraph.set('axes', ['x2', 'y2']);
+    configGraph.set('axes', ['x3', 'y3']);
     let ncGC = configurePerTargetScatter(configGraph);
-
-    configGraph.set('yMetric', 'normalized_coverage');
-    configGraph.set('axes', ['x3', 'y2']);
-    let ncHist = configurePerTargetHist(configGraph);
 
     let layout = {
         title: {
@@ -24,44 +22,39 @@ export function configurePerTar(configGraph) {
         },
         grid: {
             rows: 2,
-            columns: 2,
+            columns: 1,
             subplots: [
-                ['x1y1', 'x2y2', 'x3y2']
+                ['x2y2', 'x3y3']
             ]
 
         },
         // Распределение NC по генам (x1 y1)
-        xaxis1: {
+        xaxis2: {
             domain: [0, 1],
-            title: { text: 'Гены', font: { weight: 'bold', size: 22, family: "Arial" } },
-            tickfont: { size: 18, family: "Arial" },
+            title: { text: 'Гены', font: { weight: 'bold', size: 16, family: "Arial" } },
+            tickfont: { size: 16, family: "Arial" },
+            range: [range[0][0] - 1, range[0].at(-1) + 1],
+            tickmode: 'array',
+            tickvals: range[0],
+            ticktext: range[1]
         },
-        yaxis1: {
-            domain: [0.8, 1],
-            title: { text: 'Нормализованное покрытие', font: { weight: 'bold', size: 22, family: "Arial" } },
+        yaxis2: {
+            domain: [0.85, 1],
             tickfont: { size: 18, family: "Arial" },
         },
         // Распределение NC по %gc (x2 y2)
-        xaxis2: {
-            domain: [0, 0.9],
+        xaxis3: {
+            domain: [0, 1],
+            range:[0, 1],
             title: { text: 'ГЦ-состав', font: { weight: 'bold', size: 22, family: "Arial" } },
             tickfont: { size: 18, family: "Arial" },
         },
-        yaxis2: {
-            domain: [0, 0.8],
+        yaxis3: {
+            domain: [0, 0.6],
             title: { text: 'Нормализованное покрытие', font: { weight: 'bold', size: 22, family: "Arial" } },
             tickfont: { size: 18, family: "Arial" },
         },
-        // Распределение NC (x3 y2)
-        xaxis3: {
-            domain: [0.9, 1],
-            tickfont: { size: 18, family: "Arial" },
-        },
-        yaxis2: {
-            domain: [0, 0.8],
-            title: { text: 'Нормализованное покрытие', font: { weight: 'bold', size: 22, family: "Arial" } },
-            tickfont: { size: 18, family: "Arial" },
-        },
+        
         legend: {
             title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
             font: { size: 18, family: "Arial" }
@@ -71,8 +64,6 @@ export function configurePerTar(configGraph) {
     }
 
     let config = { responsive: true };
-    document.getElementById('graphTitle').innerText = 'Ваш график';
-
-
-    return [[...perGene, ...ncGC, ...ncHist], layout, config]
+    
+    return [[...perGene, ...ncGC], layout, config]
 }

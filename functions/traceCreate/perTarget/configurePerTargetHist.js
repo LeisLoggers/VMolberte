@@ -7,7 +7,7 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
     let yMetric = configGraph.get('yMetric');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
-
+    console.log(axes);
     const tracesDrawable = []
     let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
 
@@ -23,6 +23,7 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
             showlegend: false,
             // Оси
             y: filteredData.map(d => d[yMetric]),
+            xaxes: axes[0],
             yaxis: axes[1],
             
             hoverlabel: {

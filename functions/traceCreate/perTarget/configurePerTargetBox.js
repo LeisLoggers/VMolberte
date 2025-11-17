@@ -6,25 +6,24 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
     let colorBy = configGraph.get('colorBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let yMetric = configGraph.get('yMetric');
-    let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
-
+    console.log(axes);
 
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
-    
+    let xTicksOrder = sortNumericArray(Array.from(genes));
+    let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
 
     for (let category of xTicksOrder) {
-        const filteredData = fullData.filter(d => d[groupBy] === category);
-        let xPos = [];
-        xPos.length = filteredData.length;
-        xPos.fill(xTicksOrder.indexOf(category));
-        for (let gene of genes) {
-            let geneData = filteredData.filter(d => d['name'] === gene);
+        const filteredData = fullData.filter(d => d['name'] === category);
+        for (let group of uniqueCategories) {
+            let geneData = filteredData.filter(d => d[groupBy] === group);
+            let xPos = [];
+            xPos.length = geneData.length;
+            xPos.fill(xTicksOrder.indexOf(category));
             let catTrace = {
-                name: category,
-                type: graphType,
+                name: group,
+                type: 'box',
                 mode: 'markers',
                 outliercolor: 'red',
                 marker: { color: colorDiscreteMap[geneData.map(d => d[colorBy])[0]], size: 8 },
@@ -32,7 +31,7 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
                 points: 'all',
                 pointpos: -1.8,
                 jitter: 0.5,
-                legendgroup: category,
+                legendgroup: group,
                 showlegend: false,
                 // Оси
                 x: xPos,
@@ -68,5 +67,5 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-    return tracesDrawable;
+    return [tracesDrawable, [xIndex, xTicksOrder]];
 }
