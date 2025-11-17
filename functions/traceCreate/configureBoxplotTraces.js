@@ -13,6 +13,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let graphTitle = `Распределение ${yMetric} по ${groupBy}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
+    let axes = config.configGraph.get('axes') || ['x', 'y'];
     
 
     const tracesDrawable = []
@@ -36,7 +37,9 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             jitter: 0.5,
 
             x: xPos,
+            xaxis: axes[0],
             y: filteredData.map(d => d[yMetric]),
+            yaxis: axes[1],
             customdata: filteredData.map(
                 d => `<b>Файл:</b> ${d['filename']}<br>
 <b>Группа:</b> ${d[groupBy]}<br>

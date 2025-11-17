@@ -2,6 +2,7 @@
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
+import { configurePerTar } from "./traceCreate/configurePerTar.js";
 import { fileParse } from './fileParse.js';
 import { zipDict } from './zipDict.js';
 const Plotly = require('plotly.js-dist');
@@ -63,6 +64,11 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             configureReportTraces(configGraph, true)
         } else if (graphType === 'quickReportEnrichment') {
             configureReportTraces(configGraph, false)
+        } else if (graphType === 'perTarget') {
+            let genes = [... new Set(fullData.map(d => d['name']))];
+            configGraph.set('genes', genes);
+            let ptGraph = configurePerTar(configGraph);
+            Plotly.newPlot('plotlyPlot', ptGraph[0], ptGraph[1], ptGraph[2])
         }
     })();
 })

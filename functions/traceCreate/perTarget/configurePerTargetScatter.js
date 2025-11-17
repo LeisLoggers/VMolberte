@@ -1,19 +1,15 @@
-import { sortNumericArray } from '../sortNumericArray.js'
+import { sortNumericArray } from '../../sortNumericArray.js'
 
-
-
-
-export function configureScatterTraces(configGraph, verticals, horizontals) {
+export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     let uniqueCategories = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
     let colorBy = configGraph.get('colorBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
-    let graphTitle = `Зависимость ${yMetric} от ${xMetric}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
-    let axes = config.configGraph.get('axes') || ['x', 'y'];
+    let axes = configGraph.get('axes') || ['x', 'y'];
     let xMax = parseFloat(sortNumericArray(fullData.map(d => d[xMetric])).pop());
     let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
     xMax += xMax * 0.1;
@@ -31,6 +27,8 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             type: graphType,
             mode: 'markers',
             marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
+            legendgroup: category,
+            showlegend: true,
             // Оси
             x: filteredData.map(d => d[xMetric]),
             xaxis: axes[0],
@@ -39,10 +37,11 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             // Кастом
             customdata: filteredData.map(
                 d => `<b>Файл:</b> ${d['filename']}<br>
-<b>Pool:</b> ${d[groupBy]}<br>
+<b>Группа:</b> ${d[groupBy]}<br>
 <b>Code:</b> ${d['Code']}<br>
 <b>${yMetric}:</b> ${d[yMetric]}<br>
-<b>${xMetric}:</b> ${d[xMetric]}`
+<b>Ген:</b> ${d['name']}<br>
+<b>Зонды:</b> ${d['probe'] || 'Не найдены'}`
             ),
             hovertemplate: '%{customdata}<extra></extra>',
             hoverlabel: {
@@ -62,34 +61,5 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-
-
-    let layout = {
-        title: {
-            text: graphTitle, font: { weight: 'bold', size: 24, family: "Arial" }
-        },
-        xaxis: {
-            title: { text: xMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
-            tickfont: { size: 18, family: "Arial" },
-            range: [0, xMax]
-
-        },
-        yaxis: {
-            title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
-            tickfont: { size: 18, family: "Arial" },
-            range: [0, yMax],
-        },
-        legend: {
-            title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
-            font: { size: 18, family: "Arial" }
-        },
-        height: 700,
-        autosize: true
-    }
-
-    let config = { responsive: true };
-    document.getElementById('graphTitle').innerText = 'Ваш график';
-    
-
-    return [tracesDrawable, layout, config]
+    return tracesDrawable;
 }
