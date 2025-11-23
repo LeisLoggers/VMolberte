@@ -83,6 +83,7 @@ export function fillReportDiv(traces, filenames) {
 
     `
     let reportHeader = document.getElementById('report').querySelector('h2');
+    reportHeader.innerText = '';
     reportHeader.innerText = `Отчёт по ${filenames.join(', ')}`;
     let report = document.getElementById('report-content'); 
     report.innerHTML = reportDiv;

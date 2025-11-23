@@ -13,7 +13,7 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     let graphTitle = `Зависимость ${yMetric} от ${xMetric}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
-    let axes = config.configGraph.get('axes') || ['x', 'y'];
+    let axes = configGraph.get('axes') || ['x', 'y'];
     let xMax = parseFloat(sortNumericArray(fullData.map(d => d[xMetric])).pop());
     let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
     xMax += xMax * 0.1;

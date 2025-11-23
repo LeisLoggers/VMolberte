@@ -39,7 +39,7 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
                 // Оси
                 x: xPos,
                 xaxis: axes[0],
-                y: filteredData.map(d => d[yMetric]),
+                y: geneData.map(d => d[yMetric]),
                 yaxis: axes[1],
                 // Кастом
                 customdata: geneData.map(

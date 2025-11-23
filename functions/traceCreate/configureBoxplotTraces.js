@@ -13,7 +13,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let graphTitle = `Распределение ${yMetric} по ${groupBy}`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
-    let axes = config.configGraph.get('axes') || ['x', 'y'];
+    let axes = configGraph.get('axes') || ['x', 'y'];
     
 
     const tracesDrawable = []

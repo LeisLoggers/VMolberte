@@ -1,14 +1,14 @@
 const fs = require('fs');
 
-export function createReportForSave(header, traces, path) {
+export function createPerTarForSave(header, traces, path) {
     const objFromMap = {};
     for (const [key, value] of traces.entries()) {
         objFromMap[key] = value;
     };
     const fileHeader = header.toString();
     console.log(fileHeader);
-    let template = 
-    `<!DOCTYPE html>
+    let template =
+        `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -235,78 +235,36 @@ export function createReportForSave(header, traces, path) {
                 <div class="content-block" style="margin-bottom: 10px;">
                     <div class="block-header">
                         <i class="fa-solid fa-splotch"></i>
-                        <h3>Ширина покрытия 10Х</h3>
+                        <h3>Распределение нормализованного покрытия</h3>
                     </div>
-                    <div id="breadth_10x">
-                    </div>
-                    <hr style="margin-top: 20px;">
-                    <div id="pct_target_bases_10x">
+                    <div id="perGeneNCHist">
                     </div>
                 </div>
 
                 <div class="content-block" style="margin-bottom: 10px;">
                     <div class="block-header">
                         <i class="fa-solid fa-splotch"></i>
-                        <h3>Ширина покрытия 20Х</h3>
+                        <h3>Распределение нормализованного покрытия по генам</h3>
                     </div>
-                    <div id="breadth_20x">
-                    </div>
-                    <hr style="margin-top: 20px;">
-                    <div id="pct_target_bases_20x">
+                    <div id="perGeneNCBox">
                     </div>
                 </div>
 
                 <div class="content-block" style="margin-bottom: 10px;">
                     <div class="block-header">
                         <i class="fa-solid fa-splotch"></i>
-                        <h3>Среднее покрытие</h3>
+                        <h3>Распределение среднего покрытия по генам</h3>
                     </div>
-                    <div id="mean_target_coverage">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Количество прочтений на образец</h3>
-                    </div>
-                    <div id="total_reads">
+                    <div id="perGeneMCBox">
                     </div>
                 </div>
 
                 <div class="content-block" style="margin-bottom: 10px;">
                     <div class="block-header">
                         <i class="fa-solid fa-splotch"></i>
-                        <h3>Доля целевых оснований</h3>
+                        <h3>Зависимость нормализованного покрытия от ГЦ-состава</h3>
                     </div>
-                    <div id="pct_selected_bases">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Доля ПЦР-дубликатов</h3>
-                    </div>
-                    <div id="pct_exc_dupe">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>AT-дропаут</h3>
-                    </div>
-                    <div id="at_dropout">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>GC-дропаут</h3>
-                    </div>
-                    <div id="gc_dropout">
+                    <div id="perGeneNCscatter">
                     </div>
                 </div>
 			</div>

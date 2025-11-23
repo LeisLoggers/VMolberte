@@ -44,5 +44,6 @@ export function configurePerTarget(configGraph) {
     traces.set('perGeneNCBox', perGeneNCBox);
     traces.set('perGeneMCBox', perGeneMCBox);
     traces.set('perGeneNCscatter', perGeneNCscatter);
+    ipcRenderer.send('save-current-traces', traces);
     fillPerTargetReport(traces, filenames);
 }

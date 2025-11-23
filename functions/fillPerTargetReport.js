@@ -41,6 +41,7 @@ export function fillPerTargetReport(traces, filenames) {
 
     `
     let reportHeader = document.getElementById('report').querySelector('h2');
+    reportHeader.innerText = '';
     reportHeader.innerText = `Per-target Отчёт по ${filenames.join(', ')}`;
     let report = document.getElementById('report-content');
     report.innerHTML = reportDiv;

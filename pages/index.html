@@ -60,7 +60,7 @@
                 <div class="buttons-area" id="buttonsArea">
                     <button class="draw-button" id="clearFP">Очистить</button>
                     <div class="selector-group">
-                        <select id="mergeKey">
+                        <select id="mergeKey" disabled>
                             <option value="">Ключ для объединения файлов не выбран</option>
                         </select>
                         
@@ -87,11 +87,11 @@
                             </select>
                         </div>
                         <div class="selector-group" style="display: inline;">
-                            <input type="checkbox" id="boxpoints" value="all" checked />
+                            <input type="checkbox" id="boxpoints" value="all" checked disabled />
                             <label for="boxpoints">Показывать все точки (боксплот)</label>
                         </div>
                         <div class="selector-group" style="display: inline;">
-                            <input type="checkbox" id="outliers" value="all" checked />
+                            <input type="checkbox" id="outliers" value="all" checked disabled/>
                             <label for="boxpoints">Показывать выбросы (боксплот)</label>
                         </div>
 
