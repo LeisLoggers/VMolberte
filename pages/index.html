@@ -414,6 +414,8 @@
                     document.getElementById('resetPlotSizes').dispatchEvent(new Event('click'));
                 }
                 document.getElementById(pageId).classList.add('active');
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             });
         });
 
