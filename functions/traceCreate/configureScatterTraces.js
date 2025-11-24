@@ -83,12 +83,39 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
             font: { size: 18, family: "Arial" }
         },
+        legend2: {
+            title: {
+                text: 'Цвет',
+                font: { weight: 'bold', size: 18, family: "Arial" }
+            },
+            font: { size: 18, family: 'Arial' },
+            orientation: 'h',
+            x: 0.1,
+            y: 1.05,
+            xanchor: 'center',
+            visible: true,
+        },
         height: 700,
         autosize: true
     }
-
+    if (groupBy !== colorBy) {
+        Object.keys(colorDiscreteMap).forEach(key => {
+            let colorTrace = {
+                name: key,
+                type: 'scatter',
+                mode: 'markers',
+                marker: { color: colorDiscreteMap[key], size: 16 },
+                visible: 'legendonly',
+                legend: 'legend2',
+                x: [0],
+                y: [0]
+            };
+            tracesDrawable.push(colorTrace);
+        });
+    } else {
+        delete layout.legend2;
+    }
     let config = { responsive: true };
-    document.getElementById('graphTitle').innerText = 'Ваш график';
     
 
     return [tracesDrawable, layout, config]

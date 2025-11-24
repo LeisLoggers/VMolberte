@@ -56,10 +56,13 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         configGraph.set('filenames', filenames);
         if (graphType === 'box' || graphType === 'violin') {
             let boxplotTraces = configureBoxplotTraces(configGraph);
+            document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', boxplotTraces[0], boxplotTraces[1], boxplotTraces[2])
         } else if (graphType === 'scatter') {
             let scatterTraces = configureScatterTraces(configGraph);
+            document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', scatterTraces[0], scatterTraces[1], scatterTraces[2])
+        // Различные отчёты
         } else if (graphType === 'quickReport') {
             configureReportTraces(configGraph, true)
         } else if (graphType === 'quickReportEnrichment') {

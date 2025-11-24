@@ -35,7 +35,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             points: 'all',
             pointpos: -1.8,
             jitter: 0.5,
-
+            legend: 'legend',
             x: xPos,
             xaxis: axes[0],
             y: filteredData.map(d => d[yMetric]),
@@ -56,6 +56,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
         }
         tracesDrawable.push(catTrace);
     };
+    
 
     if (verticals) {
         verticals.forEach(vertical => { tracesDrawable.push(vertical) })
@@ -64,7 +65,6 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-
     let layout = {
         title: {
             text: graphTitle, font: { weight: 'bold', size: 24, family: "Arial" }
@@ -88,14 +88,47 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             },
             font: { size: 18, family: "Arial" }
         },
+        legend2: {
+            title: {
+                text: 'Цвет',
+                font: { weight: 'bold', size: 18, family: "Arial" }
+            },
+            font: { size: 18, family: 'Arial' },
+            orientation: 'h',
+            x: 0.1,
+            y: 1.05,
+            xanchor: 'center',
+            visible: true,
+        },
         height: 700,
         flexgrow: 1,
         autosize: true
     }
-
+    if (groupBy !== colorBy) {
+        Object.keys(colorDiscreteMap).forEach(key => {
+            console.log(key);
+            let colorTrace = {
+                name: key,
+                type: 'scatter',
+                mode: 'markers',
+                marker: { color: colorDiscreteMap[key], size: 16 },
+                visible: 'legendonly',
+                legend: 'legend2',
+                x: [0],
+                y: [0]
+            };
+            tracesDrawable.push(colorTrace);
+        });
+    } else {
+        delete layout.legend2;
+    }
     let config = { responsive: true };
-    document.getElementById('graphTitle').innerText = 'Ваш график';
     
 
     return [tracesDrawable, layout, config]
 }
+
+/*
+                FIXME: СДЕЛАТЬ КОРРЕКТНУЮ ОЧИСТКУ ФАЙЛОВ И ВСЕХ ПРИЧИТАЮЩИХСЯ СЕЛЕКТОРОВ ПРИ
+                НАЖАТИИ НА КНОПКУ ОЧИСТИТЬ!
+*/
