@@ -63,7 +63,7 @@
                         <select id="mergeKey" disabled>
                             <option value="">Ключ для объединения файлов не выбран</option>
                         </select>
-                        
+
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                             <label for="boxpoints">Показывать все точки (боксплот)</label>
                         </div>
                         <div class="selector-group" style="display: inline;">
-                            <input type="checkbox" id="outliers" value="all" checked disabled/>
+                            <input type="checkbox" id="outliers" value="all" checked disabled />
                             <label for="boxpoints">Показывать выбросы (боксплот)</label>
                         </div>
 
@@ -194,7 +194,7 @@
                             <input id="fromWhere" placeholder="Откуда" style="grid-column-start:2; grid-row-start:2;">
                             <input id="toWhere" placeholder="Докуда" style="grid-column-start:3; grid-row-start:2;">
                             <input id="whereLine" placeholder="Где" style="grid-column-start:4; grid-row-start:2;">
-                            
+
                             <select id="verticalColorSelect" style="grid-column-start:2; grid-row-start:3;">
                                 <option value="">Цвет линии</option>
                             </select>
@@ -288,12 +288,15 @@
                         <h3>4. Добавление деталей</h3>
                     </div>
                     <div class="instruction-content">
-                        <p>После того как Вы отрисовали график по какой-либо метрике, Вам захочется приукрасить график дополнительными линиями.
-                            Для этого есть специальная вкладка "Дополнительные элементы", при нажатии на которую Вам раскроется небольшой ассортимент дополнительных опций.</p>
-                            <p><b>N.B.</b> Добавление линии p-value запускает длительный расчёт p-value по Манну-Уитни, основываясь на данных по оси Y:
-                                <pre><code>
-                                    <span class="pythonWord">Python</span>
-                                    <span class="pythonFunc">from</span> scipy.stats <span class="pythonFunc">import</span> mannwhitneyu
+                        <p>
+                            После того как Вы отрисовали график по какой-либо метрике, Вам захочется приукрасить график дополнительными линиями.
+                            Для этого есть специальная вкладка "Дополнительные элементы", при нажатии на которую Вам раскроется небольшой ассортимент дополнительных опций.
+                        </p>
+                        <p>
+                            <b>N.B.</b> Добавление линии p-value запускает длительный расчёт p-value по Манну-Уитни, основываясь на данных по оси Y:
+                            <pre><code>
+                            <span class="pythonWord">Python</span>
+                            <span class="pythonFunc">from</span> scipy.stats <span class="pythonFunc">import</span> mannwhitneyu
                                     p_value = mannwhitneyu(data_1, data_2, method='auto', nan_policy='omit')
                                 </code></pre>
                             В результате работы функции на графике между заданными боксплотами через некоторое время появится линия с расчитанным p-value.
@@ -387,9 +390,11 @@
         </div>
     </div>
 
-    
+
     <script src="../functions/justLoadRenderer.js"></script>
+    <script type="module" src="../functions/resetAllParams.js"></script>
     <script type="module" src="../fileLoadAndPrimProc.js"></script>
+    <script type="module" src="../functions/blink.js"></script>
     <script type="module" src="../functions/checkRequired.js"></script>
     <script type="module" src="../functions/drawStandartGraph.js"></script>
     <script type="module" src="../functions/detailLines.js"></script>
@@ -468,7 +473,7 @@
             optVert.innerText = hex;
             optVert.value = hex;
             optVert.style.backgroundColor = hex;
-            
+
             const label = document.createElement('span');
             label.className = 'color-label';
             label.textContent = hex;

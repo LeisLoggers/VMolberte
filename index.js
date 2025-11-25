@@ -1,5 +1,6 @@
-const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron')
-const path = require('path')
+const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
+
+
 let filesMetaData;
 let currentTraces;
 
@@ -70,8 +71,8 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
 
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {
-    filesMetaData.length = 0;
-    console.log('Filepaths cleared');
+    event.sender.send('resetAllParams');
+    filesMetaData.clear();
 })
 
 // Проверка заполнения нужных полей

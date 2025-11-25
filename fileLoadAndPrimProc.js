@@ -1,22 +1,8 @@
 const fs  = require('fs');
 const nodePath = require('path');
 import {configureSelectBoxes} from './functions/configureSelectBoxes.js';
+import { blink } from './functions/blink.js';
 
-function toggleHovered(element, duration = 200) {
-    return new Promise((resolve) => {
-        element.classList.add('hovered');
-        setTimeout(() => {
-            element.classList.remove('hovered');
-            resolve();
-        }, duration);
-    });
-}
-
-async function blink(elems) {
-    for (const elem of elems) {
-        await toggleHovered(elem);
-    }
-}
 
 
 
