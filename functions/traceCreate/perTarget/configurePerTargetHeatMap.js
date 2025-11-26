@@ -1,4 +1,4 @@
-import { sortNumericArray } from '../../sortNumericArray.js'
+import { sortNumericArray } from '../../helpers/sortNumericArray.js'
 export function configurePerTargetBox(configGraph, verticals, horizontals) {
     let uniqueCategories = Array.from(configGraph.get('categories'));
     let graphTitle = configGraph.get('graphTitle');

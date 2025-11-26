@@ -5,7 +5,7 @@ import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js"
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
 import { configurePerTarget } from "./traceCreate/configurePerTarget.js";
 import { fileParse } from './fileParse.js';
-import { zipDict } from './zipDict.js';
+import { zipDict } from './helpers/zipDict.js';
 const Plotly = require('plotly.js-dist');
 
 

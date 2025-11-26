@@ -3,7 +3,7 @@ import { configureScatterTraces } from "./configureScatterTraces.js";
 import { createHorizontalTrace } from './createHorizontalTrace.js';
 import { createVerticalTrace } from './createVerticalTrace.js';
 import { fillReportDiv } from "../fillReportDiv.js"
-import { sortNumericArray } from "../sortNumericArray.js"
+import { sortNumericArray } from "../helpers/sortNumericArray.js"
 
 export function configureReportTraces(configGraph, enrichmentFlag) {
     let uniqueCategories = configGraph.get('categories');

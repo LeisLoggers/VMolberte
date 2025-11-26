@@ -1,4 +1,4 @@
-import { sortNumericArray } from '../../sortNumericArray.js'
+import { sortNumericArray } from '../../helpers/sortNumericArray.js'
 
 export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     let uniqueCategories = configGraph.get('categories');
