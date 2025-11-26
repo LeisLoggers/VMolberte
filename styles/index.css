@@ -347,7 +347,7 @@ body {
 
 .progress-bar {
     fill: none;
-    stroke: url(#gradient);
+    stroke: #004074b1;
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 339.292;

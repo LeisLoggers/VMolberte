@@ -72,12 +72,17 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {
     event.sender.send('resetAllParams');
+    event.sender.send('reset-progress');
     filesMetaData.clear();
 })
 
 // Проверка заполнения нужных полей
 ipcMain.on('check-required', (event) => {
     event.sender.send('check-required-renderer');
+})
+
+ipcMain.on('run-progress-bar', (event) => {
+    event.sender.send('run-progress-bar-main')
 })
 
 // Получение метаданных по файлам и сохранение их в переменную приложения
@@ -95,7 +100,15 @@ ipcMain.on('send-meta-data', (event, metaData) => {
 
 // Отправка метаданных на отрисовку
 ipcMain.on('draw-signal', (event) => {
+    event.sender.send('run-progress-bar-main')
     event.sender.send('drawIt', filesMetaData)
+    /* 
+        FIXME: Прогресс работает в main, как и вычисления.
+        из прогресса нельзя обращаться в DOM, вычислениям нужен import,
+        import'у нужен module, а если делать через Worker, то Worker'у 
+        нужен parentPort, но parentPort не любит module.
+        СУКАААААААААААААААААААААААААААААААААААААААААААААААААААААААААААА
+    */
 })
 
 

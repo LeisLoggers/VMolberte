@@ -12,6 +12,7 @@ const Plotly = require('plotly.js-dist');
 
 
 ipcRenderer.on('drawIt', function (event, filesMetaData) {
+    console.log('sended')
     const available_colors = [
         '#004074', '#a0a0a0', '#cd5c5c', '#ff1493', '#dfdf0f', '#ffa500',
         '#ddaddd', '#ff00ff', '#9370DB', '#4b00b2', '#adff2f', '#90ee90',
