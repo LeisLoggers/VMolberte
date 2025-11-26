@@ -56,11 +56,11 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
         if (currentHeaders.length > 2) {
             lfh = lfh.union(new Set(currentHeaders));
             decoration = configureSelectBoxes(lfh, currentHeaders);
-            blink(decoration);
+            blink(decoration, 'configure');
             event.sender.send('send-meta-data', fileMetaData)
         } else {
             decoration = configureSelectBoxes(lfh, currentHeaders);
-            blink(decoration);
+            blink(decoration, 'configure');
             event.sender.send('send-meta-data', fileMetaData)
         };
 

@@ -1,5 +1,6 @@
 import { blink } from './blink.js';
 ipcRenderer.on('resetAllParams', function resetAllParams() {
+    let gt = document.getElementById('selectGraphType');
     let mk = document.getElementById('mergeKey');
     let grot = document.getElementById('selectGroupType');
     let groc = document.getElementById('selectGroupColor');
@@ -15,7 +16,8 @@ ipcRenderer.on('resetAllParams', function resetAllParams() {
             };
         };
     });
-    blink(selectors);
+    selectors.splice(1, 0, gt);
+    blink(selectors, 'cancel');
 });
 
 /* 

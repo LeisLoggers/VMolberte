@@ -364,8 +364,11 @@ body {
     font-weight: bold;
     color: var(--primary-color);
 }
-.hovered {
-    box-shadow: 2px 2px 5px 5px rgba(0, 64, 116, 0.5)
+.configured {
+    box-shadow: 2px 2px 5px 5px rgba(0, 64, 116, 0.5);
+}
+.canceled {
+    box-shadow: 2px 2px 5px 5px rgba(238, 73, 56, 0.50);
 }
 
 /* Instruction Page Styles */
