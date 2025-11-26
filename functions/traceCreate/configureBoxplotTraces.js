@@ -127,8 +127,3 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
 
     return [tracesDrawable, layout, config]
 }
-
-/*
-                FIXME: СДЕЛАТЬ КОРРЕКТНУЮ ОЧИСТКУ ФАЙЛОВ И ВСЕХ ПРИЧИТАЮЩИХСЯ СЕЛЕКТОРОВ ПРИ
-                НАЖАТИИ НА КНОПКУ ОЧИСТИТЬ!
-*/

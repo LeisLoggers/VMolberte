@@ -19,8 +19,3 @@ ipcRenderer.on('resetAllParams', function resetAllParams() {
     selectors.splice(1, 0, gt);
     blink(selectors, 'cancel');
 });
-
-/* 
-    FILLME: Доделать функционал для полноценного рестарта и интегрировать
-    в index.js
-*/
