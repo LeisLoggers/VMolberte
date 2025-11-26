@@ -1,4 +1,5 @@
 
+import { checkLengths } from "./checks/checkLengths.js";
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
@@ -43,6 +44,9 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         // Собираем конфиги
         let uniqueCategories = [... new Set(fullData.map(d => d[groupBy]))];
         let uniqueColorGroups = [... new Set(fullData.map(d => d[colorBy]))];
+        // Проверка соответствия длин списков
+        checkLengths(uniqueCategories, uniqueColorGroups, available_colors);
+        //
         let colorDiscreteMap = zipDict(uniqueColorGroups, available_colors);
         let configGraph = new Map()
         configGraph.set('categories', uniqueCategories);
