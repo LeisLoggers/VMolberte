@@ -98,6 +98,10 @@ ipcMain.on('send-meta-data', (event, metaData) => {
     event.sender.send('update-meta-length', filesMetaData.size);
 })
 
+ipcMain.on('need-sorting', (event) => {
+    event.sender.send('presort-data', filesMetaData);
+})
+
 // Отправка метаданных на отрисовку
 ipcMain.on('draw-signal', (event) => {
     event.sender.send('run-progress-bar-main')

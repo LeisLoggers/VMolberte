@@ -165,6 +165,19 @@
             </div>
 
             <!-- Content Block 4 -->
+            <div class="content-block" style="grid-column: span 3; margin-bottom: 20px;" id="sortBlock">
+                <div class="block-header">
+                    <i class="fa-solid fa-wrench"></i>
+                    <h3>Сортировка групп</h3>
+                </div>
+                <div class="selectors">
+                    <div class="selector-group">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Block 4 -->
             <div class="content-block" style="grid-column: span 3; margin-bottom: 20px;" id="detailBlock">
                 <div class="block-header">
                     <i class="fa-solid fa-wrench"></i>
@@ -394,6 +407,7 @@
     <script src="../functions/justLoadRenderer.js"></script>
     <script type="module" src="../functions/resetAllParams.js"></script>
     <script type="module" src="../functions/progressbar/progressbar.js"></script>
+    <script type="module" src="../functions/helpers/presorting.js"></script>
     <script type="module" src="../fileLoadAndPrimProc.js"></script>
     <script type="module" src="../functions/blink.js"></script>
     <script type="module" src="../functions/checks/checkRequired.js"></script>
@@ -554,33 +568,9 @@
         })
         groupType.addEventListener('change', () => {
             document.getElementById('selectGroupColor').value = groupType.value;
+            console.log('need sorting')
+            ipcRenderer.send('need-sorting');
         })
-        /*
-        drawButton.addEventListener('click', function () {
-
-            // Reset progress
-            progressBar.style.strokeDashoffset = circumference;
-            progressText.textContent = '0%';
-
-            // Simulate progress
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 2;
-                if (progress > 100) {
-                    clearInterval(interval);
-                    progressText.textContent = 'Done!';
-                    setTimeout(() => {
-                        progressText.textContent = '0%';
-                        progressBar.style.strokeDashoffset = circumference;
-                    }, 2000);
-                    return;
-                }
-
-                const offset = circumference - (progress / 100) * circumference;
-                progressBar.style.strokeDashoffset = offset;
-                progressText.textContent = `${progress}%`;
-            }, 50);
-        });*/
     </script>
 </body>
 </html>
