@@ -1,5 +1,21 @@
 const Sortable = require('sortablejs');
 
+let removeArea = document.querySelector('.removeArea');
+
+Sortable.create(
+    removeArea,
+    {
+        group: 'sorters',
+        onAdd: function (event) {
+            removeArea.removeChild(event.item);
+        },    
+    })
+removeArea.addEventListener('dragenter', (event) => {
+    removeArea.classList.add('hoveredRemove')
+})
+removeArea.addEventListener('dragleave', (event) => {
+    removeArea.classList.remove('hoveredRemove')
+})
 export function createSortedDragableDivs(groupArray, colorArray) {
     const groupSort = document.getElementById('groupSort');
     const colorSort = document.getElementById('colorSort');
@@ -19,6 +35,7 @@ export function createSortedDragableDivs(groupArray, colorArray) {
             ghostClass: 'sortableContent-ghost',
             chosenClass: 'sortableContent-chosen',
             dragClass: 'sortableContent-drag',
+            group: 'sorters'
         }
     );
     if (groupArray.join(',') !== colorArray.join(',')) {
@@ -35,6 +52,7 @@ export function createSortedDragableDivs(groupArray, colorArray) {
                 ghostClass: 'sortableContent-ghost',
                 chosenClass: 'sortableContent-chosen',
                 dragClass: 'sortableContent-drag',
+                group: 'sorters'
             }
         );
     } else {

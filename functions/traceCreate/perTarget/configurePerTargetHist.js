@@ -8,7 +8,7 @@ export function configurePerTargetHist(configGraph, verticals, horizontals) {
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
+    let xTicksOrder = uniqueCategories;
 
 
     for (let category of xTicksOrder) {

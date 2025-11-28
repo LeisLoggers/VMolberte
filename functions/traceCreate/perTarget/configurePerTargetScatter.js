@@ -15,7 +15,7 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
     let yMinMax = [+yValues[0] - 0.5, +yValues.pop() + 0.5]
 
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
+    let xTicksOrder = uniqueCategories;
 
 
     for (let category of xTicksOrder) {
@@ -78,6 +78,7 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
             title: { text: groupBy, font: { weight: 'bold', size: 18, family: "Arial" } },
             font: { size: 18, family: "Arial" }
         },
+        hovermode: 'closest',
         height: 700,
         autosize: true
     }

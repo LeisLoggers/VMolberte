@@ -11,7 +11,7 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
     let axes = configGraph.get('axes') || ['x', 'y'];
 
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(genes));
+    let xTicksOrder = genes;
     let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
     let passedGroups = new Set();
     for (let category of xTicksOrder) {
