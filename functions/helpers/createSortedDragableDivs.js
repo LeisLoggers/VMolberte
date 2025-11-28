@@ -8,6 +8,7 @@ Sortable.create(
         group: 'sorters',
         onAdd: function (event) {
             removeArea.removeChild(event.item);
+            removeArea.classList.remove('hoveredRemove');
         },    
     })
 removeArea.addEventListener('dragenter', (event) => {
@@ -35,7 +36,12 @@ export function createSortedDragableDivs(groupArray, colorArray) {
             ghostClass: 'sortableContent-ghost',
             chosenClass: 'sortableContent-chosen',
             dragClass: 'sortableContent-drag',
-            group: 'sorters'
+            group: 'sorters',
+            onAdd: function (event) {
+                if (event.from.id == 'colorSort') {
+                    colorSort.appendChild(event.item);
+                }
+            }
         }
     );
     if (groupArray.join(',') !== colorArray.join(',')) {
@@ -52,7 +58,12 @@ export function createSortedDragableDivs(groupArray, colorArray) {
                 ghostClass: 'sortableContent-ghost',
                 chosenClass: 'sortableContent-chosen',
                 dragClass: 'sortableContent-drag',
-                group: 'sorters'
+                group: 'sorters',
+                onAdd: function (event) {
+                    if (event.from.id == 'groupSort') {
+                        groupSort.appendChild(event.item);
+                    }
+                }
             }
         );
     } else {
