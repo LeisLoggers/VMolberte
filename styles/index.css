@@ -244,7 +244,7 @@ body {
     display: grid;
     gap: 12px;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    margin: 5px;
+    margin: 10px;
 }
 
 .sortableContent {
@@ -299,8 +299,7 @@ body {
         color: red;
     }
     .removeArea i {
-        position: fixed;
-        display: flex;
+        position: absolute;
     }
 
 .styler {
