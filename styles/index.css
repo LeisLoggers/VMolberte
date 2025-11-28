@@ -240,9 +240,44 @@ body {
     gap: 12px;
 }
 
+.sortableContainer {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.sortableContent {
+    padding: 8px 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    background-color: white;
+    transition: var(--transition);
+    flex-grow: 1;
+    text-align: center;
+    cursor: grab;
+}
+
+    .sortableContent:hover {
+        box-shadow: 0 2px 5px rgba(102, 126, 234, 0.2);
+        transform: translateX(2px);
+    }
+
+.sortableContent-ghost {
+    background-color: #0040747f;
+}
+
+.sortableContent-chosen {
+    background-color: #0040747f;
+    color: white;
+}
+
+.sortableContent-drag {
+    background-color: white;
+    box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+}
+
 .styler {
     display: grid;
-    grid-template-rows: minmax(auto-fit(200px, 1fr));
     grid-template-columns: repeat(4, minmax(100px, 1fr));
     gap: 5px;
 }

@@ -167,11 +167,17 @@
             <!-- Content Block 4 -->
             <div class="content-block" style="grid-column: span 3; margin-bottom: 20px;" id="sortBlock">
                 <div class="block-header">
-                    <i class="fa-solid fa-wrench"></i>
-                    <h3>Сортировка групп</h3>
+                    <i class="fa-solid fa-shuffle"></i>
+                    <h3>Сортировка</h3>
                 </div>
                 <div class="selectors">
-                    <div class="selector-group">
+                    <h4>Сортировка групп</h4>
+                    <div class="sortableContainer" id="groupSort">
+
+                    </div>
+                    <hr>
+                    <h4>Сортировка цветов</h4>
+                    <div class="sortableContainer" id="colorSort">
 
                     </div>
                 </div>
@@ -273,6 +279,7 @@
                             <li>Блок "Тип графиков и детали" содержит меню выбора графиков</li>
                             <li>Раздел "Раскрашиваем и группируем" содержит новую функцию - можно сгруппировать по одному столбцу, а раскрасить по другому</li>
                             <li>Блок "Метрики для визуализации" предназначен для указания имён колонок с данными для отображения</li>
+                            <li>Блок "Сортировка" позволяет Вам указать необходимый порядок групп в тех случаях, когда имена групп не являются числовыми значениями (работает путём перетаскивания)</li>
                             <li>"Дополнительные элементы" (линии, пороговые линии и др.) могут быть применены к графикам при отображении единичных метрик, но не в режимах отчёта.</li>
                         </ul>
                         <p>Обратите внимание, что, в отличие от ICDMS, в Мольберте отсутствует выбор цветов и "стиля цвета". Теперь для отображения используются 72 уникальных цвета - посмотрите на них на вкладке "цвета".</p>
@@ -470,6 +477,7 @@
         let verticalColorSelect = document.getElementById('verticalColorSelect');
         const verticalSelect = document.getElementById('verticalSelect');
         const groupType = document.getElementById('selectGroupType');
+        const groupColor = document.getElementById('selectGroupColor');
         // Function to calculate luminance to determine text color
         function getLuminance(hexColor) {
             const rgb = parseInt(hexColor.slice(1), 16);
@@ -567,8 +575,10 @@
             }
         })
         groupType.addEventListener('change', () => {
-            document.getElementById('selectGroupColor').value = groupType.value;
-            console.log('need sorting')
+            groupColor.value = groupType.value;
+            ipcRenderer.send('need-sorting');
+        });
+        groupColor.addEventListener('change', () => {
             ipcRenderer.send('need-sorting');
         })
     </script>

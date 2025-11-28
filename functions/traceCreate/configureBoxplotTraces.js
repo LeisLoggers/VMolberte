@@ -17,7 +17,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     
 
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
+    let xTicksOrder = uniqueCategories;
     let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
 
     for (let category of xTicksOrder) {

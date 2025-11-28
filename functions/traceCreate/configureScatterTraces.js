@@ -21,7 +21,7 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
 
 
     const tracesDrawable = []
-    let xTicksOrder = sortNumericArray(Array.from(uniqueCategories));
+    let xTicksOrder = uniqueCategories;
 
 
     for (let category of xTicksOrder) {

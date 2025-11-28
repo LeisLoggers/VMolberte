@@ -34,7 +34,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
     let xMetric = document.getElementById('metric_2').value || groupBy;
     let graphType = document.getElementById('selectGraphType').value;
     let filenames = [];
-    
+    let uniqueCategoriesSorted = [...document.getElementById('groupSort').querySelectorAll('.sortableContent')].map(el => el.innerText);
+    let uniqueColorGroupsSorted = (
+        [...document.getElementById('colorSort').querySelectorAll('.sortableContent')].map(el => el.innerText).length === 0 ?
+            uniqueCategoriesSorted :
+            [...document.getElementById('colorSort').querySelectorAll('.sortableContent')].map(el => el.innerText)
+    );
     // Парсим файл
     (async () => {
         for (const [key, value] of filesMetaData.entries()) {
@@ -43,14 +48,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
 
         const fullData = await fileParse(filesMetaData);
         // Собираем конфиги
-        let uniqueCategories = [... new Set(fullData.map(d => d[groupBy]))];
-        let uniqueColorGroups = [... new Set(fullData.map(d => d[colorBy]))];
         // Проверка соответствия длин списков
-        checkLengths(uniqueCategories, uniqueColorGroups, available_colors);
+        checkLengths(uniqueCategoriesSorted, uniqueColorGroupsSorted, available_colors);
         //
-        let colorDiscreteMap = zipDict(uniqueColorGroups, available_colors);
+        let colorDiscreteMap = zipDict(uniqueColorGroupsSorted, available_colors);
         let configGraph = new Map()
-        configGraph.set('categories', uniqueCategories);
+        configGraph.set('categories', uniqueCategoriesSorted);
         configGraph.set('groupBy', groupBy);
         configGraph.set('colorBy', colorBy);
         configGraph.set('colorDiscreteMap', colorDiscreteMap);
