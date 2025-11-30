@@ -1,5 +1,17 @@
 const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
+const { updateElectronApp } = require('update-electron-app');
+const { UpdateSourceType } = require('./node_modules/update-electron-app/dist/index');
+updateElectronApp({
+    updateSource: {
+        type: UpdateSourceType.ElectronPublicUpdateService,
+        repo: "LeisLoggers/VMolberte"
+    },
+    updateInterval: '5 minutes'
 
+})
+
+if (require('electron-squirrel-startup')) app.quit();
+app.setAppUserModelId("com.squirrel.VMolberte.VMolberte");
 
 let filesMetaData;
 let currentTraces;

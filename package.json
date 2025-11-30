@@ -2,10 +2,10 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/vmolberte.ico",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "description": "App for drawing",
-  "license": "MIT",
-  "author": "VK",
+  "license": "None",
+  "author": "VladimirKirillov",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "fs": "^0.0.1-security",
     "plotly": "^1.0.6",
     "plotly.js-dist": "^3.1.2",
-    "sortablejs": "^1.15.6"
+    "sortablejs": "^1.15.6",
+    "update-electron-app": "^3.1.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.10.2",
