@@ -14,15 +14,12 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "build": {
-    "icon": "./assets/vmolberte.ico"
-  },
+
   "dependencies": {
     "d3": "^7.9.0",
     "electron-forge": "^5.2.4",
     "electron-squirrel-startup": "^1.0.1",
     "fs": "^0.0.1-security",
-    "plotly": "^1.0.6",
     "plotly.js-dist": "^3.1.2",
     "sortablejs": "^1.15.6",
     "update-electron-app": "^3.1.1"
