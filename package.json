@@ -2,6 +2,8 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/vmolberte.ico",
+  "setup_icon": "./assets/installation.ico",
+  "loadingGif": "./assets/installation.gif",
   "version": "0.8.0",
   "description": "App for drawing",
   "license": "None",
