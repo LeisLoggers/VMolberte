@@ -16,6 +16,16 @@ ipcRenderer.on('resetAllParams', function resetAllParams() {
             };
         };
     });
+    // Очистка меню сортировки
+    const groupSort = document.getElementById('groupSort');
+    const colorSort = document.getElementById('colorSort');
+    groupSort.innerHTML = '';
+    colorSort.innerHTML = '';
+    // Очистка графиков
+    document.getElementById('reportMenu').style.visibility = 'hidden';
+    document.getElementById('plotlyPlot').innerHTML = '';
+    document.getElementById('graphTitle').innerText = 'Тут мог бы быть Ваш график';
+
     selectors.splice(1, 0, gt);
     blink(selectors, 'cancel');
 });
