@@ -1,5 +1,5 @@
-import { sortNumericArray } from '../helpers/sortNumericArray.js'
-
+import { sortNumericArray } from '../helpers/sortNumericArray.js';
+import { trendline } from '../helpers/trendline.js';
 
 
 
@@ -26,15 +26,18 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
 
     for (let category of xTicksOrder) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
+        let xData = filteredData.map(d => d[xMetric]);
+        let yData = filteredData.map(d => d[yMetric]);
         let catTrace = {
             name: category,
+            legendgroup: category,
             type: graphType,
             mode: 'markers',
             marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]], size: 8 },
             // Оси
-            x: filteredData.map(d => d[xMetric]),
+            x: xData,
             xaxis: axes[0],
-            y: filteredData.map(d => d[yMetric]),
+            y: yData,
             yaxis: axes[1],
             // Кастом
             customdata: filteredData.map(
@@ -53,6 +56,20 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             }
         }
         tracesDrawable.push(catTrace);
+        let trendTrace = {
+            name: category,
+            legendgroup: category,
+            type: graphType,
+            mode: 'lines',
+            marker: { color: colorDiscreteMap[filteredData.map(d => d[colorBy])[0]]},
+            // Оси
+            x: xData,
+            xaxis: axes[0],
+            y: trendline(xData, yData),
+            yaxis: axes[1],
+            showlegend: false
+        }
+        tracesDrawable.push(trendTrace);
     };
 
     if (verticals) {
@@ -62,7 +79,6 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-
 
     let layout = {
         title: {
