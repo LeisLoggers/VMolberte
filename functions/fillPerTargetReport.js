@@ -46,9 +46,13 @@ export function fillPerTargetReport(traces, filenames) {
     let report = document.getElementById('report-content');
     report.innerHTML = reportDiv;
     document.getElementById('reportMenu').style.visibility = 'visible';
-    document.getElementById('reportMenu').classList.toggle('toggling');
     for (const [key, value] of traces.entries()) {
         Plotly.newPlot(key, value[0], value[1], value[2]);
     };
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active')
+    });
+    document.getElementById('report').classList.add('active');
+    document.getElementById('resetPlotSizes').dispatchEvent(new Event('click'));
     console.log('Report filled')
 }

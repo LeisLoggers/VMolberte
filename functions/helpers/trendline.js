@@ -1,6 +1,4 @@
 export function trendline(xArray, yArray) {
-    console.log(xArray);
-    console.log(yArray);
     let sumX = 0;
     let sumY = 0;
     let sumXY = 0;
@@ -13,7 +11,6 @@ export function trendline(xArray, yArray) {
     for (let i = 0; i < xAl; i++) {
         let x = parseFloat(xArray[i]);
         let y = parseFloat(yArray[i]);
-        console.log(x, y)
         sumX += x;
         sumY += y;
         sumXY += x * y;

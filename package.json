@@ -2,7 +2,7 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/logo256.ico",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "App for drawing",
   "license": "None",
   "author": "VladimirKirillov",
@@ -14,18 +14,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "build": {
-    "blockMap": true,
-    "blockMapSize": 83886080,
-    "setup_icon": "./assets/installation.ico",
-    "loadingGif": "./assets/installation.gif"
-  },
-  "make": {
-    "blockMap": true,
-    "blockMapSize": 83886080,
-    "setup_icon": "./assets/installation.ico",
-    "loadingGif": "./assets/installation.gif"
-  },
+
   "dependencies": {
     "d3": "^7.9.0",
     "electron-squirrel-startup": "^1.0.1",
