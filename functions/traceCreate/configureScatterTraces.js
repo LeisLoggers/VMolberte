@@ -89,8 +89,8 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
                 font: { weight: 'bold', size: 18, family: "Arial" }
             },
             font: { size: 18, family: 'Arial' },
-            orientation: 'h',
-            x: 0.1,
+            orientation: 'v',
+            x: -0.15,
             y: 1.05,
             xanchor: 'center',
             visible: true,
