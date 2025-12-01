@@ -6,13 +6,32 @@ updateElectronApp({
         type: UpdateSourceType.ElectronPublicUpdateService,
         repo: "LeisLoggers/VMolberte"
     },
+    notifyUser: true,
     updateInterval: '5 minutes'
 
 })
-
 if (require('electron-squirrel-startup')) app.quit();
 app.setAppUserModelId("com.squirrel.VMolberte.VMolberte");
-
+// Блок автообновления
+//updateElectronApp.on('update-downloaded'), (event, releaseNotes, releaseName) => {
+//    const dialogOptions = {
+//        type: 'info',
+//        buttons: ['Обновить и перезапустить', 'Позже'],
+//        title: 'Обновление Мольберта',
+//        message: process.platform === 'win32' ? releaseNotes : releaseName,
+//        detail: 'Доступна новая версия приложения. Обновимся?'
+//    };
+//    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+//        if (returnValue.response === 0) autoUpdater.quitAndInstall();
+//    });
+//};
+//updateElectronApp.on('checking-for-update', (event) => {
+//    console.log('Checking for update');
+//})
+//updateElectronApp.on('update-not-available', (event) => {
+//    console.log('Нет доступных обновлений');
+//})
+// Блок приложения
 let filesMetaData;
 let currentTraces;
 
