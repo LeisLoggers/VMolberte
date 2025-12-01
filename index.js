@@ -44,7 +44,7 @@ const createWindow = (loadingWindow) => {
             contextIsolation: false,
         }
     });
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
     win.menuBarVisible = false;
     win.loadFile('pages/index.html')
     win.on('ready-to-show', () => {
