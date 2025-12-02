@@ -36,6 +36,7 @@
                 <span>Отчёт по запуску</span>
             </div>
         </div>
+        <p id="version" style="font-size: 12px; position: absolute; bottom: 20px; left: 20px;"></p>
     </div>
 
     <!-- Main Content -->
@@ -473,6 +474,12 @@
     <script type="module" src="../functions/detailLines.js"></script>
     <script type="module" src="../functions/portDataForSave.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            ipcRenderer.send('version');
+        })
+        ipcRenderer.on('current-version', (event, version) => {
+            document.getElementById('version').innerText = `v${version}`;
+        })
         // Навигация
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function () {

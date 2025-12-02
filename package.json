@@ -9,14 +9,14 @@
   "repository": "https://github.com/LeisLoggers/VMolberte",
   "type": "commonjs",
     "main": "index.js",
-  "scripts": {
-    "start": "electron-forge start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "build": "electron-builder --win",
-    "publish": "electron-builder -p always"
-  },
+    "scripts": {
+        "start": "electron-forge start",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "build": "electron-builder --win",
+        "publish": "electron-builder -p always"
+    },
   "build": {
     "appId": "org.vmolberte.vmolberte",
     "icon": "./assets/logo256.ico",

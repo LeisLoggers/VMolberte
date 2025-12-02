@@ -32,23 +32,7 @@ autoUpdater.on('error', (error) => {
 let filesMetaData;
 let currentTraces;
 
-const createLoadingWindow = () => {
-    let loadingWindow = new BrowserWindow({
-        height: 400,
-        width: 400,
-        frame: false,
-        transparent: true,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-    });
-    loadingWindow.loadFile('pages/loading.html');
-    loadingWindow.on('closed', () => (loadingWindow = null));
-    return loadingWindow
-};
-
-const createWindow = (loadingWindow) => {
+const createWindow = () => {
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width, height } = primaryDisplay.workAreaSize;
     const win = new BrowserWindow({
@@ -62,22 +46,20 @@ const createWindow = (loadingWindow) => {
     });
     win.menuBarVisible = false;
     win.loadFile('pages/index.html')
-    win.on('ready-to-show', () => {
-        if (loadingWindow) {
-            loadingWindow.close()
-        }
-    })
+};
     
-    
-}
+
 // Выход из приложения
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('ready', () => {
-    let loadingWindow = createLoadingWindow();
-    createWindow(loadingWindow)
+app.on('ready', (event) => {
+    createWindow();
+    ipcMain.on('version', (event) => {
+        console.log('version ', app.getVersion());
+        event.sender.send('current-version', app.getVersion())
+    });
     autoUpdater.checkForUpdatesAndNotify()
         .then((response) => {
             log.log('UpdCheckSuc. ');
