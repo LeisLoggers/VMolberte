@@ -1,36 +1,33 @@
 const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
-const { updateElectronApp } = require('update-electron-app');
-const { UpdateSourceType } = require('./node_modules/update-electron-app/dist/index');
-updateElectronApp({
-    updateSource: {
-        type: UpdateSourceType.ElectronPublicUpdateService,
-        repo: "LeisLoggers/VMolberte"
-    },
-    notifyUser: true,
-    updateInterval: '5 minutes'
-
+const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
+autoUpdater.setFeedURL({
+    'provider': "github",
+    'owner': "LeisLoggers",
+    'repo': "VMolberte",
+    'url': "https://github.com/LeisLoggers/VMolberte/releases/latest/download/"
+    });
+autoUpdater.on('update-not-available', (event) => {
+    log.log('Нет доступных обновлений');
 })
-if (require('electron-squirrel-startup')) app.quit();
-app.setAppUserModelId("com.squirrel.VMolberte.VMolberte");
-// Блок автообновления
-//updateElectronApp.on('update-downloaded'), (event, releaseNotes, releaseName) => {
-//    const dialogOptions = {
-//        type: 'info',
-//        buttons: ['Обновить и перезапустить', 'Позже'],
-//        title: 'Обновление Мольберта',
-//        message: process.platform === 'win32' ? releaseNotes : releaseName,
-//        detail: 'Доступна новая версия приложения. Обновимся?'
-//    };
-//    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-//        if (returnValue.response === 0) autoUpdater.quitAndInstall();
-//    });
-//};
-//updateElectronApp.on('checking-for-update', (event) => {
-//    console.log('Checking for update');
-//})
-//updateElectronApp.on('update-not-available', (event) => {
-//    console.log('Нет доступных обновлений');
-//})
+autoUpdater.on('update-available', () => {
+    log.log('Загружаю обновление');
+});
+autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
+    const dialogOptions = {
+        "type": 'info',
+        "buttons": ['Обновить и перезапустить', 'Позже'],
+        "title": 'Обновление Мольберта',
+        "detail": `Доступна новая версия приложения. Обновимся?`
+    };
+    dialog.showMessageBox(dialogOptions).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall();
+    });
+});
+autoUpdater.on('error', (error) => {
+    log.log('UpdProcErr ', error);
+});
+
 // Блок приложения
 let filesMetaData;
 let currentTraces;
@@ -63,7 +60,6 @@ const createWindow = (loadingWindow) => {
             contextIsolation: false,
         }
     });
-    //win.webContents.openDevTools();
     win.menuBarVisible = false;
     win.loadFile('pages/index.html')
     win.on('ready-to-show', () => {
@@ -81,8 +77,14 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
     let loadingWindow = createLoadingWindow();
-    setTimeout(() => createWindow(loadingWindow), 3000)
-    
+    createWindow(loadingWindow)
+    autoUpdater.checkForUpdatesAndNotify()
+        .then((response) => {
+            log.log('UpdCheckSuc. ');
+        })
+        .catch((err) => {
+            log.error('UpdCheckErr', err);
+        })
 })
 // Получение файла/файлов и путей к ним
 ipcMain.on('open-file-dialog-for-file', async (event) => {
