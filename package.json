@@ -8,7 +8,7 @@
   "author": "VladimirKirillov",
   "repository": "https://github.com/LeisLoggers/VMolberte",
   "type": "commonjs",
-    "main": "index.js",
+  "main": "index.js",
   "scripts": {
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -30,11 +30,11 @@
       "fileLoadAndPrimProc.js"
     ],
     "publish": [
-        {
-            "provider": "github",
-            "owner": "LeisLoggers",
-            "repo": "VMolberte"
-        }
+      {
+        "provider": "github",
+        "owner": "LeisLoggers",
+        "repo": "VMolberte"
+      }
     ],
     "win": {
       "target": "nsis"
@@ -53,7 +53,7 @@
     "sortablejs": "^1.15.6"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.10.2",
+    "@electron-forge/cli": "^7.8.3",
     "@electron-forge/maker-deb": "^7.10.2",
     "@electron-forge/maker-rpm": "^7.10.2",
     "@electron-forge/maker-squirrel": "^7.10.2",
@@ -63,6 +63,6 @@
     "@electron/fuses": "^1.8.0",
     "electron": "^39.0.0",
     "electron-builder": "^26.0.12",
-    "electron-forge": "^5.2.4"
+    "electron-forge": "^2.0.0"
   }
 }

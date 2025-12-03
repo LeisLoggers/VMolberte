@@ -49,8 +49,12 @@ export function fillPerTargetReport(traces, filenames) {
     for (const [key, value] of traces.entries()) {
         Plotly.newPlot(key, value[0], value[1], value[2]);
     };
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active')
+    document.querySelectorAll('.menu-item').forEach(element => {
+        element.classList.remove('active');
+    });
+    document.getElementById('reportMenu').classList.add('active');
+    document.querySelectorAll('.page').forEach(element => {
+        element.classList.remove('active');
     });
     document.getElementById('report').classList.add('active');
     document.getElementById('resetPlotSizes').dispatchEvent(new Event('click'));
