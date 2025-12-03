@@ -1,6 +1,14 @@
 const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
-const log = require('electron-log');
+const log = require('electron-log/main');
+const removeOldLogs = require('./functions/helpers/removeOldLogs.js');
+
+// Настройки логирования
+log.initialize();
+log.transports.file.maxSize = 5 * 1024 * 1024;
+log.transports.file.maxFiles = 5;
+
+// Настройки обновлений
 autoUpdater.setFeedURL({
     'provider': "github",
     'owner': "LeisLoggers",
@@ -8,10 +16,10 @@ autoUpdater.setFeedURL({
     'url': "https://github.com/LeisLoggers/VMolberte/releases/latest/download/"
     });
 autoUpdater.on('update-not-available', (event) => {
-    log.log('Нет доступных обновлений');
+    log.info('No updates');
 })
 autoUpdater.on('update-available', () => {
-    log.log('Загружаю обновление');
+    log.info('Loading update');
 });
 autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
     const dialogOptions = {
@@ -25,7 +33,7 @@ autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
     });
 });
 autoUpdater.on('error', (error) => {
-    log.log('UpdProcErr ', error);
+    log.error('Error while updating:  ', error);
 });
 
 // Блок приложения
@@ -57,17 +65,20 @@ app.on('window-all-closed', () => {
 app.on('ready', (event) => {
     createWindow();
     ipcMain.on('version', (event) => {
-        console.log('version ', app.getVersion());
+        log.info(`New launch, version ${app.getVersion()}`);
         event.sender.send('current-version', app.getVersion())
     });
     autoUpdater.checkForUpdatesAndNotify()
         .then((response) => {
-            log.log('UpdCheckSuc. ');
+            log.info('Update checking successful');
         })
         .catch((err) => {
-            log.error('UpdCheckErr', err);
-        })
+            log.error('Update checking error: ', err);
+        });
+    removeOldLogs(log.transports.file.getFile().path);
+    }
 })
+
 // Получение файла/файлов и путей к ним
 ipcMain.on('open-file-dialog-for-file', async (event) => {
     const result = await dialog.showOpenDialog({
