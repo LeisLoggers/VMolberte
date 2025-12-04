@@ -1,6 +1,5 @@
 **VMolberte is licensed for use as follows:**
 
-
 	MIT License
 
 	Copyright (c) 2025 Vladimir Kirillov
@@ -28,8 +27,6 @@
 
 *Data-Driven-Documents (D3 or D3.js) is licensed as follows:*
 
-	ISC License
-
 	Copyright 2010-2023 Mike Bostock
 
 	Permission to use, copy, modify, and/or distribute this software for any purpose
@@ -46,8 +43,6 @@
 
 
 *Electron is licensed as follows:*
-
-	MIT License
 
 	Copyright (c) Electron contributors
 	Copyright (c) 2013-2020 GitHub Inc.
@@ -74,8 +69,6 @@
 
 *electron-forge is licensed as follows:*
 
-	The MIT License (MIT)
-	
 	Copyright (c) 2016 Samuel Attard
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -97,8 +90,6 @@
 
 
 *electron-log is licensed as follows:*
-
-	MIT License
 
 	Copyright (c) 2016 Alexey Prokhorov
 
@@ -123,8 +114,6 @@
 
 *electron-updater is licensed as follows:*
 
-	MIT License
-
 	Copyright (c) 2015 Loopline Systems
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -147,8 +136,6 @@
 
 
 *Node.js is licensed as follows*
-
-	Other License
 
 	Copyright Node.js contributors. All rights reserved.
 
@@ -173,8 +160,6 @@
 
 *plotly.js is licensed as follows:*
 
-	MIT License
-
 	Copyright (c) 2016-2024 Plotly Technologies Inc.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -197,8 +182,6 @@
 
 
 *SciPy is licensed as follows:* 
-
-	BSD-3-Clause
 
 	Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.
 	All rights reserved.

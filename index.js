@@ -2,6 +2,7 @@ const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log/main');
 const removeOldLogs = require('./functions/helpers/removeOldLogs.js');
+const createLoadingWindow = require('./functions/windows/loadingWindow.js');
 
 // Настройки логирования
 log.initialize();
@@ -16,17 +17,18 @@ autoUpdater.setFeedURL({
     'url': "https://github.com/LeisLoggers/VMolberte/releases/latest/download/"
     });
 autoUpdater.on('update-not-available', (event) => {
-    log.info('No updates');
+    log.info('No updates available');
 })
-autoUpdater.on('update-available', () => {
-    log.info('Loading update');
+autoUpdater.on('update-available', (info) => {
+    log.info('Loading update ', info.version);
 });
+
 autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
     const dialogOptions = {
         "type": 'info',
         "buttons": ['Обновить и перезапустить', 'Позже'],
         "title": 'Обновление Мольберта',
-        "detail": `Доступна новая версия приложения. Обновимся?`
+        "detail": `Доступна новая версия приложения. Обновимся?\nПри отказе, обновление будет запущено после выхода из приложения.`
     };
     dialog.showMessageBox(dialogOptions).then((returnValue) => {
         if (returnValue.response === 0) autoUpdater.quitAndInstall();
@@ -39,6 +41,7 @@ autoUpdater.on('error', (error) => {
 // Блок приложения
 let filesMetaData;
 let currentTraces;
+
 
 const createWindow = () => {
     const primaryDisplay = screen.getPrimaryDisplay();
@@ -62,20 +65,14 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('ready', (event) => {
+app.on('ready', async (event) => {
+    let loadingWindow = await createLoadingWindow();
+    loadingWindow.close();
     createWindow();
     ipcMain.on('version', (event) => {
-        log.info(`New launch, version ${app.getVersion()}`);
+        log.info(`===== New launch, version ${app.getVersion()} =====`);
         event.sender.send('current-version', app.getVersion())
     });
-    autoUpdater.checkForUpdatesAndNotify()
-        .then((response) => {
-            log.info('Update checking successful');
-        })
-        .catch((err) => {
-            log.error('Update checking error: ', err);
-        });
-    removeOldLogs(log.transports.file.getFile().path);
 })
 
 // Получение файла/файлов и путей к ним
