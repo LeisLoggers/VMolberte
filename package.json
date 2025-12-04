@@ -2,9 +2,9 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/logo256.ico",
-  "version": "0.9.3",
-  "description": "App for drawing",
-  "license": "None",
+  "version": "0.9.41",
+  "description": "Just draw it",
+  "license": "MIT",
   "author": "VladimirKirillov",
   "repository": "https://github.com/LeisLoggers/VMolberte",
   "type": "commonjs",
@@ -27,7 +27,8 @@
       "styles/",
       "assets/**",
       "functions/",
-      "fileLoadAndPrimProc.js"
+      "fileLoadAndPrimProc.js",
+      "LICENSE.md"
     ],
     "publish": [
       {

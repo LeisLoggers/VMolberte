@@ -76,7 +76,6 @@ app.on('ready', (event) => {
             log.error('Update checking error: ', err);
         });
     removeOldLogs(log.transports.file.getFile().path);
-    }
 })
 
 // Получение файла/файлов и путей к ним
