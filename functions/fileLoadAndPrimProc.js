@@ -1,7 +1,7 @@
 const fs  = require('fs');
 const nodePath = require('path');
-import {configureSelectBoxes} from './functions/configureSelectBoxes.js';
-import { blink } from './functions/blink.js';
+import {configureSelectBoxes} from './configureSelectBoxes.js';
+import { blink } from './blink.js';
 
 
 

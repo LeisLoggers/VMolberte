@@ -1,9 +1,11 @@
 const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log/main');
-const removeOldLogs = require('./functions/helpers/removeOldLogs.js');
 const createLoadingWindow = require('./functions/windows/loadingWindow.js');
-
+// Переменные
+let filesMetaData;
+let currentTraces;
+let newVersion;
 // Настройки логирования
 log.initialize();
 log.transports.file.maxSize = 5 * 1024 * 1024;
@@ -21,6 +23,7 @@ autoUpdater.on('update-not-available', (event) => {
 })
 autoUpdater.on('update-available', (info) => {
     log.info('Loading update ', info.version);
+    newVersion = info.version;
 });
 
 autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
@@ -28,7 +31,7 @@ autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
         "type": 'info',
         "buttons": ['Обновить и перезапустить', 'Позже'],
         "title": 'Обновление Мольберта',
-        "detail": `Доступна новая версия приложения. Обновимся?\nПри отказе, обновление будет запущено после выхода из приложения.`
+        "detail": `Доступна новая версия приложения - ${newVersion}. Обновимся?\nПри отказе, обновление будет запущено после выхода из приложения.`
     };
     dialog.showMessageBox(dialogOptions).then((returnValue) => {
         if (returnValue.response === 0) autoUpdater.quitAndInstall();
@@ -37,11 +40,6 @@ autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
 autoUpdater.on('error', (error) => {
     log.error('Error while updating:  ', error);
 });
-
-// Блок приложения
-let filesMetaData;
-let currentTraces;
-
 
 const createWindow = () => {
     const primaryDisplay = screen.getPrimaryDisplay();
