@@ -1,6 +1,6 @@
 **VMolberte is licensed for use as follows:**
 
-"""
+
 	MIT License
 
 	Copyright (c) 2025 Vladimir Kirillov
@@ -22,11 +22,12 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-"""
+
 
 **The externally maintained libraries used by VMolberte are:**
+
 *Data-Driven-Documents (D3 or D3.js) is licensed as follows:*
-"""
+
 	ISC License
 
 	Copyright 2010-2023 Mike Bostock
@@ -42,10 +43,10 @@
 	OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 	TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 	THIS SOFTWARE.
-"""
+
 
 *Electron is licensed as follows:*
-"""
+
 	MIT License
 
 	Copyright (c) Electron contributors
@@ -69,10 +70,10 @@
 	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-"""
+
 
 *electron-forge is licensed as follows:*
-"""
+
 	The MIT License (MIT)
 	
 	Copyright (c) 2016 Samuel Attard
@@ -93,10 +94,10 @@
 	COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 	IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 	CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-"""
+
 
 *electron-log is licensed as follows:*
-"""
+
 	MIT License
 
 	Copyright (c) 2016 Alexey Prokhorov
@@ -118,10 +119,10 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-"""
+
 
 *electron-updater is licensed as follows:*
-"""
+
 	MIT License
 
 	Copyright (c) 2015 Loopline Systems
@@ -143,10 +144,10 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-"""
+
 
 *Node.js is licensed as follows*
-"""
+
 	Other License
 
 	Copyright Node.js contributors. All rights reserved.
@@ -168,10 +169,10 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 	IN THE SOFTWARE.
-"""
+
 
 *plotly.js is licensed as follows:*
-"""
+
 	MIT License
 
 	Copyright (c) 2016-2024 Plotly Technologies Inc.
@@ -193,10 +194,10 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
-"""
+
 
 *SciPy is licensed as follows:* 
-	"""
+
 	BSD-3-Clause
 
 	Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.
@@ -229,10 +230,10 @@
 	THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
+
 
 *sortablejs is licensed as follows:*
-"""
+
 	Copyright (c) 2019 All contributors to Sortable
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -252,4 +253,3 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-"""
