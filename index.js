@@ -64,8 +64,13 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', async (event) => {
-    let loadingWindow = await createLoadingWindow();
-    loadingWindow.close();
+    try {
+        let loadingWindow = await createLoadingWindow();
+        loadingWindow.close();
+    } catch (error) {
+        log.info('Error in loading window: ', error)
+    };
+    
     createWindow();
     ipcMain.on('version', (event) => {
         log.info(`===== New launch, version ${app.getVersion()} =====`);
