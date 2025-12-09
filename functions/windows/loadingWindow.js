@@ -33,6 +33,7 @@ async function createLoadingWindow() {
                 });
 
         } catch (error) {
+            log.error('Error with loading window: ', error)
             reject(error)
         };
     });

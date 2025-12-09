@@ -1,7 +1,3 @@
-import {sortNumericArray} from '../helpers/sortNumericArray.js'
-
-
-
 
 export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let uniqueCategories  = configGraph.get('categories');

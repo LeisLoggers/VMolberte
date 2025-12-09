@@ -47,7 +47,7 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: width,
         height: height,
-        icon: './assets/logo256.ico',
+        icon: './assets/vm256.ico',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

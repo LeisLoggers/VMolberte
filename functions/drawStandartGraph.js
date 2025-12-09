@@ -2,6 +2,7 @@
 import { checkLengths } from "./checks/checkLengths.js";
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
+import { configureHeatMapTraces } from "./traceCreate/configureHeatMapTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
 import { configurePerTarget } from "./traceCreate/configurePerTarget.js";
 import { fileParse } from './fileParse.js';
@@ -54,6 +55,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         let colorDiscreteMap = zipDict(uniqueColorGroupsSorted, available_colors);
         let configGraph = new Map()
         configGraph.set('categories', uniqueCategoriesSorted);
+        configGraph.set('colors', uniqueColorGroupsSorted);
         configGraph.set('groupBy', groupBy);
         configGraph.set('colorBy', colorBy);
         configGraph.set('colorDiscreteMap', colorDiscreteMap);
@@ -70,8 +72,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             let scatterTraces = configureScatterTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', scatterTraces[0], scatterTraces[1], scatterTraces[2])
-        // Различные отчёты
-        } else if (graphType === 'quickReport') {
+        } else if (graphType === 'heatmap') {
+            let heatmapTraces = configureHeatMapTraces(configGraph);
+            document.getElementById('graphTitle').innerText = 'Ваш график';
+            Plotly.newPlot('plotlyPlot', heatmapTraces[0], heatmapTraces[1], heatmapTraces[2])
+        }// Различные отчёты
+        else if (graphType === 'quickReport') {
             configureReportTraces(configGraph, true)
         } else if (graphType === 'quickReportEnrichment') {
             configureReportTraces(configGraph, false)

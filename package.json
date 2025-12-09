@@ -1,8 +1,8 @@
 {
   "name": "vmolberte",
   "productName": "VMolberte",
-  "icon": "./assets/logo256.ico",
-  "version": "0.9.3",
+  "icon": "./assets/vm128.ico",
+  "version": "1.0.0",
   "description": "Just draw it",
   "license": "MIT",
   "author": "VladimirKirillov",
@@ -19,7 +19,7 @@
   },
   "build": {
     "appId": "org.vmolberte.vmolberte",
-    "icon": "./assets/logo256.ico",
+    "icon": "./assets/vm128.ico",
     "productName": "VMolberte",
     "files": [
       "index.js",
