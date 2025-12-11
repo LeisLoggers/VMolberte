@@ -3,6 +3,7 @@ import { checkLengths } from "./checks/checkLengths.js";
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
 import { configureHeatMapTraces } from "./traceCreate/configureHeatMapTraces.js";
+import { configureHistTraces } from "./traceCreate/configureHistTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
 import { configurePerTarget } from "./traceCreate/configurePerTarget.js";
 import { fileParse } from './fileParse.js';
@@ -76,7 +77,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             let heatmapTraces = configureHeatMapTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', heatmapTraces[0], heatmapTraces[1], heatmapTraces[2])
-        }// Различные отчёты
+        } else if (graphType === 'hist') {
+            let heatmapTraces = configureHistTraces(configGraph);
+            document.getElementById('graphTitle').innerText = 'Ваш график';
+            Plotly.newPlot('plotlyPlot', heatmapTraces[0], heatmapTraces[1], heatmapTraces[2])
+        }
+        // Различные отчёты
         else if (graphType === 'quickReport') {
             configureReportTraces(configGraph, true)
         } else if (graphType === 'quickReportEnrichment') {
