@@ -1,7 +1,7 @@
 {
   "name": "vmolberte",
   "productName": "VMolberte",
-  "icon": "./assets/vm128.ico",
+  "icon": "./assets/vm256.ico",
   "version": "1.0.0",
   "description": "Just draw it",
   "license": "MIT",
@@ -19,16 +19,24 @@
   },
   "build": {
     "appId": "org.vmolberte.vmolberte",
-    "icon": "./assets/vm128.ico",
+    "icon": "./assets/vm256.ico",
     "productName": "VMolberte",
     "files": [
-      "index.js",
-      "pages/",
-      "styles/",
-      "assets/**",
-      "functions/",
-      "fileLoadAndPrimProc.js",
-      "LICENSE.md"
+        "index.js",
+        "pages/",
+        "styles/",
+        "assets/**",
+        "functions/",
+        "fileLoadAndPrimProc.js",
+        "LICENSE.md"
+    ],
+    "fileAssociations": [
+        {
+            "ext": [ "tsv", "csv", "txt" ],
+            "name": "Данные",
+            "description": "Можно открыть VMolberte",
+            "icon": "./assets/vm256.ico"
+        }
     ],
     "publish": [
       {

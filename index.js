@@ -78,6 +78,11 @@ app.on('ready', async (event) => {
     });
 })
 
+ipcMain.on('is-command-line', (event) => {
+    const filepath = process.argv.slice(1);
+    event.sender.send('selected-file', filepath);
+})
+
 // Получение файла/файлов и путей к ним
 ipcMain.on('open-file-dialog-for-file', async (event) => {
     const result = await dialog.showOpenDialog({
@@ -98,7 +103,9 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
 ipcMain.on('clear-fp-wrong-paths', (event) => {
     event.sender.send('resetAllParams');
     event.sender.send('reset-progress');
-    filesMetaData.clear();
+    if (filesMetaData !== undefined) {
+        filesMetaData.clear();
+    }
 })
 
 // Проверка заполнения нужных полей

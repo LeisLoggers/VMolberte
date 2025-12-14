@@ -58,5 +58,7 @@ export function fillPerTargetReport(traces, filenames) {
     });
     document.getElementById('report').classList.add('active');
     document.getElementById('resetPlotSizes').dispatchEvent(new Event('click'));
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     console.log('Report filled')
 }

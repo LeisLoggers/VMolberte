@@ -16,7 +16,7 @@ clearFP.addEventListener('click', function () {
     document.getElementById('fileName').innerText = `Файлы не выбраны`;
 })
 
-
+ipcRenderer.send('is-command-line');
 
 ipcRenderer.on('selected-file', function (event, filePaths) {
 
