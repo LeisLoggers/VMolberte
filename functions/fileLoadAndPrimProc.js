@@ -1,5 +1,6 @@
 const fs  = require('fs');
 const nodePath = require('path');
+const XLSX = require('xlsx');
 import {configureSelectBoxes} from './configureSelectBoxes.js';
 import { blink } from './blink.js';
 
@@ -29,20 +30,30 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     let currentHeaders = Array.from(headersInSelect.options).map(option => option.value);
 
     filePaths.forEach((path, index) => {
-        fileMetaData.set(index, { 'filepath': path });
-        fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
-        let fileHeader = fs.readFileSync(path, 'utf8').split('\n')[0];
-        if (fileHeader.split('\t').length > 1) {
-            separator = '\t';
-            fileMetaData.get(index)['resolution'] = 'tsv';
-            lfh = lfh.union(new Set(fileHeader.split(separator)));
-        } else if (fileHeader.split(',').length > 1) {
-            separator = ',';
-            lfh = lfh.union(new Set(fileHeader.split(separator)));
-            fileMetaData.get(index)['resolution'] = 'csv';
+        if (path.includes('.xls') || (path.includes('.xlsx'))) {
+            const workBook = XLSX.readFile(path)
+            const sheets = workBook.SheetNames;
+            if (sheets.length === 1) {
+                alert(`В файле 1 лист - ${sheets}`);
+            } else {
+                alert(`В файле много листов - ${sheets}`);
+            };
         } else {
-            unseparated.push(nodePath.basename(path));
-        }
+            fileMetaData.set(index, { 'filepath': path });
+            fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
+            let fileHeader = fs.readFileSync(path, 'utf8').split('\n')[0];
+            if (fileHeader.split('\t').length > 1) {
+                separator = '\t';
+                fileMetaData.get(index)['resolution'] = 'tsv';
+                lfh = lfh.union(new Set(fileHeader.split(separator)));
+            } else if (fileHeader.split(',').length > 1) {
+                separator = ',';
+                lfh = lfh.union(new Set(fileHeader.split(separator)));
+                fileMetaData.get(index)['resolution'] = 'csv';
+            } else {
+                unseparated.push(nodePath.basename(path));
+            }
+        };  
     })
     // В случае ошибки с разделителем - чистим все процессы.
     if (unseparated.length !== 0) {

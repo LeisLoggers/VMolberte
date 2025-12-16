@@ -22,21 +22,25 @@
     "icon": "./assets/vm256.ico",
     "productName": "VMolberte",
     "files": [
-        "index.js",
-        "pages/",
-        "styles/",
-        "assets/**",
-        "functions/",
-        "fileLoadAndPrimProc.js",
-        "LICENSE.md"
+      "index.js",
+      "pages/",
+      "styles/",
+      "assets/**",
+      "functions/",
+      "fileLoadAndPrimProc.js",
+      "LICENSE.md"
     ],
     "fileAssociations": [
-        {
-            "ext": [ "tsv", "csv", "txt" ],
-            "name": "Данные",
-            "description": "Можно открыть VMolberte",
-            "icon": "./assets/vm256.ico"
-        }
+      {
+        "ext": [
+          "tsv",
+          "csv",
+          "txt"
+        ],
+        "name": "Данные",
+        "description": "Можно открыть VMolberte",
+        "icon": "./assets/vm256.ico"
+      }
     ],
     "publish": [
       {
@@ -59,7 +63,8 @@
     "electron-updater": "^6.6.2",
     "fs": "^0.0.1-security",
     "plotly.js-dist": "^3.1.2",
-    "sortablejs": "^1.15.6"
+    "sortablejs": "^1.15.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.8.3",

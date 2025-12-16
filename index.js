@@ -31,7 +31,7 @@ autoUpdater.on('update-downloaded', (event, releaseName, releaseNotes) => {
         "type": 'info',
         "buttons": ['Обновить и перезапустить', 'Позже'],
         "title": 'Обновление Мольберта',
-        "detail": `Доступна новая версия приложения - ${newVersion}. Обновимся?\nПри отказе, обновление будет запущено после выхода из приложения.`
+        "detail": `Доступна новая версия приложения - ${newVersion}. Обновимся?\nОбязательно ознакомьтесь с деталями обновления на вкладке "Новости" после обновления.\nПри отказе, обновление будет запущено после выхода из приложения.`
     };
     dialog.showMessageBox(dialogOptions).then((returnValue) => {
         if (returnValue.response === 0) autoUpdater.quitAndInstall();
@@ -80,7 +80,11 @@ app.on('ready', async (event) => {
 
 ipcMain.on('is-command-line', (event) => {
     const filepath = process.argv.slice(1);
-    event.sender.send('selected-file', filepath);
+    if (filepath[0] !== '.') {
+        event.sender.send('selected-file', filepath);
+    } else {
+        return;
+    };
 })
 
 // Получение файла/файлов и путей к ним
@@ -90,7 +94,7 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
         title: 'Выберите файлы',
         buttonLabel: 'Выбрать',
         filters: [
-            { name: 'Данные', extensions: ['csv', 'tsv', 'txt'] },
+            { name: 'Данные', extensions: ['csv', 'tsv', 'txt', 'xls', 'xlsx'] },
             { name: 'All files', extensions: ['*'] }
         ]
     })
