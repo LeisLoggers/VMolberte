@@ -20,7 +20,6 @@ clearFP.addEventListener('click', function () {
 ipcRenderer.send('is-command-line');
 
 ipcRenderer.on('selected-file', function (event, filePaths) {
-
     let separator;
     let lfh = new Set();
     let fileMetaData = new Map();
@@ -31,13 +30,11 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
 
     filePaths.forEach((path, index) => {
         if (path.includes('.xls') || (path.includes('.xlsx'))) {
+            fileMetaData.set(index, { 'filepath': path });
+            fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
             const workBook = XLSX.readFile(path)
             const sheets = workBook.SheetNames;
-            if (sheets.length === 1) {
-                alert(`В файле 1 лист - ${sheets}`);
-            } else {
-                alert(`В файле много листов - ${sheets}`);
-            };
+            ipcRenderer.send('excel-file-question', sheets)
         } else {
             fileMetaData.set(index, { 'filepath': path });
             fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
@@ -74,11 +71,9 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             blink(decoration, 'configure');
             event.sender.send('send-meta-data', fileMetaData)
         };
-
-
     };
 });
-
+// Обновление количества выбранных файлов
 ipcRenderer.on('update-meta-length', function (event, metaLen) {
     document.getElementById('fileName').innerText = `Выбрано файлов: ${metaLen}`;
 })

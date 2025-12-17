@@ -2,10 +2,13 @@ const { app, BrowserWindow, screen, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log/main');
 const createLoadingWindow = require('./functions/windows/loadingWindow.js');
+const createDialogueWindow = require('./functions/windows/createDialogueWindow.js');
 // Переменные
 let filesMetaData;
 let currentTraces;
 let newVersion;
+let OPTIONS;
+let dialogueWindow;
 // Настройки логирования
 log.initialize();
 log.transports.file.maxSize = 5 * 1024 * 1024;
@@ -101,6 +104,20 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
     if (!result.canceled) {
         event.sender.send('selected-file', result.filePaths);
     }
+})
+
+ipcMain.handle('create-excel-option-list', async (event) => {
+    return OPTIONS
+})
+
+// Общение насчёт файлов excel
+ipcMain.on('excel-file-question', async (event, options) => {
+    OPTIONS = options
+    dialogueWindow = await createDialogueWindow();
+})
+
+ipcMain.on('close-the-door', (event, sheetname) => {
+    console.log(sheetname)
 })
 
 // Очистка метаданных по загруженным файлам

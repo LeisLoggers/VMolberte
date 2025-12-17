@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>VMolberte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
+</head>
+<body>
+    <div class="main-content" style="margin-left:0;">
+        <div id="main" class="page active">
+            <div class="page-header">
+                <h2>Укажите лист, который нужно прочитать</h2>
+                <p>Пока можно выбрать только один лист за раз.</p>
+            </div>
+            <div class="content-blocks">
+                <!-- Content Block 1 -->
+                <div class="content-block">
+                    <div class="block-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Выбор листа</h3>
+                    </div>
+                    <div class="selectors">
+                        <div class="selector-group">
+                            <label for="excelSheets">Лист</label>
+                            <select id="excelSheets">
+                                <option value="">Не выбран</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="draw-button" id="success">Подтвердить выбор</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../functions/justLoadRenderer.js"></script>
+    <script>
+        const SELECTOR = document.getElementById('excelSheets');
+        console.log('Im alive')
+        ipcRenderer.invoke('create-excel-option-list').then((result) => {
+            console.log('and options is ', result)
+            result.forEach(option => {
+                let newOpt = document.createElement('option');
+                newOpt.innerText = option;
+                newOpt.id = option;
+                SELECTOR.appendChild(newOpt);
+            })                
+        })
+        document.getElementById('success').addEventListener('click', function () {
+            ipcRenderer.send('close-the-door', SELECTOR.value)
+            window.close();
+        })
+    </script>
+</body>
+</html>
