@@ -16,10 +16,6 @@
             <div class="content-blocks">
                 <!-- Content Block 1 -->
                 <div class="content-block">
-                    <div class="block-header">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Выбор листа</h3>
-                    </div>
                     <div class="selectors">
                         <div class="selector-group">
                             <label for="excelSheets">Лист</label>
@@ -28,8 +24,8 @@
                             </select>
                         </div>
                     </div>
-                    <button class="draw-button" id="success">Подтвердить выбор</button>
                 </div>
+                <button class="draw-button" id="success">Подтвердить выбор</button>
             </div>
         </div>
     </div>
@@ -47,7 +43,7 @@
             })                
         })
         document.getElementById('success').addEventListener('click', function () {
-            ipcRenderer.send('close-the-door', SELECTOR.value)
+            ipcRenderer.send('sheet-to-read', SELECTOR.value)
             window.close();
         })
     </script>

@@ -106,19 +106,22 @@ ipcMain.on('open-file-dialog-for-file', async (event) => {
     }
 })
 
+// Общение насчёт файлов excel
 ipcMain.handle('create-excel-option-list', async (event) => {
     return OPTIONS
 })
 
-// Общение насчёт файлов excel
-ipcMain.on('excel-file-question', async (event, options) => {
+ipcMain.on('excel-file-question', (event, options) => {
+    ipcMain.on('sheet-to-read', (eventer, sheetname) => {
+        console.log(sheetname)
+        event.sender.send('sheet-selected', sheetname)
+    })
     OPTIONS = options
-    dialogueWindow = await createDialogueWindow();
+    dialogueWindow = createDialogueWindow();
 })
 
-ipcMain.on('close-the-door', (event, sheetname) => {
-    console.log(sheetname)
-})
+
+//
 
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {

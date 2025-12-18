@@ -8,7 +8,8 @@ async function createDialogueWindow(options) {
             let dialogueWindow = new BrowserWindow({
                 height: 500,
                 width: 600,
-                frame: false,
+                icon: './assets/vm256.ico',
+                frame: true,
                 transparent: false,
                 webPreferences: {
                     nodeIntegration: true,

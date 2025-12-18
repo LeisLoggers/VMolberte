@@ -35,6 +35,26 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             const workBook = XLSX.readFile(path)
             const sheets = workBook.SheetNames;
             ipcRenderer.send('excel-file-question', sheets)
+            ipcRenderer.on('sheet-selected', (event, sheetname) => {
+                let worksheet = workBook.Sheets[sheetname]
+                let result = XLSX.utils.sheet_to_json(worksheet);
+                fileMetaData.set(index, { 'filepath': path });
+                fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
+                fileMetaData.get(index)['sheetname'] = sheetname;
+                let fileHeader = Array.from(Object.keys(result[0]));
+                fileMetaData.get(index)['resolution'] = 'xlsx';
+                lfh = lfh.union(new Set(fileHeader));
+                if (currentHeaders.length > 2) {
+                    lfh = lfh.union(new Set(currentHeaders));
+                    decoration = configureSelectBoxes(lfh, currentHeaders);
+                    blink(decoration, 'configure');
+                    event.sender.send('send-meta-data', fileMetaData)
+                } else {
+                    decoration = configureSelectBoxes(lfh, currentHeaders);
+                    blink(decoration, 'configure');
+                    event.sender.send('send-meta-data', fileMetaData)
+                };
+            });
         } else {
             fileMetaData.set(index, { 'filepath': path });
             fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
