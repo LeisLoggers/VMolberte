@@ -113,7 +113,6 @@ ipcMain.handle('create-excel-option-list', async (event) => {
 
 ipcMain.on('excel-file-question', (event, options) => {
     ipcMain.on('sheet-to-read', (eventer, sheetname) => {
-        console.log(sheetname)
         event.sender.send('sheet-selected', sheetname)
     })
     OPTIONS = options

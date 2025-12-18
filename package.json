@@ -17,48 +17,50 @@
     "build": "electron-builder --win",
     "publish": "electron-builder -p always"
   },
-  "build": {
-    "appId": "org.vmolberte.vmolberte",
-    "icon": "./assets/vm256.ico",
-    "productName": "VMolberte",
-    "files": [
-      "index.js",
-      "pages/",
-      "styles/",
-      "assets/**",
-      "functions/",
-      "fileLoadAndPrimProc.js",
-      "LICENSE.md"
-    ],
-    "fileAssociations": [
-      {
-        "ext": [
-            "xls",
-            "xlsx",
-            "tsv",
-            "csv",
-            "txt"
+    "build": {
+        "appId": "org.vmolberte.vmolberte",
+        "icon": "./assets/vm256.ico",
+        "productName": "VMolberte",
+        "files": [
+            "index.js",
+            "pages/",
+            "styles/",
+            "assets/**",
+            "functions/",
+            "fileLoadAndPrimProc.js",
+            "LICENSE.md"
         ],
-        "name": "Данные",
-        "description": "Можно открыть VMolberte",
-        "icon": "./assets/vm256.ico"
-      }
-    ],
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "LeisLoggers",
-        "repo": "VMolberte"
-      }
-    ],
-    "win": {
-      "target": "nsis"
+        "asar": true,
+        "asarUnpack": [ "**/functions/traceCreate/n.exe" ],
+        "fileAssociations": [
+            {
+                "ext": [
+                    "xls",
+                    "xlsx",
+                    "tsv",
+                    "csv",
+                    "txt"
+                ],
+                "name": "Данные",
+                "description": "Можно открыть VMolberte",
+                "icon": "./assets/vm256.ico"
+            }
+        ],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "LeisLoggers",
+                "repo": "VMolberte"
+            }
+        ],
+        "win": {
+            "target": "nsis"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        }
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    }
-  },
   "dependencies": {
     "d3": "^7.9.0",
     "electron-log": "^5.4.3",

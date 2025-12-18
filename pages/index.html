@@ -519,10 +519,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
-        })
+            document.querySelector('.loading-circle').style.display = 'none';
+        });
         ipcRenderer.on('current-version', (event, version) => {
             document.getElementById('version').innerText = `v${version}`;
-        })
+        });
         // Навигация
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function () {
