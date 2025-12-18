@@ -33,9 +33,11 @@
     "fileAssociations": [
       {
         "ext": [
-          "tsv",
-          "csv",
-          "txt"
+            "xls",
+            "xlsx",
+            "tsv",
+            "csv",
+            "txt"
         ],
         "name": "Данные",
         "description": "Можно открыть VMolberte",
