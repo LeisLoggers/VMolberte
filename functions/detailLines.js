@@ -21,7 +21,7 @@ document.getElementById('addVert').addEventListener('click', function (event) {
     
 })
 
-ipcRenderer.on('draw-vertical', async function (event) {
+ipcRenderer.on('draw-vertical', function (event) {
     let newTrace;
     const canvas = document.getElementById('plotlyPlot');
     const lineType = document.getElementById('verticalSelect').value || 'threshold';
@@ -44,17 +44,16 @@ ipcRenderer.on('draw-vertical', async function (event) {
         ['showLegend', showLegend]
     ])
     if (lineType === 'pValue') {
-        document.querySelector('.loading-circle').style.display = 'block';
-        newTrace = await createPline(config)
-        document.querySelector('.loading-circle').style.display = 'none';
-        Plotly.addTraces(canvas, newTrace);
+        newTrace = createPline(config).then((newTrace) => {
+            Plotly.addTraces(canvas, newTrace);
+        });
     } else {
         newTrace = createHorizontalTrace(config);
         Plotly.addTraces(canvas, newTrace)
     };
 })
 
-ipcRenderer.on('draw-horizontal', async function (event) {
+ipcRenderer.on('draw-horizontal', function (event) {
     console.log('recieved horizontal command');
     let newTrace;
     const canvas = document.getElementById('plotlyPlot');
@@ -77,10 +76,9 @@ ipcRenderer.on('draw-horizontal', async function (event) {
         ['showLegend', showLegend]
     ])
     if (lineType === 'pValue') {
-        document.querySelector('.loading-circle').style.display = 'block';
-        newTrace = await createPline(config)
-        document.querySelector('.loading-circle').style.display = 'none';
-        Plotly.addTraces(canvas, newTrace);
+        newTrace = createPline(config).then((newTrace) => {
+            Plotly.addTraces(canvas, newTrace);
+        });
     } else {
         newTrace = createHorizontalTrace(config);
         Plotly.addTraces(canvas, newTrace)

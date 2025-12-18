@@ -71,4 +71,6 @@ export async function createPline(config) {
             resolve([mainTrace, vert1, vert2, textTrace])
         });
     })
+    
+    
 }

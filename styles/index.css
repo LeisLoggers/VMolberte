@@ -25,53 +25,6 @@ body {
     min-height: 100vh;
 }
 
-.loading-circle {
-    width: 96px;
-    height: 96px;
-    border-left: solid #a0a0a0;
-    border-right: solid #004074;
-    border-radius: 50%;
-    display: none;
-    margin: 15px auto;
-    position: fixed;
-    z-index: 1000;
-    top: 50%;
-    left: 50%;
-    box-sizing: border-box;
-    animation: rotation 2s linear infinite;
-}
-
-    .loading-circle::after,
-    .loading-circle::before {
-        content: "";
-        box-sizing: border-box;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: #004074;
-        width: 32px;
-        height: 32px;
-        transform: translate(-50%, 50%);
-        border-radius: 50%;
-    }
-
-    .loading-circle::before {
-        left: auto;
-        right: 0;
-        background: #a0a0a0;
-        transform: translate(50%, 100%);
-    }
-
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-} 
-
 /* Sidebar Styles */
 .sidebar {
     width: var(--sidebar-width);
