@@ -25,6 +25,24 @@ body {
     min-height: 100vh;
 }
 
+.loading-circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border: 16px solid #c0c0c0;
+    border-top: 16px solid #004074;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    z-index: 1000;
+    display: none;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 /* Sidebar Styles */
 .sidebar {
     width: var(--sidebar-width);
