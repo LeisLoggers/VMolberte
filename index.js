@@ -8,7 +8,7 @@ let filesMetaData;
 let currentTraces;
 let newVersion;
 let OPTIONS;
-let dialogueWindow;
+
 // Настройки логирования
 log.initialize();
 log.transports.file.maxSize = 5 * 1024 * 1024;

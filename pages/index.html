@@ -31,7 +31,7 @@
                 <i class="fas fa-newspaper"></i>
                 <span>Новости</span>
             </div>
-            <div class="menu-item" data-page="colors">
+            <div class="menu-item" data-page="colors" id="color-grid-menu">
                 <i class="fa-solid fa-palette"></i>
                 <span>Цвета</span>
             </div>
@@ -295,7 +295,12 @@
                             <li>Блок "Сортировка" позволит заняться ручной сортировкой (см. следующий раздел)</li>
                             <li>"Дополнительные элементы" (линии, пороговые линии и др.) могут быть применены к графикам при отображении единичных метрик, но не в режимах отчёта.</li>
                         </ul>
-                        <p>Обратите внимание, что, в отличие от ICDMS, в Мольберте отсутствует выбор цветов и "стиля цвета". Теперь для отображения используются 72 уникальных цвета - посмотрите на них на вкладке "цвета".</p>
+                        <p>
+                            <b>Обратите внимание,</b> что, в отличие от ICDMS, в Мольберте отсутствует выбор цветов и "стиля цвета".
+                            Теперь для отображения используются 72 уникальных цвета - посмотрите на них на вкладке "цвета".<br>
+                            Вы можете настроить цвета на свой вкус - кликните на HEX-код (<i>#NNNNNN</i>) и измените значение на своё (<b>не стирайте "#"</b>) и нажмите Enter.
+                            Если хотите сохранить изменения и пользоваться своей палитрой - нажмите "Сохранить мои цвета". Кнопка "Вернуть стандартные" сбросит всё до заводских настроек.
+                        </p>
                     </div>
                 </div>
 
@@ -480,8 +485,11 @@
         <div id="colors" class="page">
             <div class="page-header">
                 <h2>72 уникальных цвета</h2>
-                <p>Приложение отображает все графики с использованием этих цветов</p>
+                <p style="margin-bottom: 10px;">Приложение отображает все графики с использованием этих цветов</p>
+                <button class="draw-button" id="save-colors"><i class="fa-solid fa-download"></i> Сохранить мои цвета</button>
+                <button class="draw-button" id="reset-colors"><i class="fa-solid fa-rotate-left"></i> Вернуть стандартные</button>
             </div>
+            
             <div id="color-grid"></div>
 
         </div>
@@ -508,6 +516,7 @@
 
     <script src="../functions/justLoadRenderer.js"></script>
     <script type="module" src="../functions/resetAllParams.js"></script>
+    <script type="module" src="../functions/colors/configureColorGrid.js"></script>
     <script type="module" src="../functions/progressbar/progressbar.js"></script>
     <script type="module" src="../functions/helpers/presorting.js"></script>
     <script type="module" src="../functions/fileLoadAndPrimProc.js"></script>
@@ -517,6 +526,24 @@
     <script type="module" src="../functions/detailLines.js"></script>
     <script type="module" src="../functions/portDataForSave.js"></script>
     <script>
+        // Загрузка файлов
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+
+        // Кнопки и прогрессбар
+        const drawButton = document.getElementById('drawButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const circumference = 2 * Math.PI * 54; // 2πr where r=54
+
+        // Селекторы
+        const verticalSelect = document.getElementById('verticalSelect');
+        const grid = document.getElementById('color-grid');
+        let verticalColorSelect = document.getElementById('verticalColorSelect');
+        const groupType = document.getElementById('selectGroupType');
+        const groupColor = document.getElementById('selectGroupColor');
+        
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
             document.querySelector('.loading-circle').style.display = 'none';
@@ -546,73 +573,7 @@
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             });
-        });
-
-        // File upload functionality
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const fileName = document.getElementById('fileName');
-
-
-        // Draw button and progress bar functionality
-        const drawButton = document.getElementById('drawButton');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const circumference = 2 * Math.PI * 54; // 2πr where r=54
-
-        const colors = [
-            '#004074', '#a0a0a0', '#cd5c5c', '#ff1493', '#dfdf0f', '#ffa500',
-            '#ddaddd', '#ff00ff', '#9370DB', '#4b00b2', '#adff2f', '#90ee90',
-            '#3cb371', '#66cdaa', '#008b0b', '#4682b4', '#7b68ee', '#005959',
-            '#000080', '#ffdead', '#f4a460', '#d269e1', '#800000', '#2f4f4f',
-            "#C42727", "#00A651", "#0066CC", "#FFCC00", "#CC00CC", "#00CCCC",
-            "#A66633", "#663399", "#339966", "#993366", "#336699", "#999933",
-            "#804040", "#408040", "#404080", "#808040", "#804080", "#408080",
-            "#CC6666", "#66CC66", "#6666CC", "#CCCC66", "#CC66CC", "#66CCCC",
-            "#E67333", "#33E673", "#3333E6", "#E6E633", "#E633E6", "#33E6E6",
-            "#B38066", "#66B380", "#8066B3", "#B3B380", "#B380B3", "#66B3B3",
-            "#BF4040", "#4DBF4D", "#4D4DBF", "#BFBF40", "#BF40BF", "#40BFBF",
-            "#F28C8C", "#8CF28C", "#8C8CF2", "#F2F28C", "#F28CF2", "#8CF2F2"
-        ];
-
-        const grid = document.getElementById('color-grid');
-        let verticalColorSelect = document.getElementById('verticalColorSelect');
-        const verticalSelect = document.getElementById('verticalSelect');
-        const groupType = document.getElementById('selectGroupType');
-        const groupColor = document.getElementById('selectGroupColor');
-        // Function to calculate luminance to determine text color
-        function getLuminance(hexColor) {
-            const rgb = parseInt(hexColor.slice(1), 16);
-            const r = (rgb >> 16) & 0xff;
-            const g = (rgb >> 8) & 0xff;
-            const b = (rgb >> 0) & 0xff;
-            // Using sRGB luminance formula
-            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        }
-
-        colors.forEach(hex => {
-            const box = document.createElement('div');
-            const optVert = document.createElement('option');
-            box.className = 'color-box';
-            box.style.backgroundColor = hex;
-            optVert.innerText = hex;
-            optVert.value = hex;
-            optVert.style.backgroundColor = hex;
-
-            const label = document.createElement('span');
-            label.className = 'color-label';
-            label.textContent = hex;
-
-            // Determine if black or white text is more readable
-            const luminance = getLuminance(hex);
-            label.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
-            optVert.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
-            box.appendChild(label);
-
-            grid.appendChild(box);
-
-            verticalColorSelect.appendChild(optVert);
-        });
+        });     
 
         document.getElementById('detailBlock').querySelector('.block-header').addEventListener('click', () => {
             let content = document.getElementById('detailBlock').querySelector('.styler');

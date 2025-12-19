@@ -35,7 +35,7 @@ function spawnPlineProcess(filepath, config, resolve) {
             x: [(x0 + x1) / 2],
             y: [y],
             text: [result.trim()],
-            texttemplate: "%{text}",
+            texttemplate: "p=%{text}",
             textposition: 'top center',
             showlegend: false,
         }
