@@ -1,6 +1,7 @@
 const readColors = require('../functions/colors/readColors.js');
 const getLuminance = require('../functions/colors/getLuminance.js');
 const changeBoxColor = require('../functions/colors/changeBoxColor.js');
+const createEmptyColorBox = require('../functions/colors/createEmptyColorBox.js');
 const saveColors = require('../functions/colors/saveColors.js');
 const resetColors = require('../functions/colors/resetColors.js');
 
@@ -13,26 +14,42 @@ function configureColorGrid() {
             grid.innerHTML = '';
             colors.forEach(hex => {
                 const box = document.createElement('div');
+                const plus = document.createElement('div');
+                const minus = document.createElement('div');
                 const optVert = document.createElement('option');
+                const luminance = getLuminance(hex);
                 box.className = 'color-box';
+                plus.className = 'color-box-add';
+                minus.className = 'color-box-remove';
+                plus.innerText = '+';
+                minus.innerText = 'x';
                 box.style.backgroundColor = hex;
                 optVert.innerText = hex;
                 optVert.value = hex;
                 optVert.style.backgroundColor = hex;
 
-                const label = document.createElement('input');
-                label.className = 'color-label';
-                label.value = hex;
+                const input = document.createElement('input');
+                input.className = 'color-label';
+                input.value = hex;
+                input.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
+                input.type = 'color';
+                input.colorspace = 'limited-srgb';
+                input.addEventListener('change', changeBoxColor);
 
                 // Определение цвета текста для лучшей читаемости
-                const luminance = getLuminance(hex);
-                label.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
+                
+                minus.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
                 optVert.style.color = luminance > 128 ? '#000000' : '#FFFFFF';
-                box.appendChild(label);
-                label.addEventListener('change', changeBoxColor);
 
+                // Функционал
+                box.appendChild(input);
+                box.appendChild(minus);
+                box.appendChild(plus);
+                plus.addEventListener('click', createEmptyColorBox);
+                minus.addEventListener('click', function (eventer) {grid.removeChild(eventer.target.parentElement)})
+                box.addEventListener('mouseenter', () => { box.querySelector('.color-box-add').style.display = 'block' });
+                box.addEventListener('mouseleave', () => { box.querySelector('.color-box-add').style.display = 'none' });
                 grid.appendChild(box);
-
                 verticalColorSelect.appendChild(optVert);
             });
         }

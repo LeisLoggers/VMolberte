@@ -15,7 +15,7 @@ const Plotly = require('plotly.js-dist');
 ipcRenderer.on('drawIt', function (event, filesMetaData) {
     console.log('sended')
     const available_colors = [];
-    document.querySelectorAll('.color-label').forEach(label => {
+    document.getElementById('color-grid').querySelectorAll('.color-label').forEach(label => {
         available_colors.push(label.value);
     });
 

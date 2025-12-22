@@ -637,9 +637,9 @@ body {
 }
 #color-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 120px));
 
-    gap: 10px;
+    gap: 20px;
     max-width: 1400px;
     margin: 20px auto;
     padding: 10px;
@@ -649,6 +649,7 @@ body {
 }
 
 .color-box {
+    position: relative;
     height: 100px;
     border-radius: 6px;
     display: flex;
@@ -658,7 +659,7 @@ body {
     font-weight: bold;
     font-family: "Courier New", Courier, monospace;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.4s ease-in-out, box-shadow 0.2s ease-in-out;
     border: 1px solid #ddd;
 }
 
@@ -667,12 +668,61 @@ body {
         box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
 
+.color-box-add {
+    border-radius: 50%;
+    border: 2px solid #004074;
+    background-color: #FFF;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    display: none;
+    right: -12px;
+    color: #004074;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    padding: 2px;
+    transition: transform 0.4s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+    .color-box-add:hover {
+        background-color: #E0E0E0;
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+.color-box-remove {
+    border-radius: 50%;
+    border: 2px solid transparent;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: ease-in-out 0.4s;
+}
+    .color-box-remove:hover {
+        color: red;
+        background-color: #E0E0E0;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
 .color-label {
     width: 70%;
     font-weight: bold;
     text-align: center;
     padding: 4px 8px;
-    border-width: 0;
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.2);
+    border-width: 2;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 1);
+    transition: transform 0.4s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+
+    .color-label:hover {
+        background-color: #E0E0E0;
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }

@@ -3,8 +3,9 @@ const fs = require('fs');
 
 async function readColors() {
     return new Promise( async (resolve, reject) => {
-        const colorFileDefaultPath = path.resolve(__dirname, '..', '..', 'assets', 'uniqueColors.json');
-        const colorFileUserPath = path.resolve(__dirname, '..', '..', 'assets', 'userUniqueColors.json');
+        const colorFileDefaultPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'uniqueColors.json');
+        const colorFileUserPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'userUniqueColors.json');
+        console.log(colorFileDefaultPath);
         if (fs.existsSync(colorFileUserPath)) {
             // Если существует юзер-файл, то читаем юзерфайл
             try {
@@ -13,7 +14,7 @@ async function readColors() {
                     throw new Error(`Fetch error: ${response.status}`);
                 };
                 const data = await response.json();
-                return data['uniqueColors'];
+                resolve(data['uniqueColors']);
             } catch (error) {
                 console.log(`Ошибка при попытке прочитать файл User-Color: ${error}`);
                 reject(error);

@@ -260,8 +260,36 @@
             <div class="instruction-container">
                 <div class="instruction-section">
                     <div class="instruction-header">
+                        <i class="fa-solid fa-brush"></i>
+                        <h3>1. Цветовая палитра</h3>
+                    </div>
+                    <div class="instruction-content">
+                        <p>
+                            VMolberte "из коробки" предоставляет 72 уникальных цвета (вкладка "Цвета" в боковом меню).
+                            Вы можете:
+                            <ul>
+                                <li>Изменить эти цвета</li>
+                                <li>Добавить новые цвета</li>
+                                <li>Удалить любые цвета</li>
+                            </ul>
+                            Для изменения цвета плитки наведите курсор на прямоугольник внутри ( <input type="color" class="color-label" style="width: 60px;" value="#004074"> ) 
+                            и нажмите ЛКМ, после чего Вы можете выбрать
+                            любой цвет палитры RGB.<br>
+                            Чтобы добавить новую плитку, Вам нужно навести курсор на любую из уже существующих плиток и нажать на появившийся символ "+";<br>
+                            Если Вы хотите удалить плитку, нажмите на крестик в правом верхнем углу ненужной плитки.<br>
+                        </p>
+                        <p>
+                            По умолчанию все внесённые Вами изменения "одноразовые" и будут стёрты после перезапуска приложения или повторного перехода на
+                            вкладку "Цвета". <b>Для сохранения изменений</b> воспользуйтесь соответствующей кнопкой. Для сброса изменений повторно откройте
+                            вкладку "Цвета" или нажмите кнопку сброса.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="instruction-section">
+                    <div class="instruction-header">
                         <i class="fas fa-file-upload"></i>
-                        <h3>1. Загрузка данных</h3>
+                        <h3>2. Загрузка данных</h3>
                     </div>
                     <div class="instruction-content">
                         <p>VMolberte поддерживает три формата данных:</p>
@@ -284,7 +312,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-cogs"></i>
-                        <h3>2. Настройка параметров отображения</h3>
+                        <h3>3. Настройка параметров отображения</h3>
                     </div>
                     <div class="instruction-content">
                         <p>Каждый блок параметров содержит знакомые по ICDMS настройки:</p>
@@ -297,9 +325,6 @@
                         </ul>
                         <p>
                             <b>Обратите внимание,</b> что, в отличие от ICDMS, в Мольберте отсутствует выбор цветов и "стиля цвета".
-                            Теперь для отображения используются 72 уникальных цвета - посмотрите на них на вкладке "цвета".<br>
-                            Вы можете настроить цвета на свой вкус - кликните на HEX-код (<i>#NNNNNN</i>) и измените значение на своё (<b>не стирайте "#"</b>) и нажмите Enter.
-                            Если хотите сохранить изменения и пользоваться своей палитрой - нажмите "Сохранить мои цвета". Кнопка "Вернуть стандартные" сбросит всё до заводских настроек.
                         </p>
                     </div>
                 </div>
@@ -307,7 +332,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fa-solid fa-shuffle"></i>
-                        <h3>3. Ручная сортировка групп</h3>
+                        <h3>4. Ручная сортировка групп</h3>
                     </div>
                     <div class="instruction-content">
                         <p>
@@ -335,7 +360,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-chart-line"></i>
-                        <h3>4. Генерация изображений</h3>
+                        <h3>5. Генерация изображений</h3>
                     </div>
                     <div class="instruction-content">
                         <p>После настройки всех нужных параметров:</p>
@@ -351,7 +376,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fa-solid fa-wrench"></i>
-                        <h3>5. Добавление деталей</h3>
+                        <h3>6. Добавление деталей</h3>
                     </div>
                     <div class="instruction-content">
                         <p>
@@ -373,7 +398,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-download"></i>
-                        <h3>6. Экспорт результатов</h3>
+                        <h3>7. Экспорт результатов</h3>
                     </div>
                     <div class="instruction-content">
                         <p>После создания графиков (или отчётов):</p>
@@ -389,7 +414,7 @@
                 <div class="instruction-section">
                     <div class="instruction-header">
                         <i class="fas fa-question-circle"></i>
-                        <h3>7. Стрельба по проблемам</h3>
+                        <h3>8. Стрельба по проблемам</h3>
                     </div>
                     <div class="instruction-content">
                         <p>Частые ошибки и решения:</p>
@@ -412,6 +437,20 @@
             </div>
 
             <div class="updates-container">
+                <div class="update-card">
+                    <div class="update-date">
+                        <div class="day">22</div>
+                        <div class="month">Дек. 2025</div>
+                    </div>
+                    <div class="update-content">
+                        <h3>Версия v1.1.0!</h3>
+                        <p>Больше гибкости при работе с цветами - создавайте свою собственную палитру! (см. инструкцию)</p>
+                        <div class="update-tags">
+                            <span class="tag feature">Новые функции</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="update-card">
                     <div class="update-date">
                         <div class="day">18</div>

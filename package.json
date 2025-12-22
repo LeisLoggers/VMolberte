@@ -2,7 +2,7 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/vm256.ico",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Just draw it",
   "license": "MIT",
   "author": "VladimirKirillov",
@@ -31,7 +31,11 @@
             "LICENSE.md"
         ],
         "asar": true,
-        "asarUnpack": [ "**/functions/traceCreate/n.exe" ],
+        "asarUnpack": [
+            "**/functions/traceCreate/n.exe",
+            "**/assets/**",
+            "LICENSE.md"
+        ],
         "fileAssociations": [
             {
                 "ext": [
