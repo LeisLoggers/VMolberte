@@ -2,8 +2,14 @@ const fs = require('fs');
 const path = require('path');
 
 function saveColors() {
-    const colorFileDefaultPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'uniqueColors.json');
-    const colorFileUserPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'userUniqueColors.json');
+    const colorFileDefaultPath = (__dirname.includes("app.asar") ?
+        path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'uniqueColors.json') :
+        path.resolve(__dirname, '..', '..', 'assets', 'uniqueColors.json')
+    );
+    const colorFileUserPath = (__dirname.includes("app.asar") ?
+        path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'userUniqueColors.json') :
+        path.resolve(__dirname, '..', '..', 'assets', 'userUniqueColors.json')
+    );
     document.getElementById('save-colors').addEventListener('click', () => {
         const available_colors = [];
         document.getElementById('color-grid').querySelectorAll('.color-label').forEach(label => {

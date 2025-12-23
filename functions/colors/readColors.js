@@ -2,10 +2,15 @@ const path = require('path');
 const fs = require('fs');
 
 async function readColors() {
-    return new Promise( async (resolve, reject) => {
-        const colorFileDefaultPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'uniqueColors.json');
-        const colorFileUserPath = path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'userUniqueColors.json');
-        console.log(colorFileDefaultPath);
+    return new Promise(async (resolve, reject) => {
+        const colorFileDefaultPath = (__dirname.includes("app.asar") ?
+            path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'uniqueColors.json') : 
+            path.resolve(__dirname, '..', '..', 'assets', 'uniqueColors.json')
+        );
+        const colorFileUserPath = (__dirname.includes("app.asar") ?
+            path.resolve(__dirname, '..', '..', '..', 'app.asar.unpacked', 'assets', 'userUniqueColors.json') :
+            path.resolve(__dirname, '..', '..', 'assets', 'userUniqueColors.json')
+        );
         if (fs.existsSync(colorFileUserPath)) {
             // Если существует юзер-файл, то читаем юзерфайл
             try {
