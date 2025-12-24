@@ -53,6 +53,7 @@ function fillNewspaper() {
         } else {
             fetch(newsPath).then(newspaper => {
                 newspaper.json().then(data => {
+                    document.getElementById('updates-container').innerHTML = '';
                     Array.from(Object.keys(data)).reverse().forEach(key => {
                         if (key !== 'template') {
                             createNewsBlock(data[key]);
