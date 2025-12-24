@@ -46,7 +46,7 @@
     <!-- Main Content -->
     <div class="main-content">
         <!-- Main Page -->
-        <div id="main" class="page active">
+        <div id="main" class="page">
             <div class="page-header">
                 <h2>Визуализация данных</h2>
                 <p>Выберите файл на компьютере и настройте необходимые параметры</p>
@@ -506,6 +506,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
             document.querySelector('.loading-circle').style.display = 'none';
+            document.getElementById('main').classList.add('active');
         });
         ipcRenderer.on('current-version', (event, version) => {
             document.getElementById('version').innerText = `v${version}`;
