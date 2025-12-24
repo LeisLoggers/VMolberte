@@ -27,7 +27,7 @@
                 <i class="fas fa-book"></i>
                 <span>Инструкция</span>
             </div>
-            <div class="menu-item" data-page="whatsnew">
+            <div class="menu-item" data-page="whatsnew" id="newspaper-menu">
                 <i class="fas fa-newspaper"></i>
                 <span>Новости</span>
             </div>
@@ -436,88 +436,8 @@
                 <p>Будьте в курсе всех обновлений!</p>
             </div>
 
-            <div class="updates-container">
-                <div class="update-card">
-                    <div class="update-date">
-                        <div class="day">22</div>
-                        <div class="month">Дек. 2025</div>
-                    </div>
-                    <div class="update-content">
-                        <h3>Версия v1.1.0!</h3>
-                        <p>Больше гибкости при работе с цветами - создавайте свою собственную палитру! (см. инструкцию)</p>
-                        <div class="update-tags">
-                            <span class="tag feature">Новые функции</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="update-card">
-                    <div class="update-date">
-                        <div class="day">18</div>
-                        <div class="month">Дек. 2025</div>
-                    </div>
-                    <div class="update-content">
-                        <h3>Версия v1.0.0!</h3>
-                        <p>Добавлена поддержка функции "Открыть с помощью"</p>
-                        <p>Добавлена поддержка файлов Excel</p>
-                        <p>Добавлены гистограммы</p>
-                        <p>Новый логотип</p>
-                        <p>Полностью реализован базовый функционал</p>
-                        <div class="update-tags">
-                            <span class="tag feature">Новые функции</span>
-                            <span class="tag feature">Новые графики</span>
-                            <span class="tag feature">Новый логотип</span>
-                            <span class="tag release">РЕЛИЗ</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="update-card">
-                    <div class="update-date">
-                        <div class="day">03</div>
-                        <div class="month">Дек. 2025</div>
-                    </div>
-                    <div class="update-content">
-                        <h3>Версия v0.9.4!</h3>
-                        <p>Добавлена система логирования</p>
-                        <p>Отображение версии приложения</p>
-                        <p>Скорректирована работа быстрых отчётов</p>
-                        <div class="update-tags">
-                            <span class="tag feature">Новые функции</span>
-                            <span class="tag bugfix">Исправление багов</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="update-card">
-                    <div class="update-date">
-                        <div class="day">01</div>
-                        <div class="month">Дек. 2025</div>
-                    </div>
-                    <div class="update-content">
-                        <h3>Версия v0.9.3!</h3>
-                        <p>Устранена проблема с цветовой легендой</p>
-                        <p>Переход на новую систему автоматических обновлений</p>
-                        <p>Точечные диаграммы теперь имеют линии тренда</p>
-                        <p>Улучшена работа приложения, почищен код и файлы</p>
-                        <div class="update-tags">
-                            <span class="tag feature">Новые функции</span>
-                            <span class="tag bugfix">Исправление багов</span>
-                            <span class="tag improvement">Работа приложения</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="update-card">
-                    <div class="update-date">
-                        <div class="day">01</div>
-                        <div class="month">Дек. 2025</div>
-                    </div>
-                    <div class="update-content">
-                        <h3>Первая предрелизная версия VMolberte 0.8.0!</h3>
-                        <p>Пред-релиз приложения для проверки работоспособности</p>
-                        <div class="update-tags">
-                            <span class="tag release">РЕЛИЗ</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="updates-container" id="updates-container">
+                
             </div>
         </div>
         <!-- Колористика -->
@@ -555,7 +475,7 @@
 
     <script src="../functions/justLoadRenderer.js"></script>
     <script type="module" src="../functions/resetAllParams.js"></script>
-    <script type="module" src="../functions/colors/configureColorGrid.js"></script>
+    <script type="module" src="../functions/colors/configureOptionalMenues.js"></script>
     <script type="module" src="../functions/progressbar/progressbar.js"></script>
     <script type="module" src="../functions/helpers/presorting.js"></script>
     <script type="module" src="../functions/fileLoadAndPrimProc.js"></script>

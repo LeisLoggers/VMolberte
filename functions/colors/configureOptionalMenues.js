@@ -1,4 +1,5 @@
 const readColors = require('../functions/colors/readColors.js');
+const fillNewspaper = require('../functions/windows/fillNewspaper.js');
 const getLuminance = require('../functions/colors/getLuminance.js');
 const changeBoxColor = require('../functions/colors/changeBoxColor.js');
 const createEmptyColorBox = require('../functions/colors/createEmptyColorBox.js');
@@ -6,9 +7,11 @@ const saveColors = require('../functions/colors/saveColors.js');
 const resetColors = require('../functions/colors/resetColors.js');
 
 function configureColorGrid() {
+    document.querySelector('.loading-circle').style.display = 'block';
     readColors().then(colors => {
         let currentColors = Array.from(document.querySelectorAll('.color-label'), el => el.value).join('');
         if (colors.join('') === currentColors) {
+            document.querySelector('.loading-circle').style.display = 'block';
             return
         } else {
             grid.innerHTML = '';
@@ -51,11 +54,13 @@ function configureColorGrid() {
                 box.addEventListener('mouseleave', () => { box.querySelector('.color-box-add').style.display = 'none' });
                 grid.appendChild(box);
                 verticalColorSelect.appendChild(optVert);
+                document.querySelector('.loading-circle').style.display = 'none';
             });
         }
     })
  };
 
 document.getElementById("color-grid-menu").addEventListener('click', configureColorGrid);
+document.getElementById("newspaper-menu").addEventListener('click', fillNewspaper);
 saveColors();
 resetColors();
