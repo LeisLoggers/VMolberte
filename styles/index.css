@@ -726,3 +726,44 @@ body {
         transform: scale(1.05);
         box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
+details {
+    border: solid 2px #004074;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+summary {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+}
+table {
+    width: 100%;
+}
+
+th {
+    border-right: 2px solid #004074;
+    border-bottom-right-radius: 5px;
+    border-bottom: 2px solid #004074;
+    padding: 5px;
+}
+
+.even {
+    background-color: aliceblue;
+}
+
+td {
+    border: 2px solid rgb(226, 240, 252);
+    border-radius: 5px;
+    padding: 3px;
+    text-align: center;
+}
+
+.odd {
+    background-color: rgb(255, 255, 255);
+}
+
+.tfSumm {
+    font-weight: bold;
+    text-align: right;
+}

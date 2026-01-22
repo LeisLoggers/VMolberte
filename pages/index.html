@@ -19,7 +19,7 @@
             <p>Как ICDMS, только на JS.</p>
         </div>
         <div class="sidebar-menu">
-            <div class="menu-item active" data-page="main">
+            <div class="menu-item active" data-page="main" id="main-menu">
                 <i class="fas fa-home"></i>
                 <span>Рисовалка</span>
             </div>
@@ -506,7 +506,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
             document.querySelector('.loading-circle').style.display = 'none';
+            document.getElementById("color-grid-menu").dispatchEvent(new Event('click'));
+            document.getElementById("main-menu").dispatchEvent(new Event('click'));
             document.getElementById('main').classList.add('active');
+
         });
         ipcRenderer.on('current-version', (event, version) => {
             document.getElementById('version').innerText = `v${version}`;

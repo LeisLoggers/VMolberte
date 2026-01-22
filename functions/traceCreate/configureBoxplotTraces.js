@@ -102,7 +102,6 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     }
     if (groupBy !== colorBy) {
         Object.keys(colorDiscreteMap).forEach(key => {
-            console.log(key);
             let colorTrace = {
                 name: key,
                 type: 'scatter',

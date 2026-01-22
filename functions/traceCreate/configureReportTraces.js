@@ -2,8 +2,9 @@ import { configureBoxplotTraces } from "./configureBoxplotTraces.js";
 import { configureScatterTraces } from "./configureScatterTraces.js";
 import { createHorizontalTrace } from './createHorizontalTrace.js';
 import { createVerticalTrace } from './createVerticalTrace.js';
-import { fillReportDiv } from "../fillReportDiv.js"
-import { sortNumericArray } from "../helpers/sortNumericArray.js"
+import { fillReportDiv } from "../fillReportDiv.js";
+import { sortNumericArray } from "../helpers/sortNumericArray.js";
+import { collectOutliers } from '../helpers/collectOutliers.js';
 
 export function configureReportTraces(configGraph, enrichmentFlag) {
     let uniqueCategories = configGraph.get('categories');
@@ -157,6 +158,15 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     traces.set('at_dropout', at_dropout_trace);
     traces.set('gc_dropout', gc_dropout_trace);
     ipcRenderer.send('save-current-traces', traces);
-    fillReportDiv(traces, filenames)
+    let outliers = collectOutliers(
+        fullData,
+        {
+            PCT_TARGET_BASES_10X: 0.95,
+            PCT_TARGET_BASES_20X: 0.9,
+            MEAN_TARGET_COVERAGE: 70,
+            PCT_SELECTED_BASES: 0.9
+        }
+    );
+    fillReportDiv(traces, filenames, outliers)
     
 }
