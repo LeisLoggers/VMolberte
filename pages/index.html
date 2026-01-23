@@ -506,8 +506,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
             document.querySelector('.loading-circle').style.display = 'none';
-            document.getElementById("color-grid-menu").dispatchEvent(new Event('click'));
-            document.getElementById("main-menu").dispatchEvent(new Event('click'));
             document.getElementById('main').classList.add('active');
 
         });

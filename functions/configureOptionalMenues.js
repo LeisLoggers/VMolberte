@@ -9,8 +9,10 @@ const resetColors = require('../functions/colors/resetColors.js');
 function configureColorGrid() {
     document.querySelector('.loading-circle').style.display = 'block';
     readColors().then(colors => {
+        console.log("Получена цветовая палитра")
         let currentColors = Array.from(document.querySelectorAll('.color-label'), el => el.value).join('');
         if (colors.join('') === currentColors) {
+            console.log("Цветовая палитра уже настроена")
             document.querySelector('.loading-circle').style.display = 'block';
             return
         } else {
@@ -55,12 +57,14 @@ function configureColorGrid() {
                 grid.appendChild(box);
                 verticalColorSelect.appendChild(optVert);
                 document.querySelector('.loading-circle').style.display = 'none';
+                
             });
         }
+        console.log("Завершена настройка цветов")
     })
  };
 
-document.getElementById("color-grid-menu").addEventListener('click', configureColorGrid);
+configureColorGrid();
 document.getElementById("newspaper-menu").addEventListener('click', fillNewspaper);
 saveColors();
 resetColors();
