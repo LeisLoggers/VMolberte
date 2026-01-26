@@ -14,7 +14,6 @@ downloadBtn.addEventListener('click', function (event) {
 
 ipcRenderer.on('path-to-save', function (event, path, traces) {
     let header = document.getElementById('report').querySelector('.page-header').querySelector('h2').innerText.toString();
-    console.log(header)
     if (header.includes('Per-target')) {
         createPerTarForSave(header, traces, path)
     } else {

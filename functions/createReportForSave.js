@@ -161,7 +161,8 @@ export function createReportForSave(header, traces, path) {
             background: linear-gradient(135deg, #004074 0%, #a0a0a0a0 100%);
             color: white;
             position: fixed;
-            width: 100vw;
+			left: 0;
+			height: 100vh;
             overflow-y: auto;
             z-index: 1000;
             transition: var(--transition);
@@ -215,11 +216,11 @@ export function createReportForSave(header, traces, path) {
         /* Main Content */
         .main-content {
             display: none;
-            margin-top: 100px;
-            flex: 1;
+            margin-top: 5px;
             padding: 30px;
-            width: calc(100% - var(--sidebar-width));
-            
+			width: calc(100% - var(--sidebar-width));
+			margin-left: var(--sidebar-width);
+
         }
 
         .page {
@@ -262,6 +263,7 @@ export function createReportForSave(header, traces, path) {
 
         .content-block {
             background-color: white;
+            margin-top: 10px;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -326,6 +328,19 @@ export function createReportForSave(header, traces, path) {
                 flex-direction: column;
             }
         }
+        .topping {
+			position: fixed;
+			right: 10px;
+			bottom: 10px;
+		}
+		.topping i {
+			color: #004074;
+			transition: ease-in-out 0.2s;
+		}
+
+		.topping i:hover {
+			color: red;
+		}
     </style>
 </head>
 <body>
@@ -352,86 +367,12 @@ export function createReportForSave(header, traces, path) {
 			</div>
 
 			<div id="report-content">
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Ширина покрытия 10Х</h3>
-                    </div>
-                    <div id="breadth_10x">
-                    </div>
-                    <hr style="margin-top: 20px;">
-                    <div id="pct_target_bases_10x">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Ширина покрытия 20Х</h3>
-                    </div>
-                    <div id="breadth_20x">
-                    </div>
-                    <hr style="margin-top: 20px;">
-                    <div id="pct_target_bases_20x">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Среднее покрытие</h3>
-                    </div>
-                    <div id="mean_target_coverage">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Количество прочтений на образец</h3>
-                    </div>
-                    <div id="total_reads">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Доля целевых оснований</h3>
-                    </div>
-                    <div id="pct_selected_bases">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>Доля ПЦР-дубликатов</h3>
-                    </div>
-                    <div id="pct_exc_dupe">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>AT-дропаут</h3>
-                    </div>
-                    <div id="at_dropout">
-                    </div>
-                </div>
-
-                <div class="content-block" style="margin-bottom: 10px;">
-                    <div class="block-header">
-                        <i class="fa-solid fa-splotch"></i>
-                        <h3>GC-дропаут</h3>
-                    </div>
-                    <div id="gc_dropout">
-                    </div>
-                </div>
+                
 			</div>
         </div>
-
+        <div class="topping">
+			<a href="#top"><i class="fa-regular fa-circle-up" style="font-size: 48px"></i></a>
+		</div>
     </div>
     <script>
 		function loadPlotly() {
@@ -452,15 +393,40 @@ export function createReportForSave(header, traces, path) {
 		};
 	</script>
     <script>
+        function scrollToElementById(id) {
+          const element = document.getElementById(id);
+          if (element) {
+                element.scrollIntoView({
+                behavior: 'smooth'
+               });
+            } else {
+			alert('Элемент не существует');
+			}
+        }
+    </script>
+    <script>
         loadPlotly().then(() => {
+            let reportContent = document.getElementById('report-content');
+            let sideBar = document.querySelector('.sidebar');
             let traces = ${JSON.stringify(objFromMap)};
             let tracesKeys = Object.keys(traces);
             document.getElementById('report').querySelector('h2').innerText = '${fileHeader}';
             for (const key in traces) {
+                let menuItem = document.createElement('div');
+                menuItem.innerText = key;
+                menuItem.classList.add('menu-item');
+                menuItem.addEventListener('click', function() {scrollToElementById(key)})
+                sideBar.appendChild(menuItem);
+                let plotDiv = document.createElement('div');
+                let contentDiv = document.createElement('div');
+                plotDiv.id = key;
+                contentDiv.classList.add('content-block')
+                contentDiv.appendChild(plotDiv);
+                reportContent.appendChild(contentDiv);
                 Plotly.newPlot(key, traces[key][0], traces[key][1], traces[key][2]);
             };
             document.querySelector('.loadingContainer').style.display = 'none';
-		    document.querySelector('.main-content').style.display = 'block';		
+		    document.querySelector('.main-content').style.display = 'block';
             let plots = document.querySelectorAll('.js-plotly-plot');
 		    plots.forEach(elem => {
 			    Plotly.Plots.resize(elem);
