@@ -1,7 +1,6 @@
 import { createReportForSave } from './createReportForSave.js';
 import { createPerTarForSave } from './createPerTarForSave.js';
-const Plotly = require('plotly.js-dist')
-const { fs } = require('fs')
+const Plotly = require('plotly.js-dist');
 const downloadBtn = document.getElementById('downloadAsHtml');
 const resetBtn = document.getElementById('resetPlotSizes');
 
@@ -17,7 +16,8 @@ ipcRenderer.on('path-to-save', function (event, path, traces) {
     if (header.includes('Per-target')) {
         createPerTarForSave(header, traces, path)
     } else {
-        createReportForSave(header, traces, path);
+        let tables = Array.from(document.getElementsByTagName('details')).map(d => d.innerHTML);
+        createReportForSave(header, traces, path, tables);
     }
     
 })

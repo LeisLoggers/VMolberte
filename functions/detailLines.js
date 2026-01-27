@@ -49,7 +49,7 @@ ipcRenderer.on('draw-vertical', async function (event) {
         document.querySelector('.loading-circle').style.display = 'none';
         Plotly.addTraces(canvas, newTrace);
     } else {
-        newTrace = createHorizontalTrace(config);
+        newTrace = createVerticalTrace(config);
         Plotly.addTraces(canvas, newTrace)
     };
 })

@@ -1,14 +1,13 @@
 const fs = require('fs');
 
-export function createReportForSave(header, traces, path) {
+export function createReportForSave(header, traces, path, tables) {
     const objFromMap = {};
     for (const [key, value] of traces.entries()) {
         objFromMap[key] = value;
     };
     const fileHeader = header.toString();
-    console.log(fileHeader);
-    let template = 
-    `<!DOCTYPE html>
+    let template =
+        `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -328,6 +327,48 @@ export function createReportForSave(header, traces, path) {
                 flex-direction: column;
             }
         }
+        details {
+            border: solid 2px #004074;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            margin-top: 5px;
+    }
+        summary {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px;
+    }
+        table {
+            width: 100%;
+			border-bottom: solid 2px #004074;
+    }
+
+    th {
+        border-right: 2px solid #004074;
+        border-bottom-right-radius: 5px;
+        border-bottom: 2px solid #004074;
+        padding: 5px;
+    }
+
+    .even {
+        background-color: aliceblue;
+    }
+
+    td {
+        border: 2px solid rgb(226, 240, 252);
+        border-radius: 5px;
+        padding: 3px;
+        text-align: center;
+    }
+
+    .odd {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .tfSumm {
+        font-weight: bold;
+        text-align: right;
+    }
         .topping {
 			position: fixed;
 			right: 10px;
@@ -365,7 +406,12 @@ export function createReportForSave(header, traces, path) {
 			<div class="page-header">
                 <h2></h2>
 			</div>
-
+            <div id="tables" class="content-block">
+            <details>
+                <summary>Выпавшие образцы</summary>
+                ${tables.join("")}
+            </details>
+            </div>
 			<div id="report-content">
                 
 			</div>
@@ -403,6 +449,9 @@ export function createReportForSave(header, traces, path) {
 			alert('Элемент не существует');
 			}
         }
+    </script>
+    <script>
+        
     </script>
     <script>
         loadPlotly().then(() => {
