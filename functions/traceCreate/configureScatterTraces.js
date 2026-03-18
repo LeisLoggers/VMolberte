@@ -40,6 +40,7 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             y: yData,
             yaxis: axes[1],
             // Кастом
+            showlegend: colorBy === groupBy ? true : false,
             customdata: filteredData.map(
                 d => `<b>Файл:</b> ${d['filename']}<br>
 <b>Pool:</b> ${d[groupBy]}<br>
@@ -106,9 +107,6 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             },
             font: { size: 18, family: 'Arial' },
             orientation: 'v',
-            x: -0.15,
-            y: 1.05,
-            xanchor: 'center',
             visible: true,
         },
         height: 700,

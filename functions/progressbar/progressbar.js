@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+
 export function progressUpdate() {
     progressBar.style.strokeDashoffset = circumference;
     progressText.textContent = '0%';

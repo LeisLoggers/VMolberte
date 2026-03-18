@@ -142,6 +142,7 @@ body {
     margin-bottom: 30px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e0e0e0;
+    cursor: default;
 }
 
     .page-header h2 {
@@ -233,19 +234,39 @@ body {
 .block-header {
     display: flex;
     align-items: center;
+    gap: 10px;
+    justify-items: center;
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
+    cursor: default;
 }
 
     .block-header i {
         color: var(--primary-color);
-        margin-right: 10px;
     }
 
     .block-header h3 {
         font-size: 1.1rem;
         color: var(--dark-color);
+    }
+    .block-header button {
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        color:#004074;
+        background-color: #00407422;
+        padding: 5px;
+        cursor: pointer;
+        transition: ease-in-out 0.1s;
+    }
+    .block-header button:hover {
+        background-color: #00407455;
+        
+    }
+    .block-header button:active {
+        background-color: #00407488;
+        box-shadow: 0 0 5px #004074;
     }
 
 .selectors {
@@ -255,9 +276,10 @@ body {
 }
 
 .sortableContainer {
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     margin: 10px;
 }
 
@@ -269,6 +291,7 @@ body {
     transition: var(--transition);
     flex-grow: 1;
     text-align: center;
+    width: fit-content;
     cursor: grab;
 }
 

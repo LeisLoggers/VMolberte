@@ -9,6 +9,8 @@ import { blink } from './blink.js';
 
 const fileUpload = document.getElementById('fileUploadArea');
 const clearFP = document.getElementById('clearFP');
+const groupBy = document.getElementById('selectGroupType');
+
 fileUpload.addEventListener('click', function (event) {
     ipcRenderer.send('open-file-dialog-for-file')
 });
@@ -92,6 +94,9 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             event.sender.send('send-meta-data', fileMetaData)
         };
     };
+    if (groupBy.value !== '' || undefined) {
+        event.sender.send('need-sorting');
+    }
 });
 // Обновление количества выбранных файлов
 ipcRenderer.on('update-meta-length', function (event, metaLen) {

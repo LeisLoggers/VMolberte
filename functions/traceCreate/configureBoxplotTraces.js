@@ -32,6 +32,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             pointpos: -1.8,
             jitter: 0.5,
             legend: 'legend',
+            showlegend: colorBy === groupBy? true : false,
             x: xPos,
             xaxis: axes[0],
             y: filteredData.map(d => d[yMetric]),
@@ -71,7 +72,8 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             range: [xIndex[0] - 1, xIndex.at(-1) + 1],
             tickmode: 'array',
             tickvals: xIndex,
-            ticktext: xTicksOrder
+            ticktext: xTicksOrder,
+            automargin: true
         },
         yaxis: {
             title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
@@ -91,9 +93,6 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             },
             font: { size: 18, family: 'Arial' },
             orientation: 'v',
-            x: -0.15,
-            y: 1.0,
-            xanchor: 'center',
             visible: true,
         },
         height: 700,

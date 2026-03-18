@@ -152,9 +152,39 @@ ipcMain.on('send-meta-data', (event, metaData) => {
     }
     event.sender.send('update-meta-length', filesMetaData.size);
 })
-
+// Сортировка данных
 ipcMain.on('need-sorting', (event) => {
     event.sender.send('presort-data', filesMetaData);
+})
+// Импорт порядка сортировки из файла
+ipcMain.on('import-sorted', async(event) => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile', 'showOverwriteConfirmation'],
+        title: 'Выберите файл сортировки',
+        buttonLabel: 'Выбрать',
+        filters: [
+            { name: 'Сортировка', extensions: ['txt'] },
+            { name: 'All files', extensions: ['*'] }
+        ]
+    })
+    if (!result.canceled) {
+        event.sender.send('create-from-file', result.filePaths);
+    }
+})
+// Экспорт порядка сортировки в файл
+ipcMain.on('export-sorted', async(event, sortedOrder) => {
+    const result = await dialog.showSaveDialog({
+        properties: ['createDirectory', 'showOverwriteConfirmation'],
+        title: 'Куда сохранить файл?',
+        buttonLabel: 'Сохранить',
+        filters: [
+            { name: 'Сортировка', extensions: ['txt'] },
+            { name: 'All files', extensions: ['*'] }
+        ]
+    })
+    if (!result.canceled) {
+        event.sender.send('path-to-save-sort', result.filePath, sortedOrder);
+    }
 })
 
 // Отправка метаданных на отрисовку

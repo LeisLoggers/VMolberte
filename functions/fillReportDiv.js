@@ -108,7 +108,6 @@ export function fillReportDiv(traces, filenames, outliers) {
         Plotly.newPlot(key, value[0], value[1], value[2]);
     };
     // Размещение выпаденцев
-    console.log(outliers)
     for (const [key, value] of Object.entries(outliers)) {
         document.getElementById(key).innerHTML = `<details><summary>Выпавшие образцы ${key}:</summary><table><thead><tr><th>Code</th><th>Pool</th></thead><tbody>${value.join('')}</tbody></details>`
     };
