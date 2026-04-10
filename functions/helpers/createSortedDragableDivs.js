@@ -7,7 +7,6 @@ Sortable.create(
     {
         group: 'sorters',
         onAdd: function (event) {
-            removeArea.removeChild(event.item);
             removeArea.classList.remove('hoveredRemove');
         },    
     })
@@ -25,6 +24,7 @@ export function createSortedDragableDivs(groupArray, colorArray) {
 
     groupArray.forEach(elem => {
         let child = document.createElement('div');
+        child.dataset.source = 'group';
         child.innerText = elem;
         child.classList.add('sortableContent');
         groupSort.appendChild(child);
@@ -38,8 +38,8 @@ export function createSortedDragableDivs(groupArray, colorArray) {
             dragClass: 'sortableContent-drag',
             group: 'sorters',
             onAdd: function (event) {
-                if (event.from.id == 'colorSort') {
-                    colorSort.appendChild(event.item);
+                if (event.from.id === 'colorSort' || event.item.dataset.source === 'color') {
+                    event.from.appendChild(event.item);
                 }
             }
         }
@@ -47,6 +47,7 @@ export function createSortedDragableDivs(groupArray, colorArray) {
     if (groupArray.join(',') !== colorArray.join(',')) {
         colorArray.forEach(elem => {
             let child = document.createElement('div');
+            child.dataset.source = 'color';
             child.innerText = elem;
             child.classList.add('sortableContent');
             colorSort.appendChild(child);
@@ -60,13 +61,13 @@ export function createSortedDragableDivs(groupArray, colorArray) {
                 dragClass: 'sortableContent-drag',
                 group: 'sorters',
                 onAdd: function (event) {
-                    if (event.from.id == 'groupSort') {
-                        groupSort.appendChild(event.item);
+                    if (event.from.id === 'groupSort' || event.item.dataset.source === 'group') {
+                        event.from.appendChild(event.item);
                     }
                 }
             }
         );
     } else {
-        colorSort.innerText = 'Порядок соответствует порядку групп';
+        //colorSort.innerText = 'Порядок соответствует порядку групп';
     }
 }

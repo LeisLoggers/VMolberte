@@ -119,16 +119,11 @@ ipcMain.on('excel-file-question', (event, options) => {
     dialogueWindow = createDialogueWindow();
 })
 
-
-//
-
 // Очистка метаданных по загруженным файлам
 ipcMain.on('clear-fp-wrong-paths', (event) => {
     event.sender.send('resetAllParams');
     event.sender.send('reset-progress');
-    if (filesMetaData !== undefined) {
-        filesMetaData.clear();
-    }
+    filesMetaData.clear();
 })
 
 // Проверка заполнения нужных полей
@@ -150,8 +145,10 @@ ipcMain.on('send-meta-data', (event, metaData) => {
     } else {
         filesMetaData = metaData;
     }
+    console.log(filesMetaData)
     event.sender.send('update-meta-length', filesMetaData.size);
 })
+
 // Сортировка данных
 ipcMain.on('need-sorting', (event) => {
     event.sender.send('presort-data', filesMetaData);

@@ -6,7 +6,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
-    let graphTitle = `Распределение ${yMetric} по ${groupBy}`;
+    let graphTitle = `Распределение "${yMetric}" по "${groupBy}"`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];

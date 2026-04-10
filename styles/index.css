@@ -235,7 +235,6 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-items: center;
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e0e0e0;
@@ -246,7 +245,7 @@ body {
         color: var(--primary-color);
     }
 
-    .block-header h3 {
+    .block-header h4 {
         font-size: 1.1rem;
         color: var(--dark-color);
     }
@@ -260,20 +259,30 @@ body {
         cursor: pointer;
         transition: ease-in-out 0.1s;
     }
-    .block-header button:hover {
-        background-color: #00407455;
-        
-    }
-    .block-header button:active {
-        background-color: #00407488;
-        box-shadow: 0 0 5px #004074;
-    }
+        .block-header button:hover {
+            background-color: #00407455;
+            
+        }
+        .block-header button:active {
+            background-color: #00407488;
+            box-shadow: 0 0 5px #004074;
+        }
+        .block-header button i {
+            color: #004074;
+        }
 
 .selectors {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
+.sortable-area-group {
+    display: grid;
+    grid-template-rows: 32px 0.5fr 1% 32px 0.5fr;
+}
+    .sortable-area-group hr {
+        height: 1px;
+    }
 
 .sortableContainer {
     display: flex;
@@ -281,6 +290,9 @@ body {
     flex-wrap: wrap;
     gap: 12px;
     margin: 10px;
+    height: fit-content;
+    border: 2px dashed #d0d0d0;
+    border-radius: 8px;
 }
 
 .sortableContent {
@@ -292,12 +304,20 @@ body {
     flex-grow: 1;
     text-align: center;
     width: fit-content;
+    max-height: 48px;
     cursor: grab;
 }
 
     .sortableContent:hover {
         box-shadow: 0 2px 5px rgba(102, 126, 234, 0.2);
         transform: translateX(2px);
+    }
+
+    [data-source="group"] {
+        background-color: #00407433;
+    }
+    [data-source="color"] {
+        background-color: #6c757d33;
     }
 
 .sortableContent-ghost {
@@ -314,29 +334,29 @@ body {
     box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
 }
 .removeArea {
-    display: flex;
+    display: block;
+    min-height: 140px;
+    max-height: 600px;
+    overflow-y: scroll;
     align-items: center;
     justify-content: center;
-    color: #d0d0d0;
+    color: #00407488;
     border: 2px dashed #d0d0d0;
     border-radius: 8px;
-    padding: 30px;
+    padding: 10px;
+    margin-top: 10px;
     transition: var(--transition);
 }
 
     .removeArea:hover {
-        border-color: red;
-        background-color: rgba(229, 44, 44, 0.09);
-        color: red;
+        border-color: #00407466;
+        background-color: #00407422;
+        color: #00407466;
     }
     .hoveredRemove {
-        border-color: red;
-        background-color: rgba(229, 44, 44, 0.09);
-        color: red;
-    }
-    .removeArea i {
-    position: absolute;
-    font-size: 3rem;
+        border-color: #00407466;
+        background-color: #00407422;
+        color: #00407466;
     }
 
 .styler {

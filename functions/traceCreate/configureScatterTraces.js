@@ -3,6 +3,7 @@ import { trendline } from '../helpers/trendline.js';
 
 
 
+
 export function configureScatterTraces(configGraph, verticals, horizontals) {
     let uniqueCategories = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
@@ -10,7 +11,7 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let xMetric = configGraph.get('xMetric');
     let yMetric = configGraph.get('yMetric');
-    let graphTitle = `Зависимость ${yMetric} от ${xMetric}`;
+    let graphTitle = `Зависимость "${yMetric}" от "${xMetric}"`;
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
@@ -23,11 +24,12 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     const tracesDrawable = []
     let xTicksOrder = uniqueCategories;
 
-
     for (let category of xTicksOrder) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
-        let xData = filteredData.map(d => d[xMetric]);
-        let yData = filteredData.map(d => d[yMetric]);
+        let xData;
+        let yData;
+        xData = filteredData.map(d => d[xMetric]);
+        yData = filteredData.map(d => d[yMetric]);
         let catTrace = {
             name: category,
             legendgroup: category,
@@ -42,12 +44,8 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             // Кастом
             showlegend: colorBy === groupBy ? true : false,
             customdata: filteredData.map(
-                d => `<b>Файл:</b> ${d['filename']}<br>
-<b>Pool:</b> ${d[groupBy]}<br>
-<b>Code:</b> ${d['Code']}<br>
-<b>${yMetric}:</b> ${d[yMetric]}<br>
-<b>${xMetric}:</b> ${d[xMetric]}`
-            ),
+                d => `<b>Файл:</b> ${d['filename']}<br><b>Pool:</b> ${d[groupBy]}<br><b>Code:</b> ${d['Code']}<br><b>${yMetric}:</b> ${d[yMetric]}<br><b>${xMetric}:</b> ${d[xMetric]}`
+                        ),
             hovertemplate: '%{customdata}<extra></extra>',
             hoverlabel: {
                 bgcolor: 'rgba(225,225,225,0.2)',

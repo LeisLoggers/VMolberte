@@ -25,7 +25,7 @@ ipcRenderer.on('resetAllParams', function resetAllParams() {
     document.getElementById('reportMenu').style.visibility = 'hidden';
     document.getElementById('plotlyPlot').innerHTML = '';
     document.getElementById('graphTitle').innerText = 'Тут мог бы быть Ваш график';
-
+    ipcRenderer.send('delete-meta-data');
     selectors.splice(1, 0, gt);
     blink(selectors, 'cancel');
 });

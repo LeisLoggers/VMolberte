@@ -87,6 +87,7 @@
                                 <option value="quickReportEnrichment">Быстрый отчёт по обогащению</option>
                                 <option value="quickReportPerTarget">Отчёт по per-target</option>
                                 <option value="box">Диаграмма размаха</option>
+                                <option value="grBox">Диаграмма размаха (гр.)</option>
                                 <option value="scatter">Точечная диаграмма</option>
                                 <option value="violin">Скрипичная диаграмма</option>
                                 <option value="hist">Гистограмма распределения</option>
@@ -173,26 +174,37 @@
             <!-- Content Block 4 -->
             <div class="content-block" style="grid-column: span 3; margin-bottom: 20px;" id="sortBlock">
                 <div class="block-header">
-                    <i class="fa-solid fa-shuffle"></i>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
                     <h3>Сортировка</h3>
-                    <button class="sort-button" id="sort-import-button">Импортировать порядок</button>
-                    <button class="sort-button" id="sort-export-button">Экспортировать порядок</button>
-                    <button class="sort-button" id="sort-clear-button">Очистить</button>
+                    <button class="sort-button" id="sort-import-button">
+                        <i class="fa-solid fa-file-import"></i> Импортировать порядок
+                    </button>
+                    <button class="sort-button" id="sort-export-button">
+                        <i class="fa-solid fa-file-export"></i> Экспортировать порядок
+                    </button>
+                    <button class="sort-button" id="sort-to-bin-button">
+                        <i class="fa-solid fa-cart-plus"></i> В корзину
+                    </button>
+                    <button class="sort-button" id="sort-clear-button">
+                        <i class="fa-solid fa-trash"></i> Очистить всё
+                    </button>
                 </div>
-                <div class="selectors" style="display: grid; grid-template-columns: 80% 20%">
-                    <div>
+                <div class="selectors" style="display: grid; grid-template-columns: 70% 30%">
+                    <div class="sortable-area-group">
                         <h4>Сортировка групп</h4>
                         <div class="sortableContainer" id="groupSort">
                         </div>
                         <hr>
                         <h4>Сортировка цветов</h4>
                         <div class="sortableContainer" id="colorSort">
-
                         </div>
                     </div>
-                    <div class="removeArea">
-                        <i class="fa-solid fa-trash-can"></i>
+                    <div style="margin-bottom: 30px; margin-right: 10px;">
+                        <h4 style="height: 32px;">Корзина</h4>
+                        <div class="removeArea">
+                        </div>
                     </div>
+                    
                 </div>
                 
             </div>
@@ -348,6 +360,11 @@
                             При наличии смешанных типов (<i>"1, 2, 3, 6, ABC, 7, 8, 10"</i>), список будет приведён к виду <i>"1, 2, 3, 6, 7, 8, 10, ABC"</i> -
                             текстовые значения помещаются в конец списка.
                         </p>
+                        <p>
+                            Если Вы не хотите перетаскивать блоки в режиме ручной сортировки, Вы можете создать файл с расширением "txt" и
+                            указать в нём нужный порядок групп <b>через запятую</b>:
+                            <pre style="width: fit-content; padding: 5px;"><code>Группа 1,Группа 2,Группа 3,...,Группа Х</code></pre>
+                        </p>
                         <p>Для ручной сортировки:</p>
                         <ul>
                             <li>Выберите столбец для группировки в соответствующем меню</li>
@@ -490,11 +507,29 @@
     <script type="module" src="../functions/detailLines.js"></script>
     <script type="module" src="../functions/portDataForSave.js"></script>
     <script>
-        function clearSortingField() {
+        function MoveToBinFromSortingField() {
             let containers = document.querySelectorAll('.sortableContainer');
-            document.querySelectorAll('.sortableContainer').forEach(el => {
-                el.innerHTML = '';
-            })
+            let removeArea = document.querySelector('.removeArea');
+            if ([...containers].every(container => container.childElementCount === 0)) {
+                    alert("Сортировщики пусты, нельзя переместить пустоту.");
+                    return;
+                };
+            for (let container of containers) {
+                document.querySelectorAll('.sortableContainer')
+                let children = container.childNodes
+                for (let child of children) {
+                    container.removeChild(child);
+                    removeArea.appendChild(child);
+                    if (container.childElementCount !== 0) {
+                        MoveToBinFromSortingField()
+                    } else {
+                        return;
+                    };
+                };
+            }
+        }
+        function clearAllSortableContent() {
+            document.querySelectorAll('.sortableContent').forEach(el => el.remove());
         }
     </script>
     <script>
@@ -520,7 +555,8 @@
             ipcRenderer.send('version');
             document.querySelector('.loading-circle').style.display = 'none';
             document.getElementById('main').classList.add('active');
-            document.getElementById('sort-clear-button').addEventListener('click', clearSortingField);
+            document.getElementById('sort-to-bin-button').addEventListener('click', MoveToBinFromSortingField);
+            document.getElementById('sort-clear-button').addEventListener('click', clearAllSortableContent);
             document.getElementById('sort-import-button').addEventListener('click', () => {
                 ipcRenderer.send('import-sorted')
             })

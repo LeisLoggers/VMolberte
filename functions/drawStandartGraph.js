@@ -1,6 +1,7 @@
 
 import { checkLengths } from "./checks/checkLengths.js";
 import { configureBoxplotTraces } from "./traceCreate/configureBoxplotTraces.js";
+import { configureGrouppedBoxplotTraces } from "./traceCreate/configureGrouppedBoxplotTraces.js";
 import { configureScatterTraces } from "./traceCreate/configureScatterTraces.js";
 import { configureHistTraces } from "./traceCreate/configureHistTraces.js";
 import { configureReportTraces } from "./traceCreate/configureReportTraces.js";
@@ -56,6 +57,10 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         configGraph.set('filenames', filenames);
         if (graphType === 'box' || graphType === 'violin') {
             let boxplotTraces = configureBoxplotTraces(configGraph);
+            document.getElementById('graphTitle').innerText = 'Ваш график';
+            Plotly.newPlot('plotlyPlot', boxplotTraces[0], boxplotTraces[1], boxplotTraces[2])
+        } else if (graphType === 'grBox') {
+            let boxplotTraces = configureGrouppedBoxplotTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', boxplotTraces[0], boxplotTraces[1], boxplotTraces[2])
         } else if (graphType === 'scatter') {
