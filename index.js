@@ -145,7 +145,6 @@ ipcMain.on('send-meta-data', (event, metaData) => {
     } else {
         filesMetaData = metaData;
     }
-    console.log(filesMetaData)
     event.sender.send('update-meta-length', filesMetaData.size);
 })
 

@@ -10,12 +10,12 @@ export function configureGrouppedBoxplotTraces(configGraph, verticals, horizonta
     let fullData = configGraph.get('data');
     const tracesDrawable = []
     const colorByValues = Object.keys(colorDiscreteMap);
-    
+
     colorByValues.forEach(colorVal => {
         const filteredData = fullData.filter(d => d[colorBy] === colorVal);
-
-        const x = filteredData.map(d => d[groupBy]);
-        const y = filteredData.map(d => d[yMetric])
+        const data = filteredData.filter(row => new Set(uniqueCategories).has(row[groupBy]))
+        const x = data.map(d => d[groupBy]);
+        const y = data.map(d => d[yMetric]);
         tracesDrawable.push({
             type: 'box',
             x: x,
@@ -44,7 +44,6 @@ export function configureGrouppedBoxplotTraces(configGraph, verticals, horizonta
     if (horizontals) {
         horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
     };
-    console.log(tracesDrawable);
     let layout = {
         title: {
             text: graphTitle, font: { weight: 'bold', size: 24, family: "Arial" }

@@ -32,9 +32,7 @@
     <script src="../functions/justLoadRenderer.js"></script>
     <script>
         const SELECTOR = document.getElementById('excelSheets');
-        console.log('Im alive')
         ipcRenderer.invoke('create-excel-option-list').then((result) => {
-            console.log('and options is ', result)
             result.forEach(option => {
                 let newOpt = document.createElement('option');
                 newOpt.innerText = option;

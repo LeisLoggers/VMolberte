@@ -6,7 +6,6 @@ export function createPerTarForSave(header, traces, path) {
         objFromMap[key] = value;
     };
     const fileHeader = header.toString();
-    console.log(fileHeader);
     let template =
         `<!DOCTYPE html>
 <html lang="en">

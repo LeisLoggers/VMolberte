@@ -1,4 +1,22 @@
 {
+	"20260412": {
+		"date": {
+			"day": "12",
+			"month": "Апр. 2026"
+		},
+		"header": "VMolberte 1.4.1!",
+		"content": [ "Доработка графиков" ],
+		"tags": {
+			"tag_1": {
+				"type": "tag improvement",
+				"text": "Работа приложения"
+			},
+			"tag_2": {
+				"type": "tag bugfix",
+				"text": "Исправление багов"
+			}
+		}
+	},
 	"20260410": {
 		"date": {
 			"day": "10",
