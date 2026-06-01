@@ -10,8 +10,9 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
     let graphType = configGraph.get('graphType');
     let fullData = configGraph.get('data');
     let axes = configGraph.get('axes') || ['x', 'y'];
-    
-
+    let customMetaData = configGraph.get('customMetaData').length > 0 
+    ? [...configGraph.get('customMetaData'), yMetric]
+     : ['filename', 'Code', 'Pool', yMetric];
     const tracesDrawable = []
     let xTicksOrder = uniqueCategories;
     let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
@@ -21,6 +22,9 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
         let xPos = [];
         xPos.length = filteredData.length;
         xPos.fill(xTicksOrder.indexOf(category));
+        let customdata = filteredData.map(row => {
+            return customMetaData.map(key => `<b>${key}:</b> ${row[key]}`).join('<br>');
+        });
         let catTrace = {
             name: category,
             type: graphType,
@@ -37,12 +41,7 @@ export function configureBoxplotTraces(configGraph, verticals, horizontals) {
             xaxis: axes[0],
             y: filteredData.map(d => d[yMetric]),
             yaxis: axes[1],
-            customdata: filteredData.map(
-                d => `<b>Файл:</b> ${d['filename']}<br>
-<b>Группа:</b> ${d[groupBy]}<br>
-<b>Code:</b> ${d['Code']}<br>
-<b>${yMetric}:</b> ${d[yMetric]}`
-            ),
+            customdata: customdata,
             hovertemplate: '%{customdata}<extra></extra>',
             hoverlabel: {
                 bgcolor: 'rgba(225,225,225,0.2)',

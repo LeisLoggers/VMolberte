@@ -15,7 +15,7 @@ export function configurePerTargetBox(configGraph, verticals, horizontals) {
     let xIndex = Array.from({ length: xTicksOrder.length }, (_, i) => i)
     let passedGroups = new Set();
     for (let category of xTicksOrder) {
-        const filteredData = fullData.filter(d => d['name'] === category);
+        const filteredData = fullData.filter(d => d['gene'] === category);
         for (let group of uniqueCategories) {
             let geneData = filteredData.filter(d => d[groupBy] === group);
             let xPos = [];

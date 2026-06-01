@@ -7,36 +7,36 @@ drawBtn.addEventListener('click', function (event) {
     ipcRenderer.send('check-required');
 })
 
-ipcRenderer.on('check-required-renderer', function (event) {
-    const required = {
-        'groupType': document.getElementById('selectGroupType').value,
-        'yMetric': document.getElementById('metric_1').value,
+
+function upgradedChecks() {
+    const requiredFieldsId = ['selectGraphType', 'selectGroupType', "selectGroupColor", "metric_1", "metric_2"];
+    const graphType = document.getElementById('selectGraphType').value;
+    let fieldValues = new Map();
+    for (let field of requiredFieldsId) {
+        fieldValues.set(field, document.getElementById(field).value);
     };
 
-    let successCount = 2;
-    let currentCount = 2;
+    let fieldToImage = {
+        "quickReport": ['selectGroupType', "selectGroupColor"],
+        "quickReportEnrichment": ['selectGroupType', "selectGroupColor"],
+        "quickReportPerTarget": ['selectGroupType', "selectGroupColor"],
+        "scatter": ['selectGroupType', "selectGroupColor", "metric_1"],
+        "box": ['selectGroupType', "selectGroupColor", "metric_1"],
+        "grBox": ['selectGroupType', "selectGroupColor", "metric_1"],
+        "violin": ['selectGroupType', "selectGroupColor", "metric_1"],
+        "hist": ['selectGroupType', "selectGroupColor", "metric_1"]
+    };
 
-    if (document.getElementById('selectGraphType').value.includes('quickReport')) {
-        if (required['groupType'] !== '') {
-            console.log('[PROC] checkRequired OK');
-            ipcRenderer.send('draw-signal');
-        } else {
-            alert('Указаны не все обязательные поля.')
-        }
+    let isFullFilled = [];
+
+    fieldToImage[graphType].forEach(element => {
+        isFullFilled.push(fieldValues.get(element))    
+    });
+
+    if (isFullFilled.every(el => el)) {
+        ipcRenderer.send('draw-signal')
     } else {
-        Object.keys(required).forEach(param => {
-            if (required[param] === '') {
-                currentCount -= 1;
-            } else {
-                currentCount -= 0
-            };
-        })
-        if (currentCount === successCount) {
-            console.log('[PROC] checkRequired OK');
-            ipcRenderer.send('draw-signal');
-        } else {
-            alert('Указаны не все обязательные поля.')
-        };
-    }
-    
-});
+        alert('Указаны не все требуемые поля.')
+    };
+}
+ipcRenderer.on('check-required-renderer', upgradedChecks)

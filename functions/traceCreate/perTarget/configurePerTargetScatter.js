@@ -38,7 +38,7 @@ export function configurePerTargetScatter(configGraph, verticals, horizontals) {
 <b>Группа:</b> ${d[groupBy]}<br>
 <b>Code:</b> ${d['Code']}<br>
 <b>${yMetric}:</b> ${d[yMetric]}<br>
-<b>Ген:</b> ${d['name']}<br>
+<b>Ген:</b> ${d['gene']}<br>
 <b>Зонды:</b> ${d['probe'] || 'Не найдены'}`
             ),
             hovertemplate: '%{customdata}<extra></extra>',

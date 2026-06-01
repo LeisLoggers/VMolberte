@@ -19,7 +19,9 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     let yMax = parseFloat(sortNumericArray(fullData.map(d => d[yMetric])).pop());
     xMax += xMax * 0.1;
     yMax += yMax * 0.1;
-
+    let customMetaData = configGraph.get('customMetaData').length > 0 
+    ? [...configGraph.get('customMetaData'), xMetric, yMetric] 
+    : ['filename', 'Code', 'Pool', xMetric, yMetric];
 
     const tracesDrawable = []
     let xTicksOrder = uniqueCategories;
@@ -30,6 +32,9 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
         let yData;
         xData = filteredData.map(d => d[xMetric]);
         yData = filteredData.map(d => d[yMetric]);
+        let customdata = filteredData.map(row => {
+            return customMetaData.map(key => `<b>${key}:</b> ${row[key]}`).join('<br>');
+        });
         let catTrace = {
             name: category,
             legendgroup: category,
@@ -43,9 +48,7 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
             yaxis: axes[1],
             // Кастом
             showlegend: colorBy === groupBy ? true : false,
-            customdata: filteredData.map(
-                d => `<b>Файл:</b> ${d['filename']}<br><b>Pool:</b> ${d[groupBy]}<br><b>Code:</b> ${d['Code']}<br><b>${yMetric}:</b> ${d[yMetric]}<br><b>${xMetric}:</b> ${d[xMetric]}`
-                        ),
+            customdata: customdata,
             hovertemplate: '%{customdata}<extra></extra>',
             hoverlabel: {
                 bgcolor: 'rgba(225,225,225,0.2)',
@@ -129,6 +132,5 @@ export function configureScatterTraces(configGraph, verticals, horizontals) {
     }
     let config = { responsive: true };
     
-
     return [tracesDrawable, layout, config]
 }

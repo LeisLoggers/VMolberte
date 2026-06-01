@@ -16,6 +16,7 @@ fileUpload.addEventListener('click', function (event) {
 });
 clearFP.addEventListener('click', function () {
     ipcRenderer.send('clear-fp-wrong-paths');
+    document.querySelectorAll('.sortableContent').forEach(el => el.remove());
     document.getElementById('fileName').innerText = `Файлы не выбраны`;
 })
 

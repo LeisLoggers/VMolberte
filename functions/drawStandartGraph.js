@@ -25,6 +25,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
     let yMetric = document.getElementById('metric_1').value;
     let xMetric = document.getElementById('metric_2').value || groupBy;
     let graphType = document.getElementById('selectGraphType').value;
+    let metaFields = [...document.getElementById('metainformation').querySelectorAll('.selector-type-checkbox:checked')].map(d => d.value);
     let filenames = [];
     let uniqueCategoriesSorted = [...document.getElementById('groupSort').querySelectorAll('.sortableContent')].map(el => el.innerText);
     let uniqueColorGroupsSorted = (
@@ -55,6 +56,8 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         configGraph.set('graphType', graphType);
         configGraph.set('data', fullData);
         configGraph.set('filenames', filenames);
+        configGraph.set('customMetaData', metaFields);
+        console.log(configGraph)
         if (graphType === 'box' || graphType === 'violin') {
             let boxplotTraces = configureBoxplotTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';
@@ -78,7 +81,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         } else if (graphType === 'quickReportEnrichment') {
             configureReportTraces(configGraph, false)
         } else if (graphType === 'quickReportPerTarget') {
-            let genes = [... new Set(fullData.map(d => d['name']))];
+            let genes = [... new Set(fullData.map(d => d['gene']))];
             configGraph.set('genes', genes);
             configurePerTarget(configGraph);
         }

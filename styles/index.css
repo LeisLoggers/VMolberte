@@ -412,7 +412,25 @@ body {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
         }
+#metainformation {
+    width: 100%;
+    height: 110px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
+}
+
+.selector-custom-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 14px;
+}
+    .selector-custom-row input[type="checkbox"] {
+  accent-color: #004074; /* Changes the background color when checked */
+}
 .action-container {
     display: flex;
     justify-content: center;

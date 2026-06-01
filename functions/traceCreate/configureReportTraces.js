@@ -12,6 +12,7 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
     let colorBy = configGraph.get('colorBy');
     let colorDiscreteMap = configGraph.get('colorDiscreteMap');
     let fullData = configGraph.get('data');
+    let metaData = configGraph.get('customMetaData')
     let mtcMax = parseFloat(sortNumericArray(fullData.map(d => d['MEAN_TARGET_COVERAGE'])).pop());
     mtcMax += 30;
     let filenames = configGraph.get('filenames')
@@ -24,7 +25,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', 'MEAN_TARGET_COVERAGE'],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_10X' : 'PCT_TARGET_BASES_50X')],
         ['graphType', 'scatter'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), [(enrichmentFlag ?
         createVerticalTrace(new Map([['where', 70], ['from', 0], ['to', 1.2], ['showLegend', false]])) :
@@ -39,7 +41,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', 'MEAN_TARGET_COVERAGE'],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_20X' : 'PCT_TARGET_BASES_100X')],
         ['graphType', 'scatter'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), [(enrichmentFlag ?
         createVerticalTrace(new Map([['where', 70], ['from', 0], ['to', 1.2], ['showLegend', false]])) :
@@ -54,7 +57,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_10X' : 'PCT_TARGET_BASES_50X')],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), '',
         [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.95], ['showLegend', false]]))]);
@@ -67,7 +71,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', (enrichmentFlag ? 'PCT_TARGET_BASES_20X' : 'PCT_TARGET_BASES_100X')],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.9], ['showLegend', false]]))]);
 
@@ -79,9 +84,10 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'PCT_SELECTED_BASES'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
-    ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.9], ['showLegend', false]]))]);
+    ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.65], ['showLegend', false]]))]);
 
     let pct_exc_dupe_trace = configureBoxplotTraces(new Map([
         ['categories', uniqueCategories],
@@ -91,7 +97,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'PCT_EXC_DUPE'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), '', [createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.1], ['showLegend', false]])),
         createHorizontalTrace(new Map([['from', -1], ['to', uniqueCategories.length], ['where', 0.2], ['showLegend', false]]))]);
@@ -104,7 +111,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'TOTAL_READS'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ));
 
@@ -116,7 +124,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'MEAN_TARGET_COVERAGE'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ), '', [(enrichmentFlag ?
         createHorizontalTrace(new Map([['where', 70], ['from', -1], ['to', uniqueCategories.length], ['showLegend', false]])) :
@@ -130,7 +139,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'AT_DROPOUT'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ));
 
@@ -142,7 +152,8 @@ export function configureReportTraces(configGraph, enrichmentFlag) {
         ['xMetric', ''],
         ['yMetric', 'GC_DROPOUT'],
         ['graphType', 'box'],
-        ['data', fullData]
+        ['data', fullData],
+        ['customMetaData', metaData]
     ]
     ));
 

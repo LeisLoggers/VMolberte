@@ -36,8 +36,8 @@ export function configurePerTarget(configGraph) {
     configGraph.set('graphTitle', 'Распределение нормализованного покрытия по ГЦ-составу')
     let perGeneNCscatter = configurePerTargetScatter(
         configGraph,
-    [createHorizontalTrace(new Map([['where', 0.5], ['from', 0.2], ['to', 0.8], ['showLegend', false]])),
-     createHorizontalTrace(new Map([['where', 1.5], ['from', 0.2], ['to', 0.8], ['showLegend', false]]))]);
+    [createHorizontalTrace(new Map([['where', 0.5], ['from', 0], ['to', 1], ['showLegend', false]])),
+     createHorizontalTrace(new Map([['where', 1.5], ['from', 0], ['to', 1], ['showLegend', false]]))]);
 
     let traces = new Map();
     traces.set('perGeneNCHist', perGeneNCHist);

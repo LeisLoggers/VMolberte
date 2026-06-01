@@ -5,6 +5,7 @@ export function configureSelectBoxes(columns, lfh) {
     let metric1 = document.getElementById('metric_1');
     let metric2 = document.getElementById('metric_2');
     let mergeKey = document.getElementById('mergeKey');
+    let metainf = document.getElementById('metainformation');
     let decoration = [mergeKey, gt, menu, colormenu, metric1, metric2]
     columns.forEach(column => {
         if (lfh.includes(column)) {
@@ -15,6 +16,15 @@ export function configureSelectBoxes(columns, lfh) {
             let m1Option = document.createElement('option');
             let m2Option = document.createElement('option');
             let mergeOpt = document.createElement('option');
+            let selectorCustomRow = document.createElement('div');
+            selectorCustomRow.classList.add('selector-custom-row');
+            let customSelectorValue = document.createElement('input');
+            customSelectorValue.type = 'checkbox';
+            customSelectorValue.classList.add('selector-type-checkbox');
+            customSelectorValue.value = column;
+            let customSelectorLabel = document.createElement('label');
+            customSelectorLabel.innerText = column;
+
             groupOption.innerText = column;
             colorOption.innerText = column;
             m1Option.innerText = column;
@@ -30,6 +40,10 @@ export function configureSelectBoxes(columns, lfh) {
             metric1.appendChild(m1Option);
             metric2.appendChild(m2Option);
             mergeKey.appendChild(mergeOpt)
+
+            selectorCustomRow.appendChild(customSelectorValue);
+            selectorCustomRow.appendChild(customSelectorLabel);
+            metainf.appendChild(selectorCustomRow)
         };
     })
     return decoration;
