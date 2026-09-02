@@ -109,7 +109,7 @@ export function fillReportDiv(traces, filenames, outliers) {
     };
     // Размещение выпаденцев
     for (const [key, value] of Object.entries(outliers)) {
-        document.getElementById(key).innerHTML = `<details><summary>Выпавшие образцы ${key}:</summary><table><thead><tr><th>Code</th><th>Pool</th></thead><tbody>${value.join('')}</tbody></details>`
+        document.getElementById(key).innerHTML = `<details><summary>Выпавшие образцы ${key}:</summary><table id="outlier-table_${key}" class="outlier-table"><thead><tr><th>Code</th><th>Pool</th></thead><tbody>${value.join('')}</tbody></details>`
     };
 
     // Перевод пользователя на страницу отчётов

@@ -419,11 +419,20 @@
                             Для этого есть специальная вкладка "Дополнительные элементы", при нажатии на которую Вам раскроется небольшой ассортимент дополнительных опций.
                         </p>
                         <p>
-                            <b>N.B.</b> Добавление линии p-value запускает длительный расчёт p-value по Манну-Уитни, основываясь на данных по оси Y:
+                            <b>N.B.</b> Добавление линии p-value запускает U-test Манна-Уитни, основываясь на данных по оси Y:
                             <pre><code>
-                            <span class="pythonWord">Python</span>
-                            <span class="pythonFunc">from</span> scipy.stats <span class="pythonFunc">import</span> mannwhitneyu
-                            p_value = mannwhitneyu(data_1, data_2, method='auto', nan_policy='omit')
+                            <span style="color:rgb(253, 79, 79); font-weight: bold">Rust</span>
+                            <span class="pythonFunc" style="color:rgb(207, 0, 162)">use</span> <span style="color:rgb(253, 79, 79)">hypors::mann_whitney::u_test;</span>
+                            <span class="pythonFunc" style="color:rgb(207, 0, 162)">use</span> <span style="color:rgb(253, 79, 79)">hypors::common::TailType;</span>
+                            <span class="pythonFunc" style="color:rgb(207, 0, 162)">use</span> <span style="color:rgb(253, 79, 79)">wasm_bindgen::prelude::*;</span>
+
+                            #[<span class="pythonFunc">wasm_bindgen</span>]
+                            <span style="color:rgb(207, 0, 162)">pub</span> <span style="color:rgb(174, 0, 255)">fn</span> <span class="pythonFunc">mann_whitney_test</span>(a: &[f64], b: &[f64]) -> String {
+                                <span style="color:rgb(207, 0, 162)">match</span> u_test(a.iter().copied(), b.iter().copied(), 0.05, TailType::Two) {
+                                    <span style="color:rgb(253, 79, 79)">Ok</span>(result) => format!("{:.2e}", result.p_value),
+                                    <span style="color:rgb(253, 79, 79)">Err(_)</span> => f64::NAN.to_string(),
+                                }
+                            }
                                 </code></pre>
                             В результате работы функции на графике между заданными боксплотами через некоторое время появится линия с расчитанным p-value.
                         </p>
@@ -497,6 +506,9 @@
                 <button class="draw-button" id="downloadAsHtml" style="margin-top: 30px;">
                     <i class="fa-solid fa-download"></i> Скачать как html
                 </button>
+                <button class="draw-button" id="downloadAsPPTX" style="margin-top: 30px;">
+                    <i class="fa-solid fa-file-powerpoint"></i></i> Скачать как презентацию
+                </button>
                 <button class="draw-button" id="resetPlotSizes" style="margin-top: 30px;">
                     <i class="fa-solid fa-rotate-left"></i> Обновить графики
                 </button>
@@ -521,6 +533,7 @@
     <script type="module" src="../functions/drawStandartGraph.js"></script>
     <script type="module" src="../functions/detailLines.js"></script>
     <script type="module" src="../functions/portDataForSave.js"></script>
+    <script type="module" src="../functions/donwloadAsPPTX.js"></script>
     <script>
         function MoveToBinFromSortingField() {
             let containers = document.querySelectorAll('.sortableContainer');

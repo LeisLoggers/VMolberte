@@ -1,4 +1,36 @@
 {
+	"20260901": {
+		"date": {
+			"day": "01",
+			"month": "Сен. 2026"
+		},
+		"header": "VMolberte 1.4.4!",
+		"content": [ "Добавлена возможнось экспорта отчётов в файл '.pptx'" ],
+		"tags": {
+			"tag_1": {
+				"type": "tag improvement",
+				"text": "Работа приложения"
+			},
+			"tag_2": {
+				"type": "tag feature",
+				"text": "Новые функции"
+			}
+		}
+	},
+	"20260819": {
+		"date": {
+			"day": "19",
+			"month": "Авг. 2026"
+		},
+		"header": "VMolberte 1.4.3!",
+		"content": [ "Расчёт p-value переведён на Rust" ],
+		"tags": {
+			"tag_1": {
+				"type": "tag improvement",
+				"text": "Работа приложения"
+			}
+		}
+	},
 	"20260601": {
 		"date": {
 			"day": "01",

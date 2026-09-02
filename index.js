@@ -183,17 +183,26 @@ ipcMain.on('export-sorted', async(event, sortedOrder) => {
     }
 })
 
+// Экспорт отчёта в pptx
+ipcMain.handle('pptx-file', async(event) => {
+    const result = await dialog.showSaveDialog({
+        properties: ['createDirectory', 'showOverwriteConfirmation'],
+        title: 'Куда сохранить файл?',
+        buttonLabel: 'Сохранить',
+        filters: [
+            { name: 'Презентация', extensions: ['pptx'] },
+            { name: 'All files', extensions: ['*'] }
+        ]
+    })
+    if (!result.canceled) {
+        return result.filePath
+    }
+})
+
 // Отправка метаданных на отрисовку
 ipcMain.on('draw-signal', (event) => {
     event.sender.send('run-progress-bar-main')
     event.sender.send('drawIt', filesMetaData)
-    /* 
-        FIXME: Прогресс работает в main, как и вычисления.
-        из прогресса нельзя обращаться в DOM, вычислениям нужен import,
-        import'у нужен module, а если делать через Worker, то Worker'у 
-        нужен parentPort, но parentPort не любит module.
-        СУКАААААААААААААААААААААААААААААААААААААААААААААААААААААААААААА
-    */
 })
 
 

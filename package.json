@@ -2,7 +2,7 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/vm256.ico",
-  "version": "1.4.1",
+  "version": "1.4.4",
   "description": "Just draw it",
   "license": "MIT",
   "author": "VladimirKirillov",
@@ -21,6 +21,7 @@
     "appId": "org.vmolberte.vmolberte",
     "icon": "./assets/vm256.ico",
     "productName": "VMolberte",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
     "files": [
       "index.js",
       "pages/",
@@ -54,7 +55,8 @@
       {
         "provider": "github",
         "owner": "LeisLoggers",
-        "repo": "VMolberte"
+        "repo": "VMolberte",
+        "releaseType": "draft"
       }
     ],
     "win": {
@@ -71,6 +73,7 @@
     "electron-updater": "^6.6.2",
     "fs": "^0.0.1-security",
     "plotly.js-dist": "^3.1.2",
+    "pptxgenjs": "^4.0.1",
     "sortablejs": "^1.15.6",
     "xlsx": "^0.18.5"
   },
