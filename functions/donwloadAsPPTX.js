@@ -10,7 +10,7 @@ document.getElementById('downloadAsPPTX').addEventListener('click', async () => 
         return;
     }
 
-    // 2. Создание презентацию
+    // 2. Создание презентации
     const pptx = new PptxGenJS();
     pptx.defineLayout({ name: 'WIDE', width: 13.33, height: 7.5 });
     pptx.layout = 'WIDE';

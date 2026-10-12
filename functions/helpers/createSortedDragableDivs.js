@@ -16,17 +16,19 @@ removeArea.addEventListener('dragenter', (event) => {
 removeArea.addEventListener('dragleave', (event) => {
     removeArea.classList.remove('hoveredRemove')
 })
-export function createSortedDragableDivs(groupArray, colorArray) {
+export function createSortedDragableDivs(groupArray, colorArray, colorGridForFiles) {
     const groupSort = document.getElementById('groupSort');
     const colorSort = document.getElementById('colorSort');
     groupSort.innerHTML = '';
     colorSort.innerHTML = '';
-
+    const colorBy = window.colorBy;
     groupArray.forEach(elem => {
         let child = document.createElement('div');
         child.dataset.source = 'group';
         child.innerText = elem;
         child.classList.add('sortableContent');
+        child.style.backgroundColor = colorGridForFiles[elem]['color'];
+        child.title = `${colorBy}: ${colorGridForFiles[elem]['colorBy']}`
         groupSort.appendChild(child);
     });
     Sortable.create(

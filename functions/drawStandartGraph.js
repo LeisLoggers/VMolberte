@@ -15,10 +15,15 @@ const Plotly = require('plotly.js-dist');
 
 ipcRenderer.on('drawIt', function (event, filesMetaData) {
     console.log('sended')
-    const available_colors = [];
-    document.getElementById('color-grid').querySelectorAll('.color-label').forEach(label => {
-        available_colors.push(label.value);
-    });
+    if (!window.available_colors) {
+        const available_colors = [];
+        document.getElementById('color-grid').querySelectorAll('.color-label').forEach(label => {
+            available_colors.push(label.value);
+         });
+    } else {
+        available_colors = window.available_colors;
+    }
+    
 
     let groupBy = document.getElementById('selectGroupType').value;
     let colorBy = document.getElementById('selectGroupColor').value;
