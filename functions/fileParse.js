@@ -11,13 +11,6 @@ export async function fileParse(filesMetaData) {
         const filepath = fileMeta['filepath'];
         const resolution = fileMeta['resolution'];
         const filename = fileMeta['filename'];
-        let mergeKey = document.getElementById('mergeKey').value;
-        /*
-        * FIXME:
-        * Если строка с данным значением mergeKey существует в
-        * fullDara, то нужно найти такую строку в fullData
-        * и добавить ей значений.
-        */
         const promise = new Promise((resolve, reject) => {
             if (resolution === 'tsv') {
                 d3.tsv(filepath, (data) => {

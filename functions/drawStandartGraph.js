@@ -76,9 +76,9 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             document.getElementById('graphTitle').innerText = 'Ваш график';
             Plotly.newPlot('plotlyPlot', scatterTraces[0], scatterTraces[1], scatterTraces[2])
         } else if (graphType === 'hist') {
-            let heatmapTraces = configureHistTraces(configGraph);
+            let histTraces = configureHistTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';
-            Plotly.newPlot('plotlyPlot', heatmapTraces[0], heatmapTraces[1], heatmapTraces[2])
+            Plotly.newPlot('plotlyPlot', histTraces[0], histTraces[1], histTraces[2])
         }
         // Различные отчёты
         else if (graphType === 'quickReport') {
@@ -90,5 +90,7 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
             configGraph.set('genes', genes);
             configurePerTarget(configGraph);
         }
+        const gd = document.getElementById('plotlyPlot');
+        console.log(gd.layout.shapes)
     })();
 })

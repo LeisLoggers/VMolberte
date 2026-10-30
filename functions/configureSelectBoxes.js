@@ -4,9 +4,8 @@ export function configureSelectBoxes(columns, lfh) {
     let colormenu = document.getElementById('selectGroupColor');
     let metric1 = document.getElementById('metric_1');
     let metric2 = document.getElementById('metric_2');
-    let mergeKey = document.getElementById('mergeKey');
     let metainf = document.getElementById('metainformation');
-    let decoration = [mergeKey, gt, menu, colormenu, metric1, metric2]
+    let decoration = [gt, menu, colormenu, metric1, metric2]
     columns.forEach(column => {
         if (lfh.includes(column)) {
             return;
@@ -15,7 +14,6 @@ export function configureSelectBoxes(columns, lfh) {
             let colorOption = document.createElement('option');
             let m1Option = document.createElement('option');
             let m2Option = document.createElement('option');
-            let mergeOpt = document.createElement('option');
             let selectorCustomRow = document.createElement('div');
             selectorCustomRow.classList.add('selector-custom-row');
             let customSelectorValue = document.createElement('input');
@@ -29,17 +27,14 @@ export function configureSelectBoxes(columns, lfh) {
             colorOption.innerText = column;
             m1Option.innerText = column;
             m2Option.innerText = column;
-            mergeOpt.innerText = column;
             groupOption.value = column;
             colorOption.value = column;
             m1Option.value = column;
             m2Option.value = column;
-            mergeOpt.value = column;
             menu.appendChild(groupOption);
             colormenu.appendChild(colorOption)
             metric1.appendChild(m1Option);
             metric2.appendChild(m2Option);
-            mergeKey.appendChild(mergeOpt)
 
             selectorCustomRow.appendChild(customSelectorValue);
             selectorCustomRow.appendChild(customSelectorLabel);

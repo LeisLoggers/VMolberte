@@ -1,5 +1,7 @@
+import {getConfidenceInterval95} from '../helpers/getConfidenceInterval95.js';
+import {createVerticalTrace} from './createVerticalTrace.js';
 
-export function configureHistTraces(configGraph, verticals, horizontals) {
+export function configureHistTraces(configGraph) {
     let uniqueCategories = configGraph.get('categories');
     let groupBy = configGraph.get('groupBy');
     let colorBy = configGraph.get('colorBy');
@@ -11,7 +13,25 @@ export function configureHistTraces(configGraph, verticals, horizontals) {
 
     const tracesDrawable = []
     let xTicksOrder = uniqueCategories;
-
+    let ciData = fullData.map(d => d[yMetric]);
+    let data = ciData
+        .map(val => Number(val))
+        .filter(val => !isNaN(val)); // Удалит элементы, которые не удалось превратить в числа
+    let ci = getConfidenceInterval95(data);
+    let ciConfigL = new Map([
+        ['where', ci['lowerBound']], 
+        ['from', 0], 
+        ['to', ci['mean']]
+    ]);
+    let ciConfigU = new Map([
+        ['where', ci['upperBound']], 
+        ['from', 0], 
+        ['to', ci['mean']]
+    ]);
+    
+    let verticals = []
+    verticals.push(createVerticalTrace(ciConfigL))
+    verticals.push(createVerticalTrace(ciConfigU))
     for (let category of xTicksOrder) {
         const filteredData = fullData.filter(d => d[groupBy] === category);
         let catTrace = {
@@ -34,13 +54,7 @@ export function configureHistTraces(configGraph, verticals, horizontals) {
         tracesDrawable.push(catTrace);
     };
 
-    if (verticals) {
-        verticals.forEach(vertical => { tracesDrawable.push(vertical) })
-    };
 
-    if (horizontals) {
-        horizontals.forEach(horizontal => { tracesDrawable.push(horizontal) })
-    };
     let layout = {
         title: {
             text: graphTitle,
@@ -54,6 +68,7 @@ export function configureHistTraces(configGraph, verticals, horizontals) {
             title: { text: yMetric, font: { weight: 'bold', size: 22, family: "Arial" } },
             tickfont: { size: 18, family: "Arial" },
         },
+        shapes: verticals,
         legend: {
             title: {
                 text: groupBy,
@@ -66,6 +81,6 @@ export function configureHistTraces(configGraph, verticals, horizontals) {
         autosize: true
     }
     let config = { responsive: true };
-
+    console.log(layout.shapes);
     return [tracesDrawable, layout, config];
 }

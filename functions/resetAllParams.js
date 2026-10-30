@@ -1,7 +1,6 @@
 import { blink } from './blink.js';
 ipcRenderer.on('resetAllParams', function resetAllParams() {
     let gt = document.getElementById('selectGraphType');
-    let mk = document.getElementById('mergeKey');
     let grot = document.getElementById('selectGroupType');
     let groc = document.getElementById('selectGroupColor');
     let xMe = document.getElementById('metric_1');

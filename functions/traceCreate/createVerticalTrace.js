@@ -8,9 +8,12 @@ export function createVerticalTrace(config) {
     let showLegend = (config.get('showLegend') !== undefined ? config.get('showLegend') : false);
 
     const newTrace = {
-        x: [x, x],
-        y: [y0, y1],
-        mode: 'lines',
+        type: 'line',
+        x0: x,
+        x1: x,
+        y0: 0,
+        y1: 1,
+        yref: 'paper',
         name: lineName,
         showlegend: showLegend,
         line: {
