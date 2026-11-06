@@ -27,7 +27,10 @@ export async function fileParse(filesMetaData) {
             } else if (resolution === 'xlsx') {
                 let workbook = XLSX.readFile(filepath);
                 let worksheet = workbook.Sheets[fileMeta['sheetname']];
-                let jsonData = XLSX.utils.sheet_to_json(worksheet);
+                let jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                    raw: false,
+                    defval: "",
+                });
                 jsonData.forEach(el => {
                     el['filename'] = filename;
                 });
