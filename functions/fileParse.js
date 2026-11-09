@@ -1,5 +1,6 @@
 const d3 = require('d3');
 const XLSX = require('xlsx');
+import {readExcelToJson} from './helpers/excelReader.js';
 
 export async function fileParse(filesMetaData) {
     const fullData = [];
@@ -25,17 +26,10 @@ export async function fileParse(filesMetaData) {
                     resolve();
                 });
             } else if (resolution === 'xlsx') {
-                let workbook = XLSX.readFile(filepath);
-                let worksheet = workbook.Sheets[fileMeta['sheetname']];
-                let jsonData = XLSX.utils.sheet_to_json(worksheet, {
-                    raw: false,
-                    defval: "",
-                });
-                jsonData.forEach(el => {
-                    el['filename'] = filename;
-                });
-                fullData.push(...jsonData);
-                resolve();
+                readExcelToJson(filepath, fileMeta['sheetname'], filename).then(data => {
+                   fullData.push(...data) 
+                   resolve();
+                })
             } else {
                 // Если тип не поддерживается
                 resolve();

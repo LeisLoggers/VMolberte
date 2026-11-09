@@ -1,6 +1,7 @@
 const fs  = require('fs');
 const nodePath = require('path');
 const XLSX = require('xlsx');
+const {readXlsx, listSheets} = require('sheetstream');
 import {configureSelectBoxes} from './configureSelectBoxes.js';
 import { blink } from './blink.js';
 
@@ -35,29 +36,34 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
         if (path.includes('.xls') || (path.includes('.xlsx'))) {
             fileMetaData.set(index, { 'filepath': path });
             fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
-            const workBook = XLSX.readFile(path)
-            const sheets = workBook.SheetNames;
+            // const workBook = XLSX.readFile(path)
+            // const sheets = workBook.SheetNames;
+            listSheets(path).then(result => {
+            let sheets = result.map(d => d['name']);
             ipcRenderer.send('excel-file-question', sheets)
             ipcRenderer.on('sheet-selected', (event, sheetname) => {
-                let worksheet = workBook.Sheets[sheetname]
-                let result = XLSX.utils.sheet_to_json(worksheet);
-                fileMetaData.set(index, { 'filepath': path });
-                fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
-                fileMetaData.get(index)['sheetname'] = sheetname;
-                let fileHeader = Array.from(Object.keys(result[0]));
-                fileMetaData.get(index)['resolution'] = 'xlsx';
-                lfh = lfh.union(new Set(fileHeader));
-                if (currentHeaders.length > 2) {
-                    lfh = lfh.union(new Set(currentHeaders));
-                    decoration = configureSelectBoxes(lfh, currentHeaders);
-                    blink(decoration, 'configure');
-                    event.sender.send('send-meta-data', fileMetaData)
-                } else {
-                    decoration = configureSelectBoxes(lfh, currentHeaders);
-                    blink(decoration, 'configure');
-                    event.sender.send('send-meta-data', fileMetaData)
-                };
+                // let worksheet = workBook.Sheets[sheetname]
+                readXlsx(path, {batchSize: 1, sheet: sheetname, header: true}).toArray().then(firstRow => {
+                    let fileHeader = Object.keys(firstRow[0])
+                    fileMetaData.set(index, { 'filepath': path });
+                    fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];
+                    fileMetaData.get(index)['sheetname'] = sheetname;
+                    fileMetaData.get(index)['resolution'] = 'xlsx';
+                    lfh = lfh.union(new Set(fileHeader));
+                    if (currentHeaders.length > 2) {
+                        lfh = lfh.union(new Set(currentHeaders));
+                        decoration = configureSelectBoxes(lfh, currentHeaders);
+                        blink(decoration, 'configure');
+                        event.sender.send('send-meta-data', fileMetaData)
+                    } else {
+                        decoration = configureSelectBoxes(lfh, currentHeaders);
+                        blink(decoration, 'configure');
+                        event.sender.send('send-meta-data', fileMetaData)
+                    };
+                });
+                
             });
+            })
         } else {
             fileMetaData.set(index, { 'filepath': path });
             fileMetaData.get(index)['filename'] = nodePath.basename(path).split('.')[0];

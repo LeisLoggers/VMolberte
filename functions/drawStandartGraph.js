@@ -45,6 +45,12 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         }
 
         const fullData = await fileParse(filesMetaData);
+        // TODO: переписать в localStrorage или ещё куда, потому что
+        // я паршу fullData минимум дважды - в presort и вот тут.
+        fullData.forEach(row => {
+            row[groupBy] = String(row[groupBy])
+            row[colorBy] = String(row[colorBy])
+        })
         // Собираем конфиги
         // Проверка соответствия длин списков
         checkLengths(uniqueCategoriesSorted, uniqueColorGroupsSorted, available_colors);
@@ -62,7 +68,6 @@ ipcRenderer.on('drawIt', function (event, filesMetaData) {
         configGraph.set('data', fullData);
         configGraph.set('filenames', filenames);
         configGraph.set('customMetaData', metaFields);
-        console.log(configGraph)
         if (graphType === 'box' || graphType === 'violin') {
             let boxplotTraces = configureBoxplotTraces(configGraph);
             document.getElementById('graphTitle').innerText = 'Ваш график';

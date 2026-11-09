@@ -2,7 +2,7 @@
   "name": "vmolberte",
   "productName": "VMolberte",
   "icon": "./assets/vm256.ico",
-  "version": "1.4.43",
+  "version": "1.4.5",
   "description": "Just draw it",
   "license": "MIT",
   "author": "VladimirKirillov",
@@ -74,6 +74,7 @@
     "fs": "^0.0.1-security",
     "plotly.js-dist": "^3.1.2",
     "pptxgenjs": "^4.0.1",
+    "sheetstream": "^0.3.0",
     "sortablejs": "^1.15.6",
     "xlsx": "^0.18.5"
   },

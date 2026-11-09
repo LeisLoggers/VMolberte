@@ -15,6 +15,11 @@ ipcRenderer.on('presort-data', function (event, filesMetaData) {
     window.groupBy = groupBy;
     window.colorBy = colorBy;
     fileParse(filesMetaData).then(fullData => {
+        fullData.forEach(row => {
+            row[groupBy] = String(row[groupBy])
+            row[colorBy] = String(row[colorBy])
+        })
+        
         let uniqueCategories = [... new Set(fullData.map(d => d[groupBy]))];
         let uniqueColors = [... new Set(fullData.map(d => d[colorBy]))];
         let categoriesSorted = sortNumericArray(Array.from(uniqueCategories));
@@ -44,12 +49,7 @@ ipcRenderer.on('presort-data', function (event, filesMetaData) {
             };
             return acc;
             }, {});
-        }
-        
-        // let colorGrid = Object.fromEntries(
-        //     fullData.map(row => [row[groupBy], `${filesToColor[row [colorBy] || row['run'] || row['Run'] || row['filename']]}66`])
-        // )
-        
+        }      
         createSortedDragableDivs(categoriesSorted, colorsSorted, colorGrid);
     })
 })
