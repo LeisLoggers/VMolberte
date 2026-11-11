@@ -146,10 +146,17 @@ ipcMain.on('send-meta-data', (event, metaData) => {
         filesMetaData = metaData;
     }
     let uploadedFP = [];
+    let uploadedSheets = [];
     for (const [key, value] of filesMetaData) {
         uploadedFP.push(value['filepath'])
+        try {
+            uploadedSheets.push(value['sheetname'])
+        }
+        catch(e) {
+            console.log(`Error: ${e}`)
+        }
     }
-    event.sender.send('update-meta-length', filesMetaData.size, uploadedFP);
+    event.sender.send('update-meta-length', filesMetaData.size, uploadedFP, uploadedSheets);
 })
 
 // Сортировка данных

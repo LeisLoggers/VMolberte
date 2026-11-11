@@ -1,5 +1,4 @@
 const d3 = require('d3');
-const XLSX = require('xlsx');
 import {readExcelToJson} from './helpers/excelReader.js';
 
 export async function fileParse(filesMetaData) {

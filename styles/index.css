@@ -206,6 +206,8 @@ body {
         background-color: #e0e0e0;
         text-decoration: underline;
         overflow-x: hidden;
+        overflow-y: hidden;
+        min-height: 32px;
         
     }
 .buttons-area {

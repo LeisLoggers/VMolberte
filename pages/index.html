@@ -199,6 +199,9 @@
                     <button class="sort-button" id="sort-to-bin-button">
                         <i class="fa-solid fa-cart-plus"></i> В корзину
                     </button>
+                    <button class="sort-button" id="sort-from-bin-button">
+                        <i class="fa-solid fa-square-caret-left"></i> Из корзины
+                    </button>
                     <button class="sort-button" id="sort-clear-button">
                         <i class="fa-solid fa-trash"></i> Очистить всё
                     </button>
@@ -541,13 +544,32 @@
                     return;
                 };
             for (let container of containers) {
-                document.querySelectorAll('.sortableContainer')
                 let children = container.childNodes
                 for (let child of children) {
                     container.removeChild(child);
                     removeArea.appendChild(child);
                     if (container.childElementCount !== 0) {
                         MoveToBinFromSortingField()
+                    } else {
+                        return;
+                    };
+                };
+            }
+        }
+        function MoveFromBinFromSortingField() {
+            let containers = document.querySelectorAll('.sortableContainer');
+            let removeArea = document.querySelector('.removeArea');
+            if (removeArea.childElementCount === 0) {
+                    alert("Сортировщики пусты, нельзя переместить пустоту.");
+                    return;
+                };
+            for (let container of containers) {
+                let children = removeArea.childNodes
+                for (let child of children) {
+                    removeArea.removeChild(child);
+                    container.appendChild(child);
+                    if (removeArea.childElementCount !== 0) {
+                        MoveFromBinFromSortingField()
                     } else {
                         return;
                     };
@@ -582,6 +604,7 @@
             document.querySelector('.loading-circle').style.display = 'none';
             document.getElementById('main').classList.add('active');
             document.getElementById('sort-to-bin-button').addEventListener('click', MoveToBinFromSortingField);
+            document.getElementById('sort-from-bin-button').addEventListener('click', MoveFromBinFromSortingField);
             document.getElementById('sort-clear-button').addEventListener('click', clearAllSortableContent);
             document.getElementById('sort-import-button').addEventListener('click', () => {
                 ipcRenderer.send('import-sorted')

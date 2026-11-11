@@ -1,6 +1,5 @@
 const fs  = require('fs');
 const nodePath = require('path');
-const XLSX = require('xlsx');
 const {readXlsx, listSheets} = require('sheetstream');
 import {configureSelectBoxes} from './configureSelectBoxes.js';
 import { blink } from './blink.js';
@@ -41,7 +40,7 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
             listSheets(path).then(result => {
             let sheets = result.map(d => d['name']);
             ipcRenderer.send('excel-file-question', sheets)
-            ipcRenderer.on('sheet-selected', (event, sheetname) => {
+            ipcRenderer.once('sheet-selected', (event, sheetname) => {
                 // let worksheet = workBook.Sheets[sheetname]
                 readXlsx(path, {batchSize: 1, sheet: sheetname, header: true}).toArray().then(firstRow => {
                     let fileHeader = Object.keys(firstRow[0])
@@ -106,13 +105,14 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     }
 });
 // Обновление количества выбранных файлов
-ipcRenderer.on('update-meta-length', function (event, metaLen, metaPaths) {
+ipcRenderer.on('update-meta-length', function (event, metaLen, metaPaths, metaSheets) {
     document.getElementById('fileName').innerText = `Выбрано файлов: ${metaLen}`;
+    document.querySelector('.uploaded-files').innerHTML = `<h3>Загруженные файлы</h3>`
     const uploadedFilesArea = document.querySelector('.uploaded-files');
-    metaPaths.forEach(upFile => {
+    metaPaths.forEach((upFile, i) => {
         let upDiv = document.createElement('div');
         upDiv.classList.add('uploaded-file');
-        upDiv.title = upFile;
+        upDiv.title = `Файл: ${upFile}; ${metaSheets[i] ? "лист: " + metaSheets[i] : ""}`;
         upDiv.innerText = nodePath.basename(upFile);
         uploadedFilesArea.appendChild(upDiv);
     })
