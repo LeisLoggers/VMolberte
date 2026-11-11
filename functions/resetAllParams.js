@@ -1,11 +1,12 @@
 import { blink } from './blink.js';
 ipcRenderer.on('resetAllParams', function resetAllParams() {
+    document.querySelector('.uploaded-files').innerHTML = `<h3>Загруженные файлы</h3>`
     let gt = document.getElementById('selectGraphType');
     let grot = document.getElementById('selectGroupType');
     let groc = document.getElementById('selectGroupColor');
     let xMe = document.getElementById('metric_1');
     let yMe = document.getElementById('metric_2');
-    let selectors = [mk, grot, groc, xMe, yMe];
+    let selectors = [grot, groc, xMe, yMe];
 
     // Очистка селекторов
     selectors.forEach(el => {

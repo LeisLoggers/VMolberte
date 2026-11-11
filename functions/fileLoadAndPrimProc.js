@@ -106,6 +106,14 @@ ipcRenderer.on('selected-file', function (event, filePaths) {
     }
 });
 // Обновление количества выбранных файлов
-ipcRenderer.on('update-meta-length', function (event, metaLen) {
+ipcRenderer.on('update-meta-length', function (event, metaLen, metaPaths) {
     document.getElementById('fileName').innerText = `Выбрано файлов: ${metaLen}`;
+    const uploadedFilesArea = document.querySelector('.uploaded-files');
+    metaPaths.forEach(upFile => {
+        let upDiv = document.createElement('div');
+        upDiv.classList.add('uploaded-file');
+        upDiv.title = upFile;
+        upDiv.innerText = nodePath.basename(upFile);
+        uploadedFilesArea.appendChild(upDiv);
+    })
 })

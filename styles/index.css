@@ -164,6 +164,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     display: grid;
     grid-template-rows: 80% 20%;
+    grid-template-columns: 70% 30%;
     gap: 10px;
     align-self: center;
 }
@@ -186,6 +187,26 @@ body {
         font-size: 3rem;
         color: var(--primary-color);
         margin-bottom: 15px;
+    }
+.uploaded-files {
+    border: 2px dashed #d0d0d0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    text-align: center;
+    max-height: 209px;
+    overflow-y: auto;
+    padding: 5px;
+}
+    .uploaded-file {
+        border: 1px solid #d0d0d0;
+        padding: 4px;
+        border-radius: 8px;
+        background-color: #e0e0e0;
+        text-decoration: underline;
+        overflow-x: hidden;
+        
     }
 .buttons-area {
     display: grid;
