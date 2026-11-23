@@ -109,6 +109,61 @@ body {
         font-size: 1.2rem;
     }
 
+.stats-bar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 450px;
+    transform: translateX(425px);
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    transition: ease-in-out 0.4s;
+    z-index: 10000;
+
+}
+.stats-bar.active {
+    transform: translateX(0);
+}
+.stats-bar-container {
+    background-color: #FFF;
+    border-radius: 8px;
+    border: 4px solid #004074;
+    width: 100%;
+    overflow-y: scroll;
+}
+.stats-bar-header {
+    text-align: center;
+    padding: 5px;
+}
+.stats-bar-card {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 5px;
+
+}
+.stats-bar-card-header {
+    font-weight: bold;
+    text-align: justify;
+    width: 90%;
+}
+.stats-bar-card-content {
+    text-align: justify;
+    width: 90%;
+}
+.stats-bar-tail {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    background-color: #004074;
+    color: #FFFFFF;
+    border: 2px solid #004074;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    height: 250px;
+    text-align: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
 /* Main Content */
 .main-content {
     margin-left: var(--sidebar-width);
@@ -405,6 +460,10 @@ body {
         border-radius: 5px;
         background-color: white;
         transition: var(--transition);
+    }
+    .selector-group select option:checked {
+        background-color: #004074;
+        color: #FFFFFF;
     }
     .selector-group input {
         padding: 8px 12px;

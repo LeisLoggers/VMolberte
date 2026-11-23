@@ -12,6 +12,21 @@
     <div class="loading-circle">
 
     </div>
+    <!--Область статистики-->
+    <div class="stats-bar">
+        <div class="stats-bar-tail">
+            СТАТИСТИКА
+        </div>
+        <div class="stats-bar-container">
+            <div class="stats-bar-header">
+                <h3>Результаты вычисления p-value</h3>
+                <hr>
+            </div>
+            <div class="stats-bar-content">
+            </div>
+        </div>
+        
+    </div>
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
@@ -598,6 +613,7 @@
         let verticalColorSelect = document.getElementById('verticalColorSelect');
         const groupType = document.getElementById('selectGroupType');
         const groupColor = document.getElementById('selectGroupColor');
+
         
         document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('version');
@@ -615,6 +631,9 @@
                     sortedOrder.push(el.innerText);
                 })
                 ipcRenderer.send('export-sorted', sortedOrder)
+            })
+            document.querySelector(".stats-bar-tail").addEventListener('click', () => {
+                document.querySelector(".stats-bar").classList.toggle('active');
             })
 
         });

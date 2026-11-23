@@ -90,6 +90,8 @@ ipcMain.on('is-command-line', (event) => {
     };
 })
 
+
+
 // Получение файла/файлов и путей к ним
 ipcMain.on('open-file-dialog-for-file', async (event) => {
     const result = await dialog.showOpenDialog({

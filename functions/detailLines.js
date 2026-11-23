@@ -3,7 +3,6 @@ const Plotly = require('plotly.js-dist');
 import { createVerticalTrace } from './traceCreate/createVerticalTrace.js';
 import { createHorizontalTrace } from './traceCreate/createHorizontalTrace.js';
 import { createPline } from './traceCreate/createPline.js';
-
 document.getElementById('addVert').addEventListener('click', function (event) {
     const lineDirection = document.getElementById('lineDirection').value;
     const plotlyPlot = document.getElementById('plotlyPlot').textContent;
@@ -45,7 +44,7 @@ ipcRenderer.on('draw-vertical', async function (event) {
     ])
     if (lineType === 'pValue') {
         document.querySelector('.loading-circle').style.display = 'block';
-        newTrace = await createPline(config)
+        newTrace = createPline(config)
         document.querySelector('.loading-circle').style.display = 'none';
         Plotly.addTraces(canvas, newTrace);
     } else {
@@ -78,7 +77,7 @@ ipcRenderer.on('draw-horizontal', async function (event) {
     ])
     if (lineType === 'pValue') {
         document.querySelector('.loading-circle').style.display = 'block';
-        newTrace = await createPline(config)
+        newTrace = createPline(config)
         document.querySelector('.loading-circle').style.display = 'none';
         Plotly.addTraces(canvas, newTrace);
     } else {
